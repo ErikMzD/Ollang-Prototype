@@ -796,16 +796,6 @@ input:focus,textarea:focus{outline:none}
                     <option value="{{ opt }}">{{ opt }}</option>
                   </sc-for>
                 </select>
-                <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Workspace access</label>
-                <div style="border:1px solid rgba(0,0,29,0.08);border-radius:10px;margin-bottom:8px">
-                  <sc-for list="{{ peopleInviteWorkspaceRows }}" as="wr" hint-placeholder-count="3">
-                    <div style="{{ wr.rowStyle }}">
-                      <div onClick="{{ wr.onToggle }}" style="{{ wr.checkboxStyle }}"><sc-if value="{{ wr.checked }}" hint-placeholder-val="{{ false }}"><svg width="10" height="8" viewBox="0 0 10 8" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 4 7 9 1"></polyline></svg></sc-if></div>
-                      <span style="font:500 13px var(--font-ui);color:#16161A">{{ wr.name }}</span>
-                    </div>
-                  </sc-for>
-                </div>
-                <div style="font:400 12px var(--font-ui);color:#8A8A96;line-height:1.5;margin-bottom:14px">Workspace access controls where this person can work. Review Teams can be assigned after they accept.</div>
                 <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Permission preset</label>
                 <select value="{{ peopleInvitePermissionPreset }}" onChange="{{ peopleInviteOnPermissionPreset }}" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui);color:#16161A;background:#fff">
                   <sc-for list="{{ peopleInvitePresetOptions }}" as="opt" hint-placeholder-count="3">
@@ -830,10 +820,6 @@ input:focus,textarea:focus{outline:none}
         </sc-if>
 
         <sc-if value="{{ peopleTabIsAccess }}" hint-placeholder-val="{{ false }}">
-          <div style="margin-bottom:16px">
-            <div style="font:600 15px var(--font-ui);color:#16161A">Workspace access</div>
-            <div style="font:400 12.5px var(--font-ui);color:#6B6B78;margin-top:4px">This is the people-specific view of workspace membership. Review Teams stay global.</div>
-          </div>
           <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:14px">
             <sc-for list="{{ waCards }}" as="wc" hint-placeholder-count="3">
               <div style="flex:1;min-width:210px;max-width:270px;background:#fff;border:1px solid rgba(20,20,30,0.06);border-radius:16px;padding:18px">
@@ -844,28 +830,32 @@ input:focus,textarea:focus{outline:none}
                     <div style="font:400 12px var(--font-ui);color:#9A9AA6;margin-top:2px">{{ wc.activeTranslationsLabel }}</div>
                   </div>
                 </div>
-                <div style="border-top:1px solid rgba(20,20,30,0.07);margin:14px 0 12px"></div>
-                <div style="display:flex;align-items:center;gap:20px">
+                <div style="display:flex;gap:24px;margin-top:16px">
                   <div>
-                    <div style="font:600 20px var(--font-ui);color:#16161A;letter-spacing:-.01em">{{ wc.peopleCount }}</div>
+                    <div style="font:600 26px var(--font-ui);color:#16161A;letter-spacing:-.02em">{{ wc.peopleCount }}</div>
                     <div style="font:400 12px var(--font-ui);color:#9A9AA6;margin-top:2px">People</div>
                   </div>
                   <div>
-                    <div style="font:600 20px var(--font-ui);color:#16161A;letter-spacing:-.01em">{{ wc.adminCount }}</div>
+                    <div style="font:600 26px var(--font-ui);color:#16161A;letter-spacing:-.02em">{{ wc.adminCount }}</div>
                     <div style="font:400 12px var(--font-ui);color:#9A9AA6;margin-top:2px">Admins</div>
                   </div>
-                  <span style="{{ badgeCountNeutralDemoStyle }};font:600 10px var(--font-ui);letter-spacing:.03em;margin-left:auto">Access scope</span>
                 </div>
+                <div style="border-top:1px solid rgba(20,20,30,0.07);margin:14px 0 12px"></div>
+                <span style="{{ badgeCountNeutralDemoStyle }};font:600 10px var(--font-ui);letter-spacing:.03em">Access scope</span>
               </div>
             </sc-for>
           </div>
         </sc-if>
 
         <sc-if value="{{ peopleTabIsTeams }}" hint-placeholder-val="{{ false }}">
-          <div style="margin-bottom:16px">
-            <div style="font:600 15px var(--font-ui);color:#16161A">Global Review Teams</div>
-            <div style="font:400 12.5px var(--font-ui);color:#6B6B78;margin-top:4px">Reusable groups for review routing across every workspace.</div>
-          </div>
+          <sc-if value="{{ rtEditable }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-bottom:14px">
+              <button onClick="{{ rtOnNewTeamToggle }}" style="{{ btnSecondarySm }}" style-hover="{{ btnSecondaryHover }}">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="flex:none"><path d="M12 5v14M5 12h14"></path></svg>
+                New team
+              </button>
+            </div>
+          </sc-if>
 
           <sc-if value="{{ rtNewTeamOpen }}" hint-placeholder-val="{{ false }}">
             <div style="position:fixed;inset:0;background:rgba(16,16,20,0.4);z-index:100;display:flex;align-items:center;justify-content:center;padding:24px" onClick="{{ rtOnNewTeamToggle }}">
@@ -916,46 +906,58 @@ input:focus,textarea:focus{outline:none}
               </div>
             </div>
           </sc-if>
-          <div style="display:flex;gap:14px;flex-wrap:wrap">
-            <sc-for list="{{ rtCards }}" as="tc" hint-placeholder-count="3">
-              <div style="flex:1;min-width:210px;max-width:270px;background:#fff;border:1px solid rgba(20,20,30,0.06);border-radius:16px;padding:18px">
-                <div style="display:flex;align-items:center;justify-content:space-between">
-                  <span style="width:8px;height:8px;border-radius:50%;background:{{ tc.color }};flex:none"></span>
-                  <button title="Team actions" style="{{ rowMenuTriggerStyle }}" style-hover="background:rgba(20,20,30,0.06);color:#16161A">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"></circle><circle cx="12" cy="12" r="2"></circle><circle cx="19" cy="12" r="2"></circle></svg>
-                  </button>
+          <sc-for list="{{ rtCards }}" as="tc" hint-placeholder-count="3">
+            <div style="{{ tc.panelStyle }};margin-bottom:14px">
+              <div style="{{ tc.row0Style }}">
+                <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px">
+                  <div style="display:flex;align-items:flex-start;gap:14px;min-width:0">
+                    <span style="{{ tc.tileStyle }}">{{ tc.tileIcon }}</span>
+                    <div style="min-width:0">
+                      <div style="display:flex;align-items:center;gap:7px">
+                        <span style="width:8px;height:8px;border-radius:50%;background:{{ tc.color }};flex:none"></span>
+                        <span style="font:600 14px var(--font-ui);color:#16161A">{{ tc.teamName }}</span>
+                      </div>
+                      <div style="font:400 12.5px var(--font-ui);color:#6B6B78;margin-top:3px">{{ tc.desc }}</div>
+                    </div>
+                  </div>
+                  <div style="text-align:right;flex:none">
+                    <div style="font: 700 20px var(--font-ui); color: #16161A; font-size: 24px">{{ tc.memberCount }}</div>
+                    <div style="font:600 10.5px var(--font-ui);color:#9A9AA6;text-transform:uppercase;letter-spacing:.04em;margin-top:2px">Members</div>
+                  </div>
                 </div>
-                <div style="font:600 14px var(--font-ui);color:#16161A;margin-top:10px">{{ tc.teamName }}</div>
-                <div style="font:400 12.5px var(--font-ui);color:#6B6B78;margin-top:3px">{{ tc.desc }}</div>
-                <div style="display:flex;align-items:center;margin-top:14px">
-                  <sc-for list="{{ tc.avatars }}" as="av" hint-placeholder-count="3">
-                    <sc-if value="{{ av.hasPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ av.photoUrl }}" style="{{ av.photoStyle }};margin-left:-6px;border:2px solid #fff" alt="{{ av.name }}"></sc-if>
-                    <sc-if value="{{ av.noPhoto }}" hint-placeholder-val="{{ true }}"><span style="{{ av.style }};margin-left:-6px;border:2px solid #fff;box-sizing:content-box">{{ av.initials }}</span></sc-if>
+              </div>
+              <div style="{{ tc.rowStyle }}">
+                <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+                  <sc-for list="{{ tc.chips }}" as="ch" hint-placeholder-count="2">
+                    <span style="display:inline-flex;align-items:center;gap:6px;padding:4px 6px 4px 4px;border-radius:999px;background:#F5F5F7">
+                      <sc-if value="{{ ch.avatarHasPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ ch.avatarPhotoUrl }}" style="{{ ch.avatarPhotoStyle }}" alt="{{ ch.name }}"></sc-if><sc-if value="{{ ch.avatarNoPhoto }}" hint-placeholder-val="{{ true }}"><span style="{{ ch.avatarStyle }}">{{ ch.initials }}</span></sc-if>
+                      <span style="font:500 12.5px var(--font-ui);color:#3A3A44">{{ ch.name }}</span>
+                      <sc-if value="{{ tc.editable }}" hint-placeholder-val="{{ false }}">
+                        <button onClick="{{ ch.onRemoveClick }}" title="Remove" style="width:16px;height:16px;border-radius:50%;border:none;background:transparent;color:#8A8A96;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;line-height:1">×</button>
+                      </sc-if>
+                    </span>
                   </sc-for>
-                  <sc-if value="{{ tc.hasOverflow }}" hint-placeholder-val="{{ false }}">
-                    <span style="width:26px;height:26px;border-radius:50%;background:#F1F1F4;color:#6B6B78;font:600 10px var(--font-ui);display:flex;align-items:center;justify-content:center;flex:none;margin-left:-6px;border:2px solid #fff;box-sizing:content-box">+{{ tc.overflowCount }}</span>
+                  <sc-if value="{{ tc.isEmpty }}" hint-placeholder-val="{{ false }}"><span style="font:400 12.5px var(--font-ui);color:#A6A6B0">No members yet.</span></sc-if>
+                  <sc-if value="{{ tc.editable }}" hint-placeholder-val="{{ false }}">
+                    <div style="position:relative" data-pop="1">
+                      <button onClick="{{ tc.onAddToggle }}" style="font:600 12.5px var(--font-ui);color:#6148F9;background:none;border:none;cursor:pointer">+ Add</button>
+                      <sc-if value="{{ tc.addOpen }}" hint-placeholder-val="{{ false }}">
+                        <div style="position:absolute;top:calc(100% + 6px);left:0;z-index:30;width:220px;background:#fff;border:1px solid rgba(0,0,29,0.12);border-radius:11px;box-shadow:0 14px 32px -8px rgba(16,16,20,0.28);padding:8px">
+                          <input value="{{ tc.addSearch }}" onChange="{{ tc.onAddSearch }}" placeholder="Search people" style="width:100%;height:30px;padding:0 8px;border-radius:7px;border:1px solid rgba(0,0,29,0.12);font:400 12.5px var(--font-ui);margin-bottom:6px">
+                          <sc-for list="{{ tc.addOptions }}" as="op" hint-placeholder-count="3">
+                            <div onClick="{{ op.onClick }}" style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:7px;cursor:pointer" style-hover="background:#F5F5F7">
+                              <span style="width:22px;height:22px;border-radius:50%;background:rgba(97,72,249,0.14);color:#4F39D8;font:600 10px var(--font-ui);display:flex;align-items:center;justify-content:center;flex:none">{{ op.initials }}</span>
+                              <span style="font:500 12.5px var(--font-ui);color:#16161A">{{ op.name }}</span>
+                            </div>
+                          </sc-for>
+                        </div>
+                      </sc-if>
+                    </div>
                   </sc-if>
                 </div>
-                <div style="border-top:1px solid rgba(20,20,30,0.07);margin:14px 0 12px"></div>
-                <div style="display:flex;gap:24px">
-                  <div>
-                    <div style="font:600 26px var(--font-ui);color:#16161A;letter-spacing:-.02em">{{ tc.memberCount }}</div>
-                    <div style="font:400 12px var(--font-ui);color:#9A9AA6;margin-top:2px">Members</div>
-                  </div>
-                  <div>
-                    <div style="font:600 26px var(--font-ui);color:#16161A;letter-spacing:-.02em">{{ tc.scopeLabel }}</div>
-                    <div style="font:400 12px var(--font-ui);color:#9A9AA6;margin-top:2px">Scope</div>
-                  </div>
-                </div>
               </div>
-            </sc-for>
-            <sc-if value="{{ rtEditable }}" hint-placeholder-val="{{ false }}">
-              <div onClick="{{ rtOnNewTeamToggle }}" style="flex:1;min-width:210px;max-width:270px;background:#FAFAFB;border:1.5px dashed rgba(20,20,30,0.16);border-radius:16px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;color:#6B6B78" style-hover="border-color:#6148F9;color:#4F39D8;background:#FAFAFF">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
-                <span style="font:600 13px var(--font-ui)">New team</span>
-              </div>
-            </sc-if>
-          </div>
+            </div>
+          </sc-for>
         </sc-if>
 
         <sc-if value="{{ peopleTabIsPeople }}" hint-placeholder-val="{{ true }}">
@@ -1028,7 +1030,7 @@ input:focus,textarea:focus{outline:none}
                   <sc-if value="{{ pr.noTeams }}" hint-placeholder-val="{{ false }}"><span style="font:400 11.5px var(--font-ui);color:#A6A6B0">—</span></sc-if>
                 </div>
                 <button onClick="{{ pr.onToggleExpand }}" title="View details" style="{{ rowMenuTriggerStyle }}">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
                 </button>
               </div>
             </sc-for>
@@ -4379,9 +4381,9 @@ class Component extends DCLogic {
     profileAccountType: 'custom', profileRole: 'Owner', profileSwitcherOpen: false,
     peopleOrgAxis: 'organization', activePersonaId: 'org-owner',
     peopleQuery: '', peopleInvited: [], personDetailOpen: false, personDetailPersonId: '',
-    peopleInviteModalOpen: false, peopleInviteEmail: '', peopleInvitePersonType: 'Team member', peopleInvitePermissionPreset: 'View and contribute', peopleInviteWorkspaces: [],
+    peopleInviteModalOpen: false, peopleInviteEmail: '', peopleInvitePersonType: 'Team member', peopleInvitePermissionPreset: 'View and contribute',
     peopleTab: 'people', waAddOpen: '', waAddSearch: '', peopleWorkspaceFilter: '',
-    rtNewTeamOpen: false, rtNewTeamName: '', rtNewTeamDesc: '', rtNewTeamMembers: [], rtNewTeamMemberSearch: '', rtNewTeamMemberAddOpen: false,
+    rtAddOpen: '', rtAddSearch: '', rtNewTeamOpen: false, rtNewTeamName: '', rtNewTeamDesc: '', rtNewTeamMembers: [], rtNewTeamMemberSearch: '', rtNewTeamMemberAddOpen: false,
   };
 
   DURATION_MIN = 8.4;
@@ -5312,6 +5314,22 @@ class Component extends DCLogic {
     { id: 'legal', name: 'Legal review', desc: 'Regulatory and legal terminology', members: ['Maya Patel'], color: '#4C6EF5' },
     { id: 'arabic', name: 'Arabic review', desc: 'Arabic language and cultural review', members: ['Leila Haddad'], color: '#E64980' },
   ];
+
+  // Same contract as workspaceAccessAddState (Step 3) — renderPeoplePickerState still can't be reused
+  // directly since a team's members live on the REVIEW_TEAMS object, not a flat state array. One shared
+  // add-popover key (rtAddOpen) across every team card, same convention as the workspace access tab.
+  reviewTeamAddState(team) {
+    const S = this.state;
+    const q = (S.rtAddSearch || '').trim().toLowerCase();
+    const filtered = this.PEOPLE_DIRECTORY.filter(p => !(team.members || []).includes(p.name) && (!q || p.name.toLowerCase().includes(q)));
+    return {
+      open: S.rtAddOpen === team.id,
+      onToggle: () => this.setState({ rtAddOpen: S.rtAddOpen === team.id ? '' : team.id, rtAddSearch: '' }),
+      search: S.rtAddSearch, onSearch: e => this.setState({ rtAddSearch: e.target.value }),
+      hasOptions: filtered.length > 0,
+      options: filtered.map(p => ({ name: p.name, initials: p.initials, onClick: () => { team.members = (team.members || []).concat(p.name); this.setState({ rtAddOpen: '', rtAddSearch: '' }); } })),
+    };
+  }
 
   // THE person-list field composite: an uppercase/label row with an inline "+ Add" trigger (no bordered
   // box), wrapped chips below, and an empty state that's just text — no dead container. Single source for
@@ -8223,10 +8241,10 @@ class Component extends DCLogic {
           set({
             peopleInvited: invited.concat(email),
             peopleInviteModalOpen: false, peopleInviteEmail: '',
-            peopleInvitePersonType: 'Team member', peopleInvitePermissionPreset: 'View and contribute', peopleInviteWorkspaces: [],
+            peopleInvitePersonType: 'Team member', peopleInvitePermissionPreset: 'View and contribute',
           });
         };
-        const peopleInviteOnClose = () => set({ peopleInviteModalOpen: false, peopleInviteEmail: '', peopleInvitePersonType: 'Team member', peopleInvitePermissionPreset: 'View and contribute', peopleInviteWorkspaces: [] });
+        const peopleInviteOnClose = () => set({ peopleInviteModalOpen: false, peopleInviteEmail: '', peopleInvitePersonType: 'Team member', peopleInvitePermissionPreset: 'View and contribute' });
 
         // Step 4 fix: tab presence derived from each tab's own tabAbilities entry, not a binary org/
         // standalone flag. People and Review Teams are present (tone never 'not-shown') for all six
@@ -8259,29 +8277,6 @@ class Component extends DCLogic {
           ? PEOPLE_WORKSPACE_NAMES
           : PEOPLE_WORKSPACE_NAMES.filter(n => n === activePersonaForPeople.workspace);
         const waNames = S.peopleWorkspaceFilter ? waAllNames.filter(n => n === S.peopleWorkspaceFilter) : waAllNames;
-        // Invite person (Step 6): Workspace access section reuses waAllNames — the exact same
-        // "workspaces visible to persona X" list already computed above for the Workspace access tab
-        // (org-wide personas see all 3; workspace-scoped personas see only their own workspace) — not
-        // hardcoded. Cross-workspace assignment at invite time is gated on canManageAccess, the same flag
-        // that drives the Workspace access tab's own editability (true only for org-owner); every other
-        // persona in the current data only ever has one workspace in waAllNames anyway, so "locked" only
-        // ever applies to that single row. No persona in PERSONAS was ambiguous on this point.
-        const peopleInviteCanAssignAccess = !!activePersonaForPeople.canManageAccess;
-        const peopleInviteOnOpen = () => set({
-          peopleInviteModalOpen: true,
-          peopleInviteWorkspaces: peopleInviteCanAssignAccess ? [] : waAllNames.slice(),
-        });
-        const peopleInviteWorkspaceRows = waAllNames.map((name, i) => {
-          const checked = (S.peopleInviteWorkspaces || []).includes(name);
-          return {
-            name, checked,
-            rowStyle: 'display:flex;align-items:center;gap:11px;padding:11px 13px;' + (i > 0 ? 'border-top:1px solid rgba(0,0,29,0.06)' : ''),
-            checkboxStyle: this.chkBoxStyle(checked) + (peopleInviteCanAssignAccess ? '' : ';opacity:.4;pointer-events:none'),
-            onToggle: peopleInviteCanAssignAccess ? () => set({
-              peopleInviteWorkspaces: checked ? (S.peopleInviteWorkspaces || []).filter(n => n !== name) : (S.peopleInviteWorkspaces || []).concat(name),
-            }) : null,
-          };
-        });
         // Workspace access tab card visuals (Step 3b): matches the "Recently updated" workspace card
         // rhythm (icon-square + title/headerSub, stat row, divider) via renderStatCard's own layout —
         // read only, not modified/reused directly since we need two stats side by side instead of one.
@@ -8321,28 +8316,16 @@ class Component extends DCLogic {
         const peopleTabAbility = (activePersonaForPeople.tabAbilities.find(t => t.tab === 'People') || {}).copy || '';
         const rtAbility = abilityFor('Review Teams');
         const rtEditable = rtAbility.tone === 'allowed';
-        // Review Teams tab card grid (Step 5 redesign) — reuses the Workspace access tab's own grid
-        // container pattern (flex-wrap, flex:1/min/max-width, 14px gap — see waCards above) rather than
-        // building a new grid. Member chips-with-remove/+Add moved off the card face per the new compact
-        // layout — team membership stays editable via the Create review team modal and (per person) the
-        // person detail modal's own Review Teams section; the card itself is now read-oriented. Scope is
-        // hardcoded 'Global' only because REVIEW_TEAMS has no scope field for any team (checked: every
-        // team is account-wide by design, per the comment above REVIEW_TEAMS) — a team.scope value would
-        // be used instead if one ever exists.
         const rtCards = this.REVIEW_TEAMS.map(team => {
-          const members = team.members || [];
-          return {
-            id: team.id, teamName: team.name, desc: team.desc, color: team.color,
-            memberCount: members.length,
-            scopeLabel: team.scope || 'Global',
-            avatars: members.slice(0, 6).map(name => {
-              const av = this.renderAvatar(name, null, 26, 10);
-              return { name, initials: av.initials, hasPhoto: av.hasPhoto, noPhoto: av.noPhoto, photoUrl: av.photoUrl, photoStyle: av.photoStyle, style: av.fallbackStyle };
-            }),
-            overflowCount: Math.max(0, members.length - 6),
-            hasOverflow: members.length > 6,
+          const add = this.reviewTeamAddState(team);
+          const tile = this.renderIconTile('people', 40, '#F1F1F4', '#6B6B78');
+          const field = this.renderPeopleField('Members', team.members || [], add, name => { team.members = (team.members || []).filter(n => n !== name); this.setState({}); });
+          return Object.assign({}, field, {
+            id: team.id, teamName: team.name, desc: team.desc, memberCount: (team.members || []).length,
+            tileStyle: tile.tileStyle, tileIcon: tile.icon, color: team.color,
+            panelStyle: this.renderPanelStyle(false), row0Style: this.renderPanelRowStyle(0, false), rowStyle: this.renderPanelRowStyle(1, false),
             editable: rtEditable,
-          };
+          });
         });
         // New review team (Step 4 redesign): centered modal, not a popover. Members field reuses
         // renderPeopleField (already generic, not team-specific) against a draft rtNewTeamMembers list
@@ -8371,13 +8354,12 @@ class Component extends DCLogic {
           peopleCanInvite: activePersonaForPeople.canInvite,
           peopleInviteLabel: (activePersonaForPeople.account === 'organization' && activePersonaForPeople.scope === 'workspace')
             ? ('Invite to ' + activePersonaForPeople.workspace) : 'Invite person',
-          peopleInviteOnToggle: peopleInviteOnOpen,
+          peopleInviteOnToggle: () => set({ peopleInviteModalOpen: true }),
           peopleInviteModalOpen: S.peopleInviteModalOpen, peopleInviteOnClose,
           peopleInviteEmail: S.peopleInviteEmail || '', peopleInviteOnEmail: e => set({ peopleInviteEmail: e.target.value }),
           peopleInvitePersonType: S.peopleInvitePersonType || 'Team member', peopleInviteOnPersonType: e => set({ peopleInvitePersonType: e.target.value }),
           peopleInvitePermissionPreset: S.peopleInvitePermissionPreset || 'View and contribute', peopleInviteOnPermissionPreset: e => set({ peopleInvitePermissionPreset: e.target.value }),
           peopleInviteTypeOptions: PEOPLE_TYPE_OPTIONS, peopleInvitePresetOptions: PEOPLE_PERMISSION_PRESETS,
-          peopleInviteWorkspaceRows,
           peopleInviteOnSend, peopleInviteSendDisabled: !(S.peopleInviteEmail || '').trim(),
           peopleQuery: S.peopleQuery || '', peopleOnQuery: e => set({ peopleQuery: e.target.value }),
           peopleOnClearSearch: () => set({ peopleQuery: '' }),

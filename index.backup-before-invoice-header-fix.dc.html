@@ -136,8 +136,7 @@ input:focus,textarea:focus{outline:none}
         </div>
       </sc-if>
       <div onClick="{{ onToggleProfileSwitcher }}" style="display:flex;align-items:center;gap:11px;padding:9px 11px;border:1px solid rgba(20,20,30,0.1);border-radius:11px;background:#fff;cursor:pointer" style-hover="border-color:rgba(97,72,249,0.35)">
-        <sc-if value="{{ profileAvatarHasPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ profileAvatarPhotoUrl }}" style="{{ profileAvatarPhotoStyle }}" alt="Alex Rivera"></sc-if>
-        <sc-if value="{{ profileAvatarNoPhoto }}" hint-placeholder-val="{{ true }}"><span style="{{ profileAvatarStyle }}">{{ profileAvatarInitials }}</span></sc-if>
+        <span style="width:30px;height:30px;border-radius:50%;background:rgba(97,72,249,0.14);color:#4F39D8;font:600 11.5px var(--font-ui);display:flex;align-items:center;justify-content:center;flex:none">AR</span>
         <div style="min-width:0;line-height:1.25;flex:1;overflow:hidden">
           <div style="font:600 13px var(--font-ui);color:#16161A">Alex Rivera</div>
           <div style="font:400 11px var(--font-ui);color:#8A8A96">{{ profileRoleLabel }}</div>
@@ -711,12 +710,7 @@ input:focus,textarea:focus{outline:none}
                   </div>
                 </div>
                 <div style="display:flex;align-items:center;gap:10px;min-width:0">
-                  <sc-if value="{{ w.ownerAvatarHasPhoto }}" hint-placeholder-val="{{ false }}">
-                    <img src="{{ w.ownerAvatarPhotoUrl }}" style="{{ w.ownerAvatarPhotoStyle }}" alt="{{ w.ownerName }}">
-                  </sc-if>
-                  <sc-if value="{{ w.ownerAvatarNoPhoto }}" hint-placeholder-val="{{ true }}">
-                    <span style="{{ w.ownerAvatarStyle }}">{{ w.ownerInitials }}</span>
-                  </sc-if>
+                  <span style="{{ w.ownerAvatarStyle }}">{{ w.ownerInitials }}</span>
                   <span style="font:500 12.5px var(--font-ui);color:#3A3A44;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1">{{ w.ownerDisplayName }}</span>
                 </div>
                 <div><span style="{{ w.accessStyle }}">{{ w.access }}</span></div>
@@ -770,56 +764,28 @@ input:focus,textarea:focus{outline:none}
             <p style="font:400 13px var(--font-ui);color:#6B6B78;margin:6px 0 0">{{ peopleDescription }}</p>
           </div>
           <sc-if value="{{ peopleCanInvite }}" hint-placeholder-val="{{ true }}">
-            <button onClick="{{ peopleInviteOnToggle }}" style="{{ btnPrimaryMd }}" style-hover="background:#4F39D8">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="flex:none"><path d="M12 5v14M5 12h14"></path></svg>
-              {{ peopleInviteLabel }}
-            </button>
-          </sc-if>
-        </div>
-
-        <sc-if value="{{ peopleInviteModalOpen }}" hint-placeholder-val="{{ false }}">
-          <div style="position:fixed;inset:0;background:rgba(16,16,20,0.4);z-index:100;display:flex;align-items:center;justify-content:center;padding:24px" onClick="{{ peopleInviteOnClose }}">
-            <div style="width:100%;max-width:420px;background:#fff;border-radius:14px;box-shadow:0 24px 60px -12px rgba(16,16,20,0.4)" onClick="{{ stopClick }}">
-              <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 20px">
-                <div style="font:600 16px var(--font-ui);color:#16161A">Invite person</div>
-                <button onClick="{{ peopleInviteOnClose }}" title="Close" style="width:28px;height:28px;border-radius:8px;border:none;background:transparent;color:#8A8A96;cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:#F1F1F4">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                </button>
-              </div>
-              <div style="border-top:1px solid rgba(0,0,29,0.08)"></div>
-              <div style="padding:20px">
-                <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Email</label>
-                <input value="{{ peopleInviteEmail }}" onChange="{{ peopleInviteOnEmail }}" placeholder="name@company.com" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui);color:#16161A;margin-bottom:14px">
-                <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Person type</label>
-                <select value="{{ peopleInvitePersonType }}" onChange="{{ peopleInviteOnPersonType }}" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui);color:#16161A;margin-bottom:14px;background:#fff">
-                  <sc-for list="{{ peopleInviteTypeOptions }}" as="opt" hint-placeholder-count="3">
-                    <option value="{{ opt }}">{{ opt }}</option>
-                  </sc-for>
-                </select>
-                <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Workspace access</label>
-                <div style="border:1px solid rgba(0,0,29,0.08);border-radius:10px;margin-bottom:8px">
-                  <sc-for list="{{ peopleInviteWorkspaceRows }}" as="wr" hint-placeholder-count="3">
-                    <div style="{{ wr.rowStyle }}">
-                      <div onClick="{{ wr.onToggle }}" style="{{ wr.checkboxStyle }}"><sc-if value="{{ wr.checked }}" hint-placeholder-val="{{ false }}"><svg width="10" height="8" viewBox="0 0 10 8" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 4 7 9 1"></polyline></svg></sc-if></div>
-                      <span style="font:500 13px var(--font-ui);color:#16161A">{{ wr.name }}</span>
+            <div style="position:relative;flex:none" data-pop="1">
+              <button onClick="{{ peopleInviteOnToggle }}" style="{{ btnPrimaryMd }}" style-hover="background:#4F39D8">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="flex:none"><path d="M12 5v14M5 12h14"></path></svg>
+                {{ peopleInviteLabel }}
+              </button>
+              <sc-if value="{{ peopleInviteOpen }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute;top:calc(100% + 6px);right:0;z-index:30;width:230px;background:#fff;border:1px solid rgba(0,0,29,0.12);border-radius:11px;box-shadow:0 14px 32px -8px rgba(16,16,20,0.28);padding:8px">
+                  <input value="{{ peopleInviteSearch }}" onChange="{{ peopleInviteOnSearch }}" placeholder="Search people" style="width:100%;height:30px;padding:0 8px;border-radius:7px;border:1px solid rgba(0,0,29,0.12);font:400 12.5px var(--font-ui);margin-bottom:6px">
+                  <sc-for list="{{ peopleInviteOptions }}" as="op" hint-placeholder-count="3">
+                    <div onClick="{{ op.onClick }}" style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:7px;cursor:pointer" style-hover="background:#F5F5F7">
+                      <span style="width:22px;height:22px;border-radius:50%;background:rgba(97,72,249,0.14);color:#4F39D8;font:600 10px var(--font-ui);display:flex;align-items:center;justify-content:center;flex:none">{{ op.initials }}</span>
+                      <span style="font:500 12.5px var(--font-ui);color:#16161A">{{ op.name }}</span>
                     </div>
                   </sc-for>
+                  <sc-if value="{{ peopleInviteNoOptions }}" hint-placeholder-val="{{ false }}">
+                    <div style="padding:8px;font:400 12px var(--font-ui);color:#A6A6B0">No one else to invite.</div>
+                  </sc-if>
                 </div>
-                <div style="font:400 12px var(--font-ui);color:#8A8A96;line-height:1.5;margin-bottom:14px">Workspace access controls where this person can work. Review Teams can be assigned after they accept.</div>
-                <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Permission preset</label>
-                <select value="{{ peopleInvitePermissionPreset }}" onChange="{{ peopleInviteOnPermissionPreset }}" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui);color:#16161A;background:#fff">
-                  <sc-for list="{{ peopleInvitePresetOptions }}" as="opt" hint-placeholder-count="3">
-                    <option value="{{ opt }}">{{ opt }}</option>
-                  </sc-for>
-                </select>
-              </div>
-              <div style="display:flex;justify-content:flex-end;gap:9px;padding:16px 20px;border-top:1px solid rgba(0,0,29,0.08)">
-                <button onClick="{{ peopleInviteOnClose }}" style="{{ btnSecondaryMd }}" style-hover="{{ btnSecondaryHover }}">Cancel</button>
-                <button onClick="{{ peopleInviteOnSend }}" disabled="{{ peopleInviteSendDisabled }}" style="{{ btnPrimaryMd }}" style-hover="background:#4F39D8">Send invitation</button>
-              </div>
+              </sc-if>
             </div>
-          </div>
-        </sc-if>
+          </sc-if>
+        </div>
 
         <sc-if value="{{ peopleShowTabBar }}" hint-placeholder-val="{{ false }}">
           <div style="display:flex;gap:22px;border-bottom:1px solid rgba(0,0,29,0.08);margin-bottom:20px">
@@ -830,132 +796,109 @@ input:focus,textarea:focus{outline:none}
         </sc-if>
 
         <sc-if value="{{ peopleTabIsAccess }}" hint-placeholder-val="{{ false }}">
-          <div style="margin-bottom:16px">
-            <div style="font:600 15px var(--font-ui);color:#16161A">Workspace access</div>
-            <div style="font:400 12.5px var(--font-ui);color:#6B6B78;margin-top:4px">This is the people-specific view of workspace membership. Review Teams stay global.</div>
-          </div>
-          <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:14px">
-            <sc-for list="{{ waCards }}" as="wc" hint-placeholder-count="3">
-              <div style="flex:1;min-width:210px;max-width:270px;background:#fff;border:1px solid rgba(20,20,30,0.06);border-radius:16px;padding:18px">
-                <div style="display:flex;align-items:center;gap:10px;min-width:0">
-                  <span style="{{ wc.initialsStyle }}">{{ wc.initialsLabel }}</span>
-                  <div style="min-width:0">
-                    <div style="font:600 14px var(--font-ui);color:#16161A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ wc.name }}</div>
-                    <div style="font:400 12px var(--font-ui);color:#9A9AA6;margin-top:2px">{{ wc.activeTranslationsLabel }}</div>
-                  </div>
-                </div>
-                <div style="border-top:1px solid rgba(20,20,30,0.07);margin:14px 0 12px"></div>
-                <div style="display:flex;align-items:center;gap:20px">
-                  <div>
-                    <div style="font:600 20px var(--font-ui);color:#16161A;letter-spacing:-.01em">{{ wc.peopleCount }}</div>
-                    <div style="font:400 12px var(--font-ui);color:#9A9AA6;margin-top:2px">People</div>
-                  </div>
-                  <div>
-                    <div style="font:600 20px var(--font-ui);color:#16161A;letter-spacing:-.01em">{{ wc.adminCount }}</div>
-                    <div style="font:400 12px var(--font-ui);color:#9A9AA6;margin-top:2px">Admins</div>
-                  </div>
-                  <span style="{{ badgeCountNeutralDemoStyle }};font:600 10px var(--font-ui);letter-spacing:.03em;margin-left:auto">Access scope</span>
-                </div>
-              </div>
-            </sc-for>
-          </div>
-        </sc-if>
-
-        <sc-if value="{{ peopleTabIsTeams }}" hint-placeholder-val="{{ false }}">
-          <div style="margin-bottom:16px">
-            <div style="font:600 15px var(--font-ui);color:#16161A">Global Review Teams</div>
-            <div style="font:400 12.5px var(--font-ui);color:#6B6B78;margin-top:4px">Reusable groups for review routing across every workspace.</div>
-          </div>
-
-          <sc-if value="{{ rtNewTeamOpen }}" hint-placeholder-val="{{ false }}">
-            <div style="position:fixed;inset:0;background:rgba(16,16,20,0.4);z-index:100;display:flex;align-items:center;justify-content:center;padding:24px" onClick="{{ rtOnNewTeamToggle }}">
-              <div style="width:100%;max-width:440px;background:#fff;border-radius:14px;box-shadow:0 24px 60px -12px rgba(16,16,20,0.4)" onClick="{{ stopClick }}">
-                <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 20px">
-                  <div style="font:600 16px var(--font-ui);color:#16161A">Create review team</div>
-                  <button onClick="{{ rtOnNewTeamToggle }}" title="Close" style="width:28px;height:28px;border-radius:8px;border:none;background:transparent;color:#8A8A96;cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:#F1F1F4">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                  </button>
-                </div>
-                <div style="border-top:1px solid rgba(0,0,29,0.08)"></div>
-                <div style="padding:20px">
-                  <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Name</label>
-                  <input value="{{ rtNewTeamName }}" onChange="{{ rtOnNewTeamName }}" placeholder="e.g. Medical review" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui);margin-bottom:14px">
-                  <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Description</label>
-                  <input value="{{ rtNewTeamDesc }}" onChange="{{ rtOnNewTeamDesc }}" placeholder="What this team reviews" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui);margin-bottom:14px">
-                  <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Members</label>
-                  <div style="position:relative" data-pop="1">
-                    <input value="{{ rtNewTeamMembersField.addSearch }}" onChange="{{ rtNewTeamMembersField.onAddSearch }}" onClick="{{ rtNewTeamMembersField.onAddToggle }}" placeholder="Search and add people" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui)">
-                    <sc-if value="{{ rtNewTeamMembersField.addOpen }}" hint-placeholder-val="{{ false }}">
-                      <div style="position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:30;background:#fff;border:1px solid rgba(0,0,29,0.12);border-radius:11px;box-shadow:0 14px 32px -8px rgba(16,16,20,0.28);padding:8px;max-height:200px;overflow-y:auto">
-                        <sc-for list="{{ rtNewTeamMembersField.addOptions }}" as="op" hint-placeholder-count="3">
-                          <div onClick="{{ op.onClick }}" style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:7px;cursor:pointer" style-hover="background:#F5F5F7">
-                            <span style="width:22px;height:22px;border-radius:50%;background:rgba(97,72,249,0.14);color:#4F39D8;font:600 10px var(--font-ui);display:flex;align-items:center;justify-content:center;flex:none">{{ op.initials }}</span>
-                            <span style="font:500 12.5px var(--font-ui);color:#16161A">{{ op.name }}</span>
-                          </div>
-                        </sc-for>
-                      </div>
-                    </sc-if>
-                  </div>
-                  <sc-if value="{{ rtNewTeamMembersHasChips }}" hint-placeholder-val="{{ false }}">
-                    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px">
-                      <sc-for list="{{ rtNewTeamMembersField.chips }}" as="ch" hint-placeholder-count="2">
-                        <span style="display:inline-flex;align-items:center;gap:6px;padding:4px 6px 4px 4px;border-radius:999px;background:#F5F5F7">
-                          <sc-if value="{{ ch.avatarHasPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ ch.avatarPhotoUrl }}" style="{{ ch.avatarPhotoStyle }}" alt="{{ ch.name }}"></sc-if><sc-if value="{{ ch.avatarNoPhoto }}" hint-placeholder-val="{{ true }}"><span style="{{ ch.avatarStyle }}">{{ ch.initials }}</span></sc-if>
-                          <span style="font:500 12.5px var(--font-ui);color:#16161A">{{ ch.name }}</span>
-                          <button onClick="{{ ch.onRemoveClick }}" title="Remove" style="width:16px;height:16px;border-radius:50%;border:none;background:transparent;color:#8A8A96;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;line-height:1">×</button>
-                        </span>
-                      </sc-for>
+          <sc-for list="{{ waCards }}" as="wc" hint-placeholder-count="3">
+            <div style="{{ wc.panelStyle }};margin-bottom:14px">
+              <div style="{{ wc.rowStyle }}">
+                <div style="font:600 14px var(--font-ui);color:#16161A;margin-bottom:8px">{{ wc.name }}</div>
+                <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+                  <sc-for list="{{ wc.chips }}" as="ch" hint-placeholder-count="2">
+                    <span style="display:inline-flex;align-items:center;gap:6px;padding:4px 6px 4px 4px;border-radius:999px;background:#F5F5F7">
+                      <span style="width:22px;height:22px;border-radius:50%;background:rgba(97,72,249,0.14);color:#4F39D8;font:600 9.5px var(--font-ui);display:flex;align-items:center;justify-content:center;flex:none">{{ ch.initials }}</span>
+                      <span style="font:500 12.5px var(--font-ui);color:#3A3A44">{{ ch.name }}</span>
+                      <span style="{{ ch.roleStyle }}">{{ ch.role }}</span>
+                      <sc-if value="{{ wc.editable }}" hint-placeholder-val="{{ false }}">
+                        <button onClick="{{ ch.onRemoveClick }}" title="Remove" style="width:16px;height:16px;border-radius:50%;border:none;background:transparent;color:#8A8A96;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;line-height:1">×</button>
+                      </sc-if>
+                    </span>
+                  </sc-for>
+                  <sc-if value="{{ wc.isEmpty }}" hint-placeholder-val="{{ false }}"><span style="font:400 12.5px var(--font-ui);color:#A6A6B0">No one has access yet.</span></sc-if>
+                  <sc-if value="{{ wc.editable }}" hint-placeholder-val="{{ false }}">
+                    <div style="position:relative" data-pop="1">
+                      <button onClick="{{ wc.onAddToggle }}" style="font:600 12.5px var(--font-ui);color:#6148F9;background:none;border:none;cursor:pointer">+ Add</button>
+                      <sc-if value="{{ wc.addOpen }}" hint-placeholder-val="{{ false }}">
+                        <div style="position:absolute;top:calc(100% + 6px);left:0;z-index:30;width:220px;background:#fff;border:1px solid rgba(0,0,29,0.12);border-radius:11px;box-shadow:0 14px 32px -8px rgba(16,16,20,0.28);padding:8px">
+                          <input value="{{ wc.addSearch }}" onChange="{{ wc.onAddSearch }}" placeholder="Search people" style="width:100%;height:30px;padding:0 8px;border-radius:7px;border:1px solid rgba(0,0,29,0.12);font:400 12.5px var(--font-ui);margin-bottom:6px">
+                          <sc-for list="{{ wc.addOptions }}" as="op" hint-placeholder-count="3">
+                            <div onClick="{{ op.onClick }}" style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:7px;cursor:pointer" style-hover="background:#F5F5F7">
+                              <span style="width:22px;height:22px;border-radius:50%;background:rgba(97,72,249,0.14);color:#4F39D8;font:600 10px var(--font-ui);display:flex;align-items:center;justify-content:center;flex:none">{{ op.initials }}</span>
+                              <span style="font:500 12.5px var(--font-ui);color:#16161A">{{ op.name }}</span>
+                            </div>
+                          </sc-for>
+                        </div>
+                      </sc-if>
                     </div>
                   </sc-if>
-                  <div style="font:400 12px var(--font-ui);color:#8A8A96;line-height:1.5;margin-top:12px">This Review Team will be available across the entire account. Workspace access is managed separately.</div>
-                </div>
-                <div style="display:flex;justify-content:flex-end;gap:9px;padding:16px 20px;border-top:1px solid rgba(0,0,29,0.08)">
-                  <button onClick="{{ rtOnNewTeamToggle }}" style="{{ btnSecondaryMd }}" style-hover="{{ btnSecondaryHover }}">Cancel</button>
-                  <button onClick="{{ rtOnCreate }}" disabled="{{ rtCreateDisabled }}" style="{{ btnPrimaryMd }}" style-hover="background:#4F39D8">Create review team</button>
                 </div>
               </div>
             </div>
-          </sc-if>
-          <div style="display:flex;gap:14px;flex-wrap:wrap">
-            <sc-for list="{{ rtCards }}" as="tc" hint-placeholder-count="3">
-              <div style="flex:1;min-width:210px;max-width:270px;background:#fff;border:1px solid rgba(20,20,30,0.06);border-radius:16px;padding:18px">
-                <div style="display:flex;align-items:center;justify-content:space-between">
-                  <span style="width:8px;height:8px;border-radius:50%;background:{{ tc.color }};flex:none"></span>
-                  <button title="Team actions" style="{{ rowMenuTriggerStyle }}" style-hover="background:rgba(20,20,30,0.06);color:#16161A">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"></circle><circle cx="12" cy="12" r="2"></circle><circle cx="19" cy="12" r="2"></circle></svg>
-                  </button>
+          </sc-for>
+        </sc-if>
+
+        <sc-if value="{{ peopleTabIsTeams }}" hint-placeholder-val="{{ false }}">
+          <sc-if value="{{ rtEditable }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-bottom:14px">
+              <button onClick="{{ rtOnNewTeamToggle }}" style="{{ btnSecondarySm }}" style-hover="{{ btnSecondaryHover }}">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="flex:none"><path d="M12 5v14M5 12h14"></path></svg>
+                New team
+              </button>
+              <sc-if value="{{ rtNewTeamOpen }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top:10px;background:#fff;border:1px solid rgba(0,0,29,0.1);border-radius:11px;padding:14px;max-width:360px">
+                  <label style="font:600 12px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Team name</label>
+                  <input value="{{ rtNewTeamName }}" onChange="{{ rtOnNewTeamName }}" placeholder="e.g. Legal review" style="width:100%;height:36px;padding:0 10px;border-radius:8px;border:1px solid rgba(0,0,29,0.15);font:500 13px var(--font-ui);margin-bottom:10px">
+                  <label style="font:600 12px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Description</label>
+                  <input value="{{ rtNewTeamDesc }}" onChange="{{ rtOnNewTeamDesc }}" placeholder="What this team reviews" style="width:100%;height:36px;padding:0 10px;border-radius:8px;border:1px solid rgba(0,0,29,0.15);font:500 13px var(--font-ui);margin-bottom:12px">
+                  <div style="display:flex;justify-content:flex-end;gap:8px">
+                    <button onClick="{{ rtOnNewTeamToggle }}" style="{{ btnSecondarySm }}" style-hover="{{ btnSecondaryHover }}">Cancel</button>
+                    <button onClick="{{ rtOnCreate }}" disabled="{{ rtCreateDisabled }}" style="{{ btnPrimarySm }}">Create team</button>
+                  </div>
                 </div>
-                <div style="font:600 14px var(--font-ui);color:#16161A;margin-top:10px">{{ tc.teamName }}</div>
-                <div style="font:400 12.5px var(--font-ui);color:#6B6B78;margin-top:3px">{{ tc.desc }}</div>
-                <div style="display:flex;align-items:center;margin-top:14px">
-                  <sc-for list="{{ tc.avatars }}" as="av" hint-placeholder-count="3">
-                    <sc-if value="{{ av.hasPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ av.photoUrl }}" style="{{ av.photoStyle }};margin-left:-6px;border:2px solid #fff" alt="{{ av.name }}"></sc-if>
-                    <sc-if value="{{ av.noPhoto }}" hint-placeholder-val="{{ true }}"><span style="{{ av.style }};margin-left:-6px;border:2px solid #fff;box-sizing:content-box">{{ av.initials }}</span></sc-if>
+              </sc-if>
+            </div>
+          </sc-if>
+          <sc-for list="{{ rtCards }}" as="tc" hint-placeholder-count="3">
+            <div style="{{ tc.panelStyle }};margin-bottom:14px">
+              <div style="{{ tc.row0Style }}">
+                <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+                  <div style="min-width:0">
+                    <div style="font:600 14px var(--font-ui);color:#16161A">{{ tc.teamName }}</div>
+                    <div style="font:400 12.5px var(--font-ui);color:#6B6B78;margin-top:3px">{{ tc.desc }}</div>
+                  </div>
+                  <span style="display:inline-flex;align-items:center;padding:2px 7px;border-radius:999px;background:#F1F1F4;color:#4A4A57;font:600 10.5px var(--font-ui);flex:none">Global</span>
+                </div>
+                <div style="margin-top:10px;font:400 11.5px var(--font-ui);color:#9A9AA6">{{ tc.memberCount }} members</div>
+              </div>
+              <div style="{{ tc.rowStyle }}">
+                <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+                  <sc-for list="{{ tc.chips }}" as="ch" hint-placeholder-count="2">
+                    <span style="display:inline-flex;align-items:center;gap:6px;padding:4px 6px 4px 4px;border-radius:999px;background:#F5F5F7">
+                      <span style="width:22px;height:22px;border-radius:50%;background:rgba(97,72,249,0.14);color:#4F39D8;font:600 9.5px var(--font-ui);display:flex;align-items:center;justify-content:center;flex:none">{{ ch.initials }}</span>
+                      <span style="font:500 12.5px var(--font-ui);color:#3A3A44">{{ ch.name }}</span>
+                      <sc-if value="{{ tc.editable }}" hint-placeholder-val="{{ false }}">
+                        <button onClick="{{ ch.onRemoveClick }}" title="Remove" style="width:16px;height:16px;border-radius:50%;border:none;background:transparent;color:#8A8A96;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;line-height:1">×</button>
+                      </sc-if>
+                    </span>
                   </sc-for>
-                  <sc-if value="{{ tc.hasOverflow }}" hint-placeholder-val="{{ false }}">
-                    <span style="width:26px;height:26px;border-radius:50%;background:#F1F1F4;color:#6B6B78;font:600 10px var(--font-ui);display:flex;align-items:center;justify-content:center;flex:none;margin-left:-6px;border:2px solid #fff;box-sizing:content-box">+{{ tc.overflowCount }}</span>
+                  <sc-if value="{{ tc.isEmpty }}" hint-placeholder-val="{{ false }}"><span style="font:400 12.5px var(--font-ui);color:#A6A6B0">No members yet.</span></sc-if>
+                  <sc-if value="{{ tc.editable }}" hint-placeholder-val="{{ false }}">
+                    <div style="position:relative" data-pop="1">
+                      <button onClick="{{ tc.onAddToggle }}" style="font:600 12.5px var(--font-ui);color:#6148F9;background:none;border:none;cursor:pointer">+ Add</button>
+                      <sc-if value="{{ tc.addOpen }}" hint-placeholder-val="{{ false }}">
+                        <div style="position:absolute;top:calc(100% + 6px);left:0;z-index:30;width:220px;background:#fff;border:1px solid rgba(0,0,29,0.12);border-radius:11px;box-shadow:0 14px 32px -8px rgba(16,16,20,0.28);padding:8px">
+                          <input value="{{ tc.addSearch }}" onChange="{{ tc.onAddSearch }}" placeholder="Search people" style="width:100%;height:30px;padding:0 8px;border-radius:7px;border:1px solid rgba(0,0,29,0.12);font:400 12.5px var(--font-ui);margin-bottom:6px">
+                          <sc-for list="{{ tc.addOptions }}" as="op" hint-placeholder-count="3">
+                            <div onClick="{{ op.onClick }}" style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:7px;cursor:pointer" style-hover="background:#F5F5F7">
+                              <span style="width:22px;height:22px;border-radius:50%;background:rgba(97,72,249,0.14);color:#4F39D8;font:600 10px var(--font-ui);display:flex;align-items:center;justify-content:center;flex:none">{{ op.initials }}</span>
+                              <span style="font:500 12.5px var(--font-ui);color:#16161A">{{ op.name }}</span>
+                            </div>
+                          </sc-for>
+                        </div>
+                      </sc-if>
+                    </div>
                   </sc-if>
                 </div>
-                <div style="border-top:1px solid rgba(20,20,30,0.07);margin:14px 0 12px"></div>
-                <div style="display:flex;gap:24px">
-                  <div>
-                    <div style="font:600 26px var(--font-ui);color:#16161A;letter-spacing:-.02em">{{ tc.memberCount }}</div>
-                    <div style="font:400 12px var(--font-ui);color:#9A9AA6;margin-top:2px">Members</div>
-                  </div>
-                  <div>
-                    <div style="font:600 26px var(--font-ui);color:#16161A;letter-spacing:-.02em">{{ tc.scopeLabel }}</div>
-                    <div style="font:400 12px var(--font-ui);color:#9A9AA6;margin-top:2px">Scope</div>
-                  </div>
-                </div>
               </div>
-            </sc-for>
-            <sc-if value="{{ rtEditable }}" hint-placeholder-val="{{ false }}">
-              <div onClick="{{ rtOnNewTeamToggle }}" style="flex:1;min-width:210px;max-width:270px;background:#FAFAFB;border:1.5px dashed rgba(20,20,30,0.16);border-radius:16px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;color:#6B6B78" style-hover="border-color:#6148F9;color:#4F39D8;background:#FAFAFF">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
-                <span style="font:600 13px var(--font-ui)">New team</span>
-              </div>
-            </sc-if>
-          </div>
+            </div>
+          </sc-for>
         </sc-if>
 
         <sc-if value="{{ peopleTabIsPeople }}" hint-placeholder-val="{{ true }}">
@@ -990,7 +933,6 @@ input:focus,textarea:focus{outline:none}
             <div style="{{ peopleGridStyle }};background:#FAFAFB;border-bottom:1px solid rgba(0,0,29,0.07);padding:10px 16px">
               <div style="font:600 11px var(--font-ui);letter-spacing:.04em;text-transform:uppercase;color:#9A9AA6">Person</div>
               <div style="font:600 11px var(--font-ui);letter-spacing:.04em;text-transform:uppercase;color:#9A9AA6">Role</div>
-              <div style="font:600 11px var(--font-ui);letter-spacing:.04em;text-transform:uppercase;color:#9A9AA6">Type</div>
               <sc-if value="{{ peopleShowWorkspaceCol }}" hint-placeholder-val="{{ true }}">
                 <div style="font:600 11px var(--font-ui);letter-spacing:.04em;text-transform:uppercase;color:#9A9AA6">Workspaces</div>
               </sc-if>
@@ -1000,19 +942,13 @@ input:focus,textarea:focus{outline:none}
             <sc-for list="{{ peopleRows }}" as="pr" hint-placeholder-count="5">
               <div style="{{ pr.rowStyle }}">
                 <div style="display:flex;align-items:center;gap:10px;min-width:0">
-                  <sc-if value="{{ pr.avatarHasPhoto }}" hint-placeholder-val="{{ false }}">
-                    <img src="{{ pr.avatarPhotoUrl }}" style="{{ pr.avatarPhotoStyle }}" alt="{{ pr.name }}">
-                  </sc-if>
-                  <sc-if value="{{ pr.avatarNoPhoto }}" hint-placeholder-val="{{ true }}">
-                    <span style="{{ pr.avatarStyle }}">{{ pr.initials }}</span>
-                  </sc-if>
+                  <span style="{{ pr.avatarStyle }}">{{ pr.initials }}</span>
                   <div style="min-width:0">
                     <div style="font:600 13px var(--font-ui);color:#16161A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ pr.name }}</div>
                     <div style="font:400 11.5px var(--font-ui);color:#8A8A96;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ pr.emailLine }}</div>
                   </div>
                 </div>
                 <div><span style="{{ pr.roleStyle }}">{{ pr.roleLabel }}</span></div>
-                <div><span style="font:400 12.5px var(--font-ui);color:#6B6B78">{{ pr.typeLabel }}</span></div>
                 <sc-if value="{{ peopleShowWorkspaceCol }}" hint-placeholder-val="{{ true }}">
                   <div style="display:flex;flex-wrap:wrap;gap:5px">
                     <sc-for list="{{ pr.workspaceChips }}" as="ch" hint-placeholder-count="1">
@@ -1028,96 +964,23 @@ input:focus,textarea:focus{outline:none}
                   <sc-if value="{{ pr.noTeams }}" hint-placeholder-val="{{ false }}"><span style="font:400 11.5px var(--font-ui);color:#A6A6B0">—</span></sc-if>
                 </div>
                 <button onClick="{{ pr.onToggleExpand }}" title="View details" style="{{ rowMenuTriggerStyle }}">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
                 </button>
               </div>
+              <sc-if value="{{ pr.expanded }}" hint-placeholder-val="{{ false }}">
+                <div style="padding:4px 16px 16px 58px;background:#FAFAFB;border-top:1px solid rgba(0,0,29,0.06)">
+                  <div style="font:400 12px/1.6 var(--font-ui);color:#5B5B66">
+                    <sc-if value="{{ pr.isInvited }}" hint-placeholder-val="{{ false }}"><span style="{{ pr.invitedBadgeStyle }}">Invited</span><br></sc-if>
+                    {{ pr.typeLabel }} · {{ pr.abilityCopy }}
+                  </div>
+                </div>
+              </sc-if>
             </sc-for>
            </div>
           </div>
         </sc-if>
         </sc-if>
       </div>
-
-      <sc-if value="{{ peopleDetailModalOpen }}" hint-placeholder-val="{{ false }}">
-        <div style="position:fixed;inset:0;background:rgba(16,16,20,0.4);z-index:100" onClick="{{ pdmOnClose }}"></div>
-        <div style="position:fixed;top:0;right:0;bottom:0;width:420px;max-width:92vw;background:#fff;z-index:101;box-shadow:-24px 0 60px -12px rgba(16,16,20,0.3);display:flex;flex-direction:column">
-          <div style="flex:none;padding:20px 22px;border-bottom:1px solid rgba(0,0,29,0.08);display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
-            <div style="display:flex;align-items:center;gap:12px;min-width:0">
-              <sc-if value="{{ pdmAvatarHasPhoto }}" hint-placeholder-val="{{ false }}">
-                <img src="{{ pdmAvatarPhotoUrl }}" style="{{ pdmAvatarPhotoStyle }}" alt="{{ pdmName }}">
-              </sc-if>
-              <sc-if value="{{ pdmAvatarNoPhoto }}" hint-placeholder-val="{{ true }}">
-                <span style="{{ pdmAvatarStyle }}">{{ pdmInitials }}</span>
-              </sc-if>
-              <div style="min-width:0">
-                <div style="font:600 16px var(--font-ui);color:#16161A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ pdmName }}</div>
-                <div style="font:400 12px var(--font-ui);color:#8A8A96;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ pdmSubtitle }}</div>
-              </div>
-            </div>
-            <button onClick="{{ pdmOnClose }}" title="Close" style="width:28px;height:28px;flex:none;border-radius:8px;border:none;background:transparent;color:#8A8A96;cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:#F1F1F4">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </button>
-          </div>
-
-          <div data-scrollpane="1" style="flex:1;min-height:0;overflow-y:auto;padding:20px 22px;display:flex;flex-direction:column;gap:22px">
-
-            <div>
-              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-                <span style="font:600 11px var(--font-ui);letter-spacing:.04em;text-transform:uppercase;color:#9A9AA6">Account permissions</span>
-                <span style="{{ badgeCountNeutralDemoStyle }};font:600 10px var(--font-ui);letter-spacing:.03em">{{ pdmAccountStateLabel }}</span>
-              </div>
-              <div style="display:flex;flex-wrap:wrap;gap:6px">
-                <span style="{{ pdmAccountChipStyle }}">{{ pdmAccountChipLabel }}</span>
-              </div>
-            </div>
-
-            <sc-if value="{{ pdmShowWorkspace }}" hint-placeholder-val="{{ true }}">
-              <div>
-                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-                  <span style="font:600 11px var(--font-ui);letter-spacing:.04em;text-transform:uppercase;color:#9A9AA6">Workspace access</span>
-                  <span style="{{ badgeCountNeutralDemoStyle }};font:600 10px var(--font-ui);letter-spacing:.03em">{{ pdmWorkspaceStateLabel }}</span>
-                </div>
-                <div style="border:1px solid rgba(0,0,29,0.08);border-radius:10px">
-                  <sc-for list="{{ pdmWorkspaceRows }}" as="wr" hint-placeholder-count="3">
-                    <div style="{{ wr.rowStyle }}">
-                      <div onClick="{{ wr.onToggle }}" style="{{ wr.checkboxStyle }}"><sc-if value="{{ wr.checked }}" hint-placeholder-val="{{ false }}"><svg width="10" height="8" viewBox="0 0 10 8" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 4 7 9 1"></polyline></svg></sc-if></div>
-                      <span style="font:500 13px var(--font-ui);color:#16161A">{{ wr.name }}</span>
-                      <span style="margin-left:auto;font:400 12px var(--font-ui);color:#8A8A96">Has access</span>
-                    </div>
-                  </sc-for>
-                </div>
-              </div>
-            </sc-if>
-
-            <div>
-              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-                <span style="font:600 11px var(--font-ui);letter-spacing:.04em;text-transform:uppercase;color:#9A9AA6">Review teams</span>
-                <span style="{{ badgeCountNeutralDemoStyle }};font:600 10px var(--font-ui);letter-spacing:.03em">{{ pdmTeamsStateLabel }}</span>
-              </div>
-              <div style="border:1px solid rgba(0,0,29,0.08);border-radius:10px">
-                <sc-for list="{{ pdmTeamRows }}" as="tr" hint-placeholder-count="3">
-                  <div style="{{ tr.rowStyle }}">
-                    <div onClick="{{ tr.onToggle }}" style="{{ tr.checkboxStyle }}"><sc-if value="{{ tr.checked }}" hint-placeholder-val="{{ false }}"><svg width="10" height="8" viewBox="0 0 10 8" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 4 7 9 1"></polyline></svg></sc-if></div>
-                    <span style="font:500 13px var(--font-ui);color:#16161A">{{ tr.name }}</span>
-                    <span style="margin-left:auto;font:400 12px var(--font-ui);color:#8A8A96">{{ tr.desc }}</span>
-                  </div>
-                </sc-for>
-              </div>
-            </div>
-
-          </div>
-
-          <div style="flex:none;padding:16px 22px;border-top:1px solid rgba(0,0,29,0.08);display:flex;justify-content:flex-end;gap:9px">
-            <sc-if value="{{ pdmFooterEditable }}" hint-placeholder-val="{{ false }}">
-              <button onClick="{{ pdmOnClose }}" style="{{ btnSecondaryMd }}" style-hover="{{ btnSecondaryHover }}">Cancel</button>
-              <button onClick="{{ pdmOnClose }}" style="{{ btnPrimaryMd }}" style-hover="background:#4F39D8">Save changes</button>
-            </sc-if>
-            <sc-if value="{{ pdmFooterReadOnly }}" hint-placeholder-val="{{ false }}">
-              <button onClick="{{ pdmOnClose }}" style="{{ btnSecondaryMd }}" style-hover="{{ btnSecondaryHover }}">Close</button>
-            </sc-if>
-          </div>
-        </div>
-      </sc-if>
     </div>
   </div>
 
@@ -1203,7 +1066,7 @@ input:focus,textarea:focus{outline:none}
                 <div style="display:flex;flex-wrap:wrap;gap:8px">
                   <sc-for list="{{ grp.chips }}" as="ch" hint-placeholder-count="0">
                     <span style="display:inline-flex;align-items:center;gap:6px;padding:4px 6px 4px 4px;border-radius:999px;background:#F5F5F7">
-                      <sc-if value="{{ ch.avatarHasPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ ch.avatarPhotoUrl }}" style="{{ ch.avatarPhotoStyle }}" alt="{{ ch.name }}"></sc-if><sc-if value="{{ ch.avatarNoPhoto }}" hint-placeholder-val="{{ true }}"><span style="{{ ch.avatarStyle }}">{{ ch.initials }}</span></sc-if>
+                      <span style="width:23px;height:23px;border-radius:50%;background:rgba(97,72,249,0.14);color:#4F39D8;font:600 9.5px var(--font-ui);display:flex;align-items:center;justify-content:center;flex:none">{{ ch.initials }}</span>
                       <span style="font:500 12.5px var(--font-ui);color:#3A3A44">{{ ch.name }}</span>
                       <button onClick="{{ ch.onRemoveClick }}" title="Remove" style="width:16px;height:16px;border-radius:50%;border:none;background:transparent;color:#8A8A96;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;line-height:1">×</button>
                     </span>
@@ -1285,7 +1148,7 @@ input:focus,textarea:focus{outline:none}
                 <div style="display:flex;flex-wrap:wrap;gap:8px">
                   <sc-for list="{{ grp.chips }}" as="ch" hint-placeholder-count="0">
                     <span style="display:inline-flex;align-items:center;gap:6px;padding:4px 6px 4px 4px;border-radius:999px;background:#F5F5F7">
-                      <sc-if value="{{ ch.avatarHasPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ ch.avatarPhotoUrl }}" style="{{ ch.avatarPhotoStyle }}" alt="{{ ch.name }}"></sc-if><sc-if value="{{ ch.avatarNoPhoto }}" hint-placeholder-val="{{ true }}"><span style="{{ ch.avatarStyle }}">{{ ch.initials }}</span></sc-if>
+                      <span style="width:23px;height:23px;border-radius:50%;background:rgba(97,72,249,0.14);color:#4F39D8;font:600 9.5px var(--font-ui);display:flex;align-items:center;justify-content:center;flex:none">{{ ch.initials }}</span>
                       <span style="font:500 12.5px var(--font-ui);color:#3A3A44">{{ ch.name }}</span>
                       <button onClick="{{ ch.onRemoveClick }}" title="Remove" style="width:16px;height:16px;border-radius:50%;border:none;background:transparent;color:#8A8A96;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;line-height:1">×</button>
                     </span>
@@ -1843,7 +1706,7 @@ input:focus,textarea:focus{outline:none}
                   <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
                     <sc-for list="{{ wsdFollowers.chips }}" as="ch" hint-placeholder-count="2">
                       <span style="display:inline-flex;align-items:center;gap:6px;padding:4px 6px 4px 4px;border-radius:999px;background:#F5F5F7">
-                        <sc-if value="{{ ch.avatarHasPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ ch.avatarPhotoUrl }}" style="{{ ch.avatarPhotoStyle }}" alt="{{ ch.name }}"></sc-if><sc-if value="{{ ch.avatarNoPhoto }}" hint-placeholder-val="{{ true }}"><span style="{{ ch.avatarStyle }}">{{ ch.initials }}</span></sc-if>
+                        <span style="width:23px;height:23px;border-radius:50%;background:rgba(97,72,249,0.14);color:#4F39D8;font:600 9.5px var(--font-ui);display:flex;align-items:center;justify-content:center;flex:none">{{ ch.initials }}</span>
                         <span style="font:500 12.5px var(--font-ui);color:#3A3A44">{{ ch.name }}</span>
                         <button onClick="{{ ch.onRemoveClick }}" title="Remove" style="width:16px;height:16px;border-radius:50%;border:none;background:transparent;color:#8A8A96;cursor:pointer;font-size:13px">×</button>
                       </span>
@@ -2008,11 +1871,11 @@ input:focus,textarea:focus{outline:none}
             </div>
 
             <div>
-              <div style="font:700 11px var(--font-ui);color:#6B6B78;text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px">Credits &amp; Plan</div>
+              <div style="font:700 11px var(--font-ui);color:#6B6B78;text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px">Credits & Plan</div>
 
               <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
 
-                <div style="{{ billCardShellStyle }};display:flex;flex-direction:column" style-hover="border-color:rgba(97,72,249,0.35);box-shadow:0 10px 26px -12px rgba(16,16,20,0.16)">
+                <div style="{{ billCardShellStyle }}" style-hover="border-color:rgba(97,72,249,0.35);box-shadow:0 10px 26px -12px rgba(16,16,20,0.16)">
                   <div style="display:flex;align-items:center;gap:8px">
                     <span style="{{ billCardPlanTileStyle }}">{{ billCardPlanTileIcon }}</span>
                     <span style="font:600 12.5px var(--font-ui);color:#3A3A44">{{ billCardPlanLabel }}</span>
@@ -2035,7 +1898,7 @@ input:focus,textarea:focus{outline:none}
                   </button>
                 </div>
 
-                <div style="{{ billCardShellStyle }};display:flex;flex-direction:column" style-hover="border-color:rgba(97,72,249,0.35);box-shadow:0 10px 26px -12px rgba(16,16,20,0.16)">
+                <div style="{{ billCardShellStyle }}" style-hover="border-color:rgba(97,72,249,0.35);box-shadow:0 10px 26px -12px rgba(16,16,20,0.16)">
                   <div style="display:flex;align-items:center;gap:8px">
                     <span style="{{ billCardCreditsTileStyle }}">{{ billCardCreditsTileIcon }}</span>
                     <span style="font:600 12.5px var(--font-ui);color:#3A3A44">Credits available</span>
@@ -2051,7 +1914,7 @@ input:focus,textarea:focus{outline:none}
                   <button onClick="{{ billCardCreditsCtaOnClick }}" style="{{ btnSecondaryMd }};width:100%;margin-top:16px" style-hover="{{ btnSecondaryHover }}">{{ billCardCreditsCtaLabel }}{{ rightArrowIcon }}</button>
                 </div>
 
-                <div style="{{ billCardShellStyle }};display:flex;flex-direction:column" style-hover="border-color:rgba(97,72,249,0.35);box-shadow:0 10px 26px -12px rgba(16,16,20,0.16)">
+                <div style="{{ billCardShellStyle }}" style-hover="border-color:rgba(97,72,249,0.35);box-shadow:0 10px 26px -12px rgba(16,16,20,0.16)">
                   <div style="display:flex;align-items:center;gap:8px">
                     <span style="{{ billCardCycleTileStyle }}">{{ billCardCycleTileIcon }}</span>
                     <span style="font:600 12.5px var(--font-ui);color:#3A3A44">This cycle</span>
@@ -2061,7 +1924,7 @@ input:focus,textarea:focus{outline:none}
                     <span style="font:400 13px var(--font-ui);color:#9A9AA6">%</span>
                   </div>
                   <div style="margin-top:14px">
-                    <div style="display:flex;gap:3px"><sc-for list="{{ billCardCycleSegments }}" as="seg" hint-placeholder-count="60"><div style="flex:1;height:14px;border-radius:1px;background:{{ seg.bg }}"></div></sc-for></div>
+                    <div style="height:5px;border-radius:999px;background:rgba(97,72,249,0.14);overflow:hidden"><div style="height:100%;width:{{ billCardCycleBarPct }}%;border-radius:999px;background:{{ billCardCycleBarColor }}"></div></div>
                     <div style="font:400 12.5px var(--font-ui);color:#8A8A96;margin-top:8px">{{ billCardCycleLine1 }} {{ billCardCycleLine2 }}</div>
                   </div>
                   <button onClick="{{ billOnViewUsage }}" style="{{ btnSecondaryMd }};width:100%;margin-top:16px" style-hover="{{ btnSecondaryHover }}">View usage{{ rightArrowIcon }}</button>
@@ -2146,23 +2009,21 @@ input:focus,textarea:focus{outline:none}
           <div style="max-width:1180px">
             <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:18px;flex-wrap:wrap">
               <div style="display:flex;align-items:center;gap:12px">
-                <span style="{{ billInvHeaderIconTileStyle }}">{{ billInvHeaderIconTileIcon }}</span>
+                <span style="{{ billInvoiceIconTileStyle }}">{{ billInvoiceIconTileIcon }}</span>
                 <div>
                   <div style="display:flex;align-items:center;gap:10px">
-                    <span style="font:600 20px var(--font-ui);color:#16161A;letter-spacing:.01em">{{ billInvHeaderTitle }}</span>
-                    <sc-if value="{{ billInvHeaderShowBadge }}" hint-placeholder-val="{{ true }}">
-                      <span style="{{ billCurrentInvoiceBadgeStyle }}"><span style="{{ billCurrentInvoiceDotStyle }}"></span>{{ billCurrentInvoiceStatusLabel }}</span>
-                    </sc-if>
+                    <span style="font:600 20px var(--font-ui);color:#16161A;letter-spacing:.01em">{{ billCurrentInvoiceId }}</span>
+                    <span style="{{ billCurrentInvoiceBadgeStyle }}"><span style="{{ billCurrentInvoiceDotStyle }}"></span>{{ billCurrentInvoiceStatusLabel }}</span>
                   </div>
-                  <div style="font:400 12.5px var(--font-ui);color:#8A8A96;margin-top:4px">{{ billInvHeaderSubtitle }}</div>
+                  <div style="font:400 12.5px var(--font-ui);color:#8A8A96;margin-top:4px">{{ billCurrentInvoiceDateLine }}</div>
                 </div>
               </div>
-              <sc-if value="{{ billInvHeaderShowActions }}" hint-placeholder-val="{{ true }}">
               <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
                 <sc-if value="{{ billCurrentInvoicePayable }}" hint-placeholder-val="{{ false }}">
                   <button onClick="{{ billOnPayCurrent }}" style="{{ btnPrimaryMd }}">Pay now</button>
                 </sc-if>
                 <div style="display:flex;align-items:center;gap:8px">
+                  <span style="font:600 12px var(--font-ui);color:#4F39D8">Status Filter</span>
                   <div style="position:relative" data-pop="1">
                     <button onClick="{{ billOnLineStatusFilterToggle }}" style="{{ billLineStatusBtnStyle }}">{{ billLineStatusLabel }}<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg></button>
                     <sc-if value="{{ billLineStatusFilterOpen }}" hint-placeholder-val="{{ false }}">
@@ -2184,7 +2045,6 @@ input:focus,textarea:focus{outline:none}
                   </sc-if>
                 </div>
               </div>
-              </sc-if>
             </div>
 
             <div style="display:flex;align-items:center;gap:6px;margin:0 0 20px;border-bottom:1px solid rgba(20,20,30,0.09)">
@@ -2253,6 +2113,8 @@ input:focus,textarea:focus{outline:none}
 
             <sc-if value="{{ billInvoiceTabIsUsage }}" hint-placeholder-val="{{ false }}">
             <div style="max-width:960px">
+              <div style="font:400 12.5px var(--font-ui);color:#8A8A96;margin-bottom:18px">{{ billUsageCycleLine }}</div>
+
               <div style="font:600 13.5px var(--font-ui);color:#16161A;margin-bottom:2px">By translation type</div>
               <div style="font:400 12px var(--font-ui);color:#8A8A96;margin-bottom:10px">AI consumption this cycle · {{ billAiTotalLabel }}. Expand a type for its models, expand a model for its rate card.</div>
               <div style="{{ billPanelStyle }};margin-bottom:24px">
@@ -2261,9 +2123,10 @@ input:focus,textarea:focus{outline:none}
                     <span style="{{ t.tileStyle }}">{{ t.tileIcon }}</span>
                     <div style="flex:1;min-width:0">
                       <span style="color: #16161A; font-size: 14px; font-weight: 600">{{ t.label }}</span>
+                      <div style="font:400 12px var(--font-ui);color:#8A8A96;margin-top:2px">{{ t.modelCountLabel }}</div>
                       <sc-if value="{{ t.showPill }}" hint-placeholder-val="{{ false }}">
                         <div style="margin-top:6px">
-                          <span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;background:#6148F91E;font:600 11.5px var(--font-ui);color:#4F39D8">{{ t.pillLabel }}</span>
+                          <span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;background:#F1F1F4;font:500 11.5px var(--font-ui);color:#5B5B66">{{ t.pillLabel }}</span>
                         </div>
                       </sc-if>
                     </div>
@@ -2271,7 +2134,7 @@ input:focus,textarea:focus{outline:none}
                       <div style="font: 600 13.5px var(--font-ui); color: #16161A; font-size: 13px">{{ t.creditsLabel }}</div>
                       <div style="font:400 11.5px var(--font-ui);color:#9A9AA6;margin-top:2px">{{ t.pctLabel }}</div>
                     </div>
-                    <span style="{{ t.chevronStyle }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg></span>
+                    <span style="{{ t.chevronStyle }}">⌄</span>
                   </div>
                   <sc-if value="{{ t.expanded }}" hint-placeholder-val="{{ false }}">
                     <sc-for list="{{ t.models }}" as="m" hint-placeholder-count="2">
@@ -2290,7 +2153,7 @@ input:focus,textarea:focus{outline:none}
                           <span style="font:600 12.5px var(--font-ui);color:#16161A">{{ m.creditsLabel }}</span>
                           <span style="font:400 11px var(--font-ui);color:#9A9AA6;margin-left:8px">{{ m.pctLabel }}</span>
                         </div>
-                        <span style="{{ m.chevronStyle }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg></span>
+                        <span style="{{ m.chevronStyle }}">⌄</span>
                       </div>
                       <sc-if value="{{ m.expanded }}" hint-placeholder-val="{{ false }}">
                         <div style="{{ m.rateRowStyle }}">
@@ -2313,22 +2176,23 @@ input:focus,textarea:focus{outline:none}
               <sc-if value="{{ billShowHitlTab }}" hint-placeholder-val="{{ false }}">
                 <div style="font:600 13.5px var(--font-ui);color:#16161A;margin-bottom:2px">HITL Credits</div>
                 <div style="font:400 12px var(--font-ui);color:#8A8A96;margin-bottom:10px">Human-in-the-loop allocations, billed in credits — never USD — tracked by language pair, each with its own expiry.</div>
-                <div style="{{ billPanelStyle }};margin-bottom:16px">
+                <div style="{{ billPanelStyle }};margin-bottom:24px;background:#FAF8FF">
                   <sc-for list="{{ billHitlRows }}" as="h" hint-placeholder-count="1">
-                    <div style="{{ h.rowStyle }}">
+                    <div style="{{ billRowBorderStyle }};display:flex;align-items:flex-start;gap:14px">
                       <span style="{{ h.tileStyle }}">{{ h.tileIcon }}</span>
                       <div style="flex:1;min-width:0">
-                        <span style="font:{{ h.nameFont }};color:#16161A">{{ h.workflowChain }}</span>
-                        <div style="display:flex;align-items:center;gap:6px;margin-top:6px;flex-wrap:wrap">
-                          <span style="display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:999px;background:#F1F1F4;font:500 11px var(--font-ui);color:#5B5B66">
-                            <span style="font-size:13px;line-height:1">{{ h.srcFlag }}</span>→<span style="font-size:13px;line-height:1">{{ h.tgtFlag }}</span> {{ h.languagePair }}
-                          </span>
-                          <span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;background:#F1F1F4;font:500 11px var(--font-ui);color:#5B5B66">{{ h.previousStepsLabel }}</span>
+                        <span style="font:600 13px var(--font-ui);color:#3A3A44">{{ h.workflowChain }}</span>
+                        <div style="display:flex;align-items:center;gap:6px;margin-top:4px">
+                          <span style="font-size:14px;line-height:1">{{ h.srcFlag }}</span>
+                          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#9A9AA6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 7l5 5-5 5"></path></svg>
+                          <span style="font-size:14px;line-height:1">{{ h.tgtFlag }}</span>
+                          <span style="font:400 12px var(--font-ui);color:#8A8A96">{{ h.languagePair }}</span>
                         </div>
+                        <div style="font:400 11.5px var(--font-ui);color:#8A8A96;margin-top:4px">{{ h.previousStepsLabel }} · expires {{ h.expires }}</div>
                       </div>
                       <div style="text-align:right;flex:none">
-                        <div style="font:600 13.5px var(--font-ui);color:#16161A">{{ h.creditsLabel }}</div>
-                        <div style="font:400 11.5px var(--font-ui);color:#9A9AA6;margin-top:2px">{{ h.unitLabel }} · expires {{ h.expires }}</div>
+                        <div style="font:600 13px var(--font-ui);color:#16161A">{{ h.creditsLabel }}</div>
+                        <div style="font:400 11.5px var(--font-ui);color:#9A9AA6;margin-top:2px">{{ h.unitLabel }}</div>
                       </div>
                     </div>
                   </sc-for>
@@ -2336,24 +2200,22 @@ input:focus,textarea:focus{outline:none}
               </sc-if>
 
               <div style="{{ billPanelStyle }}">
-                <div style="{{ billLotsRowStyle }}" onClick="{{ billOnToggleLots }}">
-                  <span style="{{ billLotsTileStyle }}">{{ billLotsTileIcon }}</span>
-                  <div style="flex:1;min-width:0">
-                    <span style="font:{{ billLotsNameFont }};color:#16161A">{{ billLotsCountLabel }}</span>
-                    <div style="margin-top:6px">
-                      <span style="{{ billLotsChipStyle }}">{{ billLotsChipLabel }}</span>
-                    </div>
-                  </div>
-                  <div style="text-align:right;flex:none">
-                    <div style="font:600 13.5px var(--font-ui);color:{{ billLotsStatColor }}">{{ billLotsStatLabel }}</div>
-                    <div style="font:400 11.5px var(--font-ui);color:#9A9AA6;margin-top:2px">{{ billLotsContextLabel }}</div>
+                <div style="{{ billRow0Style }};display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+                  <div>
+                    <div style="font:600 13px var(--font-ui);color:#16161A;margin-bottom:2px">Credit lots</div>
+                    <sc-if value="{{ billLotUrgent }}" hint-placeholder-val="{{ false }}">
+                      <div style="font:600 12.5px var(--font-ui);color:#E0135B">{{ billLotUrgentHeadline }}</div>
+                    </sc-if>
+                    <sc-if value="{{ billLotCalm }}" hint-placeholder-val="{{ true }}">
+                      <div style="font:400 12.5px var(--font-ui);color:#8A8A96">{{ billLotCalmLine }}</div>
+                    </sc-if>
                   </div>
                   <sc-if value="{{ billShowLotsToggle }}" hint-placeholder-val="{{ true }}">
-                    <span style="{{ billLotsChevronStyle }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg></span>
+                    <button onClick="{{ billOnToggleLots }}" style="{{ btnSecondaryMd }}" style-hover="{{ btnSecondaryHover }}">{{ billLotsToggleLabel }}</button>
                   </sc-if>
                 </div>
                 <sc-if value="{{ billLotsExpanded }}" hint-placeholder-val="{{ false }}">
-                  <div style="{{ billLotGridStyle }};border-top:1px solid rgba(20,20,30,0.07);margin:0 -18px;padding:12px 18px;background:#FAFAFB">
+                  <div style="display:grid;grid-template-columns:1.1fr 1.1fr 1fr 1fr 1fr;gap:14px;align-items:center;padding:12px 18px;margin:0 -18px;border-top:1px solid rgba(20,20,30,0.07);background:#FAFAFB">
                     <span style="font:600 10.5px var(--font-ui);color:#6B6B78;text-transform:uppercase;letter-spacing:.06em">Assigned</span>
                     <span style="font:600 10.5px var(--font-ui);color:#6B6B78;text-transform:uppercase;letter-spacing:.06em">Remaining</span>
                     <span style="font:600 10.5px var(--font-ui);color:#6B6B78;text-transform:uppercase;letter-spacing:.06em">Loaded</span>
@@ -2361,12 +2223,12 @@ input:focus,textarea:focus{outline:none}
                     <span style="font:600 10.5px var(--font-ui);color:#6B6B78;text-transform:uppercase;letter-spacing:.06em">Status</span>
                   </div>
                   <sc-for list="{{ billLotRows }}" as="lot" hint-placeholder-count="3">
-                    <div style="{{ billLotGridStyle }};border-top:1px solid rgba(20,20,30,0.07);margin:0 -18px;padding:12px 18px">
+                    <div style="display:grid;grid-template-columns:1.1fr 1.1fr 1fr 1fr 1fr;gap:14px;align-items:center;padding:12px 18px;margin:0 -18px;border-top:1px solid rgba(20,20,30,0.07)">
                       <span style="font:500 12.5px var(--font-ui);color:#3A3A44">{{ lot.assignedLabel }}</span>
                       <span style="font:600 12.5px var(--font-ui);color:#16161A">{{ lot.remainingLabel }}</span>
                       <span style="font:400 12px var(--font-ui);color:#8A8A96">{{ lot.loadedAt }}</span>
                       <span style="font:400 12px var(--font-ui);color:#8A8A96">{{ lot.expires }}</span>
-                      <span style="{{ lot.statusPillStyle }};justify-self:start"><span style="{{ lot.statusDotStyle }}"></span>{{ lot.statusLabel }}</span>
+                      <span style="{{ lot.statusPillStyle }}"><span style="{{ lot.statusDotStyle }}"></span>{{ lot.statusLabel }}</span>
                     </div>
                   </sc-for>
                 </sc-if>
@@ -2384,51 +2246,25 @@ input:focus,textarea:focus{outline:none}
               <p style="font:400 13px var(--font-ui);color:#6B6B78;margin:6px 0 0">Your plan, credits, and billing settings in one place.</p>
             </div>
 
-            <div style="position:relative;max-width:820px;border-radius:12px;overflow:hidden;background:#0F1729 url(assets/manage-plan-bg.svg) center/cover no-repeat;margin-bottom:24px;padding:28px 32px;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap">
-              <img src="assets/manage-plan-mark.svg" style="position:absolute;top:0;right:0;height:100%;width:auto;opacity:0.5;pointer-events:none" alt="">
-              <div style="position:relative;z-index:1;flex:1 1 380px">
-                <div style="font:600 10.5px var(--font-ui);color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:.06em">your current plan</div>
-                <div style="display:flex;align-items:center;gap:10px;margin-top:8px">
-                  <div style="font:700 22px var(--font-display);color:#fff;letter-spacing:-.01em">{{ billManagePlanName }}</div>
-                  <span style="{{ billManagePlanCyclePillStyle }}">{{ billManagePlanCycleLabel }}</span>
-                </div>
-                <div style="font:400 13px var(--font-ui);color:#DFFBCA;margin-top:10px;line-height:1.5;max-width:420px">{{ billManagePlanDescription }}</div>
-                <div style="display:flex;gap:10px;margin-top:22px">
-                  <sc-if value="{{ billShowUpgradeBtn }}" hint-placeholder-val="{{ true }}">
-                    <button onClick="{{ billOnUpgradePlanClick }}" style="{{ btnPrimaryMd }}" style-hover="background:#4F39D8">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="flex:none"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"></path></svg>
-                      Upgrade Plan
-                    </button>
-                  </sc-if>
-                  <sc-if value="{{ billIsCustom }}" hint-placeholder-val="{{ false }}">
-                    <button onClick="{{ billOnContactSales }}" style="{{ btnPrimaryMd }}" style-hover="background:#4F39D8">Contact Sales</button>
-                  </sc-if>
-                  <sc-if value="{{ billShowCancelBtn }}" hint-placeholder-val="{{ false }}">
-                    <button onClick="{{ billOnCancelPlanOpen }}" style="{{ btnManagePlanOutline }}" style-hover="border-color:rgba(255,255,255,0.6);background:rgba(255,255,255,0.06)">Cancel Plan</button>
-                  </sc-if>
+            <div style="{{ billPanelStyle }};margin-bottom:24px">
+              <div style="{{ billRow0Style }};display:flex;align-items:center;gap:12px">
+                <span style="{{ billingWidgetTileStyle }}">{{ billingWidgetTileIcon }}</span>
+                <div style="min-width:0">
+                  <div style="font:600 15px var(--font-ui);color:#16161A">{{ billManagePlanName }}</div>
+                  <div style="font:400 12.5px var(--font-ui);color:#8A8A96;margin-top:2px">{{ billPageSubtitle }}</div>
                 </div>
               </div>
-              <div style="position:relative;z-index:1;background:#fff;border-radius:10px;padding:14px 18px;display:flex;align-items:center;gap:12px;flex:none">
-                <span style="width:34px;height:34px;border-radius:9px;background:#6148F91E;display:flex;align-items:center;justify-content:center;flex:none">{{ billManagePlanRenewsIcon }}</span>
+              <div style="{{ billRowBorderStyle }};display:grid;grid-template-columns:1fr 1fr;gap:16px">
                 <div>
-                  <div style="font:600 10.5px var(--font-ui);color:#9A9AA6;text-transform:uppercase;letter-spacing:.06em">Renews</div>
-                  <div style="font: 600 15px var(--font-ui); color: #16161A; margin-top: 2px; font-size: 13px">{{ billNextBillingDate }}</div>
+                  <div style="font:600 10.5px var(--font-ui);color:#9A9AA6;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">Allowance</div>
+                  <div style="font:600 15px var(--font-ui);color:#16161A">{{ billManagePlanAllowanceLabel }}</div>
+                </div>
+                <div>
+                  <div style="font:600 10.5px var(--font-ui);color:#9A9AA6;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">Renews</div>
+                  <div style="font:600 15px var(--font-ui);color:#16161A">{{ billNextBillingDate }}</div>
                 </div>
               </div>
             </div>
-
-            <sc-if value="{{ billCancelPlanOpen }}" hint-placeholder-val="{{ false }}">
-              <div style="position:fixed;inset:0;background:rgba(16,16,20,0.4);z-index:100;display:flex;align-items:center;justify-content:center" onClick="{{ billOnCancelPlanClose }}">
-                <div style="width:400px;background:#fff;border-radius:14px;padding:22px;box-shadow:0 24px 60px -12px rgba(16,16,20,0.4)" onClick="{{ stopClick }}">
-                  <div style="font:600 16px var(--font-ui);color:#16161A">Cancel your plan?</div>
-                  <div style="font:400 13px var(--font-ui);color:#6B6B78;margin-top:8px;line-height:1.5">You'll keep {{ billManagePlanName }} access until {{ billNextBillingDate }}, then your workspace drops to the Free plan.</div>
-                  <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:20px">
-                    <button onClick="{{ billOnCancelPlanClose }}" style="{{ btnSecondaryMd }}" style-hover="{{ btnSecondaryHover }}">Keep plan</button>
-                    <button onClick="{{ billOnCancelPlanConfirm }}" style="{{ btnDangerSm }};height:36px">Cancel plan</button>
-                  </div>
-                </div>
-              </div>
-            </sc-if>
 
             <div style="{{ billPanelStyle }};margin-bottom:24px">
               <sc-for list="{{ billManagePlanLinks }}" as="l" hint-placeholder-count="4">
@@ -2443,7 +2279,7 @@ input:focus,textarea:focus{outline:none}
               </sc-for>
             </div>
 
-            <div style="border-top:1px solid rgba(0,0,29,0.08);margin:24px 0"></div>
+            <div style="height:1px;background:rgba(20,20,30,0.08);margin:32px 0"></div>
 
             <div>
               <div onClick="{{ billOnToggleCreditRates }}" style="display:flex;align-items:flex-start;justify-content:space-between;cursor:pointer;gap:16px">
@@ -2690,13 +2526,15 @@ input:focus,textarea:focus{outline:none}
                     <sc-if value="{{ billLimitIsSet }}" hint-placeholder-val="{{ false }}">
                       <div>
                         <div style="{{ billLimitMeterTrackStyle }}"><div style="{{ billLimitMeterFillStyle }}"></div></div>
-                        <div style="margin-top:9px"><span style="font:500 13px var(--font-ui);color:#16161A">{{ billLimitSpentLabel }}</span><span style="font:400 11.5px var(--font-ui);color:#9A9AA6"> of </span><span style="font:700 13px var(--font-ui);color:#16161A">{{ billLimitAmountBoldLabel }}</span></div>
-                        <sc-if value="{{ billCanManagePayment }}" hint-placeholder-val="{{ true }}">
-                          <div style="display:flex;gap:8px;margin-top:14px">
-                            <button onClick="{{ billOnLimitRemove }}" style="{{ btnDangerSm }};flex:1;justify-content:center;height:40px;border-radius:10px;white-space:nowrap">Remove Limit</button>
-                            <button onClick="{{ billOnChangeLimitClick }}" style="{{ btnSecondarySm }};flex:1;justify-content:center;height:40px;border-radius:10px;white-space:nowrap" style-hover="{{ btnSecondaryHover }}">Change Limit</button>
-                          </div>
-                        </sc-if>
+                        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:9px;flex-wrap:wrap">
+                          <div><span style="font:500 13px var(--font-ui);color:#16161A">{{ billLimitSpentLabel }}</span><span style="font:400 11.5px var(--font-ui);color:#9A9AA6"> of </span><span style="font:700 13px var(--font-ui);color:#16161A">{{ billLimitAmountBoldLabel }}</span></div>
+                          <sc-if value="{{ billCanManagePayment }}" hint-placeholder-val="{{ true }}">
+                            <div style="display:flex;gap:8px">
+                              <button onClick="{{ billOnLimitRemove }}" style="{{ btnDangerSm }};flex:1;justify-content:center;height:44px;border-radius:10px">Remove Limit</button>
+                              <button onClick="{{ billOnChangeLimitClick }}" style="{{ btnSecondarySm }};flex:1;justify-content:center;height:44px;border-radius:10px" style-hover="{{ btnSecondaryHover }}">Change Limit</button>
+                            </div>
+                          </sc-if>
+                        </div>
                       </div>
                     </sc-if>
                     <div style="margin-top:20px">
@@ -3147,7 +2985,7 @@ input:focus,textarea:focus{outline:none}
                   <div style="display:flex;flex-wrap:wrap;gap:8px">
                     <sc-for list="{{ eligibleChips }}" as="ch" hint-placeholder-count="2">
                       <span style="display:inline-flex;align-items:center;gap:6px;padding:4px 6px 4px 4px;border-radius:999px;background:#F5F5F7">
-                        <sc-if value="{{ ch.avatarHasPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ ch.avatarPhotoUrl }}" style="{{ ch.avatarPhotoStyle }}" alt="{{ ch.name }}"></sc-if><sc-if value="{{ ch.avatarNoPhoto }}" hint-placeholder-val="{{ true }}"><span style="{{ ch.avatarStyle }}">{{ ch.initials }}</span></sc-if>
+                        <span style="{{ ch.avatarStyle }}">{{ ch.initials }}</span>
                         <span style="font:500 12.5px var(--font-ui);color:#3A3A44">{{ ch.name }}</span>
                       </span>
                     </sc-for>
@@ -4378,10 +4216,9 @@ class Component extends DCLogic {
     billInvoicePageSizeOpen: false, billLineStatusFilterOpen: false, billLinePageSizeOpen: false,
     profileAccountType: 'custom', profileRole: 'Owner', profileSwitcherOpen: false,
     peopleOrgAxis: 'organization', activePersonaId: 'org-owner',
-    peopleQuery: '', peopleInvited: [], personDetailOpen: false, personDetailPersonId: '',
-    peopleInviteModalOpen: false, peopleInviteEmail: '', peopleInvitePersonType: 'Team member', peopleInvitePermissionPreset: 'View and contribute', peopleInviteWorkspaces: [],
+    peopleQuery: '', peopleInvited: [], peopleInviteSearch: '', peopleInviteOpen: false, peopleExpandedId: '',
     peopleTab: 'people', waAddOpen: '', waAddSearch: '', peopleWorkspaceFilter: '',
-    rtNewTeamOpen: false, rtNewTeamName: '', rtNewTeamDesc: '', rtNewTeamMembers: [], rtNewTeamMemberSearch: '', rtNewTeamMemberAddOpen: false,
+    rtAddOpen: '', rtAddSearch: '', rtNewTeamOpen: false, rtNewTeamName: '', rtNewTeamDesc: '',
   };
 
   DURATION_MIN = 8.4;
@@ -5128,99 +4965,18 @@ class Component extends DCLogic {
   }
 
   // THE canonical person row: avatar + name + role + workspace membership + Review Team membership,
-  // as one function. Built from existing pieces only — renderAvatar for the avatar, renderBadge('access')
+  // as one function. Built from existing pieces only — identityColor for the avatar, renderBadge('access')
   // for the role pill, renderBadge('outlined')/('neutral') for workspace/team chips — no new visual system.
   renderPersonRow(person) {
-    const av = this.renderAvatar(person.name, person.initials, 30, 11);
+    const idBg = this.identityColor(person.name);
     const wsChips = (person.workspaces || []).map(w => Object.assign({ label: w }, this.renderBadge('outlined', w, {})));
-    // Review Team chips carry that team's own color identity (same color shown as the dot on its card in
-    // the Review Teams tab) instead of a generic gray \u2014 tinted background, full-strength text.
-    const teamChips = (person.teams || []).map(t => {
-      const team = this.REVIEW_TEAMS.find(rt => rt.name === t);
-      const color = team ? team.color : '#6B6B78';
-      return { label: t, pillStyle: 'display:inline-flex;align-items:center;padding:2px 7px;border-radius:999px;background:' + color + '1E;color:' + color + ';font:600 10.5px var(--font-ui)' };
-    });
-    // Type is a distinct field from Role \u2014 not merged into it. Production itself disagrees on this
-    // field's exact values: an earlier walkthrough showed "External reviewer"/"Dubbing studio" (used here,
-    // matching this file's existing mock data), while a later screenshot showed an invite picker offering
-    // only "Team Member"/"Editor / Dubbing Studio". Flagging for the founder to confirm \u2014 not resolving here.
-    const persona = this.PERSONAS.find(pp => pp.role === person.role);
+    const teamChips = (person.teams || []).map(t => Object.assign({ label: t }, this.renderBadge('neutral', t, {})));
     return {
-      avatarStyle: av.fallbackStyle, avatarHasPhoto: av.hasPhoto, avatarNoPhoto: av.noPhoto, avatarPhotoUrl: av.photoUrl, avatarPhotoStyle: av.photoStyle,
-      initials: av.initials,
+      avatarStyle: 'width:30px;height:30px;border-radius:50%;background:' + idBg + ';color:#fff;font:600 11px var(--font-ui);display:flex;align-items:center;justify-content:center;flex:none',
+      initials: person.initials || person.name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase(),
       name: person.name, email: person.email || '',
       roleStyle: this.renderBadge('access', person.role, {}).pillStyle, roleLabel: person.role || '',
-      typeLabel: person.type || 'Team member',
-      capabilityPills: (persona ? persona.roleCan : []) || [],
       workspaceChips: wsChips, teamChips,
-    };
-  }
-
-  // Person detail modal — new, independent component scoped ONLY to the People page's row chevron.
-  // Does not touch, extend, or share code with pdConfirmOpen/wsdConfirmOpen/wcCancelConfirmOpen or any
-  // other existing modal in this file; its own state (S.personDetailOpen/personDetailPersonId), its own
-  // render function, its own markup block (see the sc-if gated on peopleDetailModalOpen in the template,
-  // nested inside the People pane exactly the way pdConfirmOpen nests inside the Project pane above —
-  // display:none on an ancestor always hides fixed-position descendants too, so this never paints outside
-  // the People page). renderAvatar/renderBadge/chkBoxStyle are called read-only, never modified.
-  //
-  // State-derivation rule (traced to each persona's own canManageAccess/canManageTeams/scope fields,
-  // already driving tabAbilities elsewhere — no second permission system invented):
-  //  - Account permissions: EDITABLE tag when the viewer administers people at the account's own level
-  //    (org-scoped owner, or either standalone persona), else SUMMARY. Always rendered as static chips
-  //    only (per spec) — never checkboxes, regardless of tag.
-  //  - Workspace access: hidden for standalone accounts (no workspace concept, matching the tab's own
-  //    visibility rule). EDITABLE when viewer.canManageAccess (true only for org-owner, same flag that
-  //    drives the Workspace access TAB's own waEditable), else OWNER MANAGED (checkboxes shown, disabled).
-  //  - Review teams: EDITABLE · GLOBAL when viewer.canManageTeams, else GLOBAL · VIEW ONLY.
-  // DISCREPANCY (flagged, not resolved): PEOPLE_DIRECTORY stores one `role` string per person (see comment
-  // above PEOPLE_DIRECTORY) — the founder reference showed several chips per person. With one field, this
-  // renders exactly one chip; restoring more needs the original per-person roles array back in the data.
-  renderPersonDetailModal(person, viewerPersona) {
-    if (!person || !viewerPersona) return { pdmOpen: false };
-    const av = this.renderAvatar(person.name, person.initials, 44, 15);
-    const accountEditable = viewerPersona.scope === 'organization' || viewerPersona.account === 'standalone';
-    const showWorkspaceSection = viewerPersona.account === 'organization';
-    const waEditable = !!viewerPersona.canManageAccess;
-    const rtEditableHere = !!viewerPersona.canManageTeams;
-    const roleBadge = this.renderBadge('access', person.role, {});
-    const rowStyle = i => 'display:flex;align-items:center;gap:11px;padding:11px 13px;' + (i > 0 ? 'border-top:1px solid rgba(0,0,29,0.06)' : '');
-    const wsRows = ['Marketing', 'Product', 'Support'].map((name, i) => {
-      const checked = (person.workspaces || []).includes(name);
-      return {
-        name, checked, rowStyle: rowStyle(i),
-        checkboxStyle: this.chkBoxStyle(checked) + (waEditable ? '' : ';opacity:.4;pointer-events:none'),
-        onToggle: waEditable ? () => {
-          person.workspaces = checked ? person.workspaces.filter(w => w !== name) : (person.workspaces || []).concat(name);
-          this.setState({});
-        } : null,
-      };
-    });
-    const teamRows = this.REVIEW_TEAMS.map((team, i) => {
-      const checked = (person.teams || []).includes(team.name);
-      return {
-        id: team.id, name: team.name, desc: team.desc, checked, rowStyle: rowStyle(i),
-        checkboxStyle: this.chkBoxStyle(checked) + (rtEditableHere ? '' : ';opacity:.4;pointer-events:none'),
-        onToggle: rtEditableHere ? () => {
-          person.teams = checked ? person.teams.filter(t => t !== team.name) : (person.teams || []).concat(team.name);
-          this.setState({});
-        } : null,
-      };
-    });
-    const anyEditable = (showWorkspaceSection && waEditable) || rtEditableHere;
-    return {
-      pdmOpen: true,
-      pdmAvatarHasPhoto: av.hasPhoto, pdmAvatarNoPhoto: av.noPhoto, pdmAvatarPhotoUrl: av.photoUrl, pdmAvatarPhotoStyle: av.photoStyle, pdmAvatarStyle: av.fallbackStyle, pdmInitials: av.initials,
-      pdmName: person.name, pdmSubtitle: (person.type || 'Team member') + ' · ' + (person.email || ''),
-      pdmAccountStateLabel: accountEditable ? 'EDITABLE' : 'SUMMARY',
-      pdmAccountChipLabel: person.role || '', pdmAccountChipStyle: roleBadge.pillStyle,
-      pdmShowWorkspace: showWorkspaceSection,
-      pdmWorkspaceStateLabel: waEditable ? 'EDITABLE' : 'OWNER MANAGED',
-      pdmWorkspaceRows: wsRows,
-      pdmTeamsStateLabel: rtEditableHere ? 'EDITABLE · GLOBAL' : 'GLOBAL · VIEW ONLY',
-      pdmTeamRows: teamRows,
-      pdmFooterEditable: anyEditable,
-      pdmFooterReadOnly: !anyEditable,
     };
   }
 
@@ -5230,32 +4986,6 @@ class Component extends DCLogic {
   // Verified against the mock roster: Alex Rivera / Priya Nair / Dana Cole land on three visibly
   // different hues (teal / jade / royal blue) — no two owners in the table read as the same colour.
   IDENTITY_PALETTE = ['#F03E3E', '#4C6EF5', '#E8590C', '#1098AD', '#BE4BDB', '#0CA678', '#E64980', '#7048E8'];
-  // Canonical avatar system (design decision, replaces the old per-person hue scheme): a real photo when
-  // the person has one, else the single Ollang violet + initials — never any other color. Most of the mock
-  // roster gets a placeholder photo; Alex Rivera (the "You"/owner reference account) and Priya Nair are
-  // deliberately left photo-less so the fallback state is actually demonstrated, not just theoretical.
-  PERSON_PHOTOS = {
-    'Maya Patel': 'https://i.pravatar.cc/128?img=47',
-    'Diego Morales': 'https://i.pravatar.cc/128?img=53',
-    'Hana Kim': 'https://i.pravatar.cc/128?img=25',
-    'Leila Haddad': 'https://i.pravatar.cc/128?img=32',
-    'Noah Williams': 'https://i.pravatar.cc/128?img=13',
-    'Javier Cruz': 'https://i.pravatar.cc/128?img=59',
-    'Dana Cole': 'https://i.pravatar.cc/128?img=45',
-  };
-  // THE single avatar renderer — every person circle in the app (Workspaces owner column, People list,
-  // sidebar account switcher, Review Team/workspace-access chips) calls this instead of building its own
-  // circle. size/fontPx let call sites match their existing scale; the palette itself never varies.
-  renderAvatar(name, initials, size, fontPx) {
-    const photoUrl = this.PERSON_PHOTOS[name] || '';
-    const ini = initials || (name || '?').split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
-    const fp = fontPx || Math.round(size * 0.4);
-    return {
-      hasPhoto: !!photoUrl, noPhoto: !photoUrl, photoUrl, initials: ini,
-      photoStyle: 'width:' + size + 'px;height:' + size + 'px;border-radius:50%;object-fit:cover;display:block;flex:none',
-      fallbackStyle: 'width:' + size + 'px;height:' + size + 'px;border-radius:50%;background:rgba(97,72,249,0.14);color:#4F39D8;font:600 ' + fp + 'px var(--font-ui);display:flex;align-items:center;justify-content:center;flex:none',
-    };
-  }
   identityColor(name) {
     const s = name || '?';
     let h = 0;
@@ -5306,12 +5036,28 @@ class Component extends DCLogic {
   // from PEOPLE_DIRECTORY initials (AR/MP/DM/HK/LH/NW/JC). Global to the account, per the source model
   // overview — no per-workspace scope field exists here on purpose.
   REVIEW_TEAMS = [
-    { id: 'brand', name: 'Brand review', desc: 'Voice, terminology, and market fit', members: ['Alex Rivera', 'Maya Patel', 'Diego Morales'], color: '#7048E8' },
-    { id: 'finalqa', name: 'Final QA', desc: 'Final quality gate before delivery', members: ['Alex Rivera', 'Hana Kim', 'Noah Williams'], color: '#0CA678' },
-    { id: 'latam', name: 'Spanish LATAM', desc: 'Regional Spanish language reviewers', members: ['Diego Morales', 'Javier Cruz'], color: '#E8590C' },
-    { id: 'legal', name: 'Legal review', desc: 'Regulatory and legal terminology', members: ['Maya Patel'], color: '#4C6EF5' },
-    { id: 'arabic', name: 'Arabic review', desc: 'Arabic language and cultural review', members: ['Leila Haddad'], color: '#E64980' },
+    { id: 'brand', name: 'Brand review', desc: 'Voice, terminology, and market fit', members: ['Alex Rivera', 'Maya Patel', 'Diego Morales'] },
+    { id: 'finalqa', name: 'Final QA', desc: 'Final quality gate before delivery', members: ['Alex Rivera', 'Hana Kim', 'Noah Williams'] },
+    { id: 'latam', name: 'Spanish LATAM', desc: 'Regional Spanish language reviewers', members: ['Diego Morales', 'Javier Cruz'] },
+    { id: 'legal', name: 'Legal review', desc: 'Regulatory and legal terminology', members: ['Maya Patel'] },
+    { id: 'arabic', name: 'Arabic review', desc: 'Arabic language and cultural review', members: ['Leila Haddad'] },
   ];
+
+  // Same contract as workspaceAccessAddState (Step 3) — renderPeoplePickerState still can't be reused
+  // directly since a team's members live on the REVIEW_TEAMS object, not a flat state array. One shared
+  // add-popover key (rtAddOpen) across every team card, same convention as the workspace access tab.
+  reviewTeamAddState(team) {
+    const S = this.state;
+    const q = (S.rtAddSearch || '').trim().toLowerCase();
+    const filtered = this.PEOPLE_DIRECTORY.filter(p => !(team.members || []).includes(p.name) && (!q || p.name.toLowerCase().includes(q)));
+    return {
+      open: S.rtAddOpen === team.id,
+      onToggle: () => this.setState({ rtAddOpen: S.rtAddOpen === team.id ? '' : team.id, rtAddSearch: '' }),
+      search: S.rtAddSearch, onSearch: e => this.setState({ rtAddSearch: e.target.value }),
+      hasOptions: filtered.length > 0,
+      options: filtered.map(p => ({ name: p.name, initials: p.initials, onClick: () => { team.members = (team.members || []).concat(p.name); this.setState({ rtAddOpen: '', rtAddSearch: '' }); } })),
+    };
+  }
 
   // THE person-list field composite: an uppercase/label row with an inline "+ Add" trigger (no bordered
   // box), wrapped chips below, and an empty state that's just text — no dead container. Single source for
@@ -5321,14 +5067,10 @@ class Component extends DCLogic {
     return {
       label,
       isEmpty: list.length === 0,
-      chips: list.map(name => {
-        const av = this.renderAvatar(name, null, 22, 10);
-        return Object.assign({
-          name, initials: av.initials, avatarHasPhoto: av.hasPhoto, avatarNoPhoto: av.noPhoto,
-          avatarPhotoUrl: av.photoUrl, avatarPhotoStyle: av.photoStyle, avatarStyle: av.fallbackStyle,
-          hasRole: false, onRemoveClick: () => onRemove(name),
-        }, chipExtra ? chipExtra(name) : {});
-      }),
+      chips: list.map(name => Object.assign({
+        name, initials: name.split(' ').map(x => x[0]).join('').slice(0, 2).toUpperCase(),
+        hasRole: false, onRemoveClick: () => onRemove(name),
+      }, chipExtra ? chipExtra(name) : {})),
       addOpen: add.open, addSearch: add.search, onAddSearch: add.onSearch, onAddToggle: add.onToggle,
       addOptions: add.options, addHasOptions: add.hasOptions,
     };
@@ -6495,28 +6237,6 @@ class Component extends DCLogic {
       const tile = this.renderIconTile(l.icon, 34, '#F1F1F4', '#6B6B78');
       return { label: l.label, sub: l.sub, onClick: l.onClick, tileStyle: tile.tileStyle, tileIcon: tile.icon, rowStyle: this.renderPanelRowStyle(i, false) + ';display:flex;align-items:center;gap:14px;cursor:pointer' };
     });
-    // Manage Plan banner redesign: "your current plan" summary + Cancel/Upgrade actions on the left,
-    // Renews/Status + a cycle-consumption meter on the right. Same shape for every account (role-
-    // independent) — only which action buttons show differs (Free has nothing to cancel; Custom is
-    // negotiated, so it gets one Contact Sales action instead of Cancel/Upgrade).
-    const billManagePlanTier = this.PLAN_TIERS.find(t => t.name === BL.planName) || {};
-    const billManagePlanCycleLabel = S.billCycle === 'yearly' ? 'Yearly' : 'Monthly';
-    const billManagePlanCyclePillStyle = 'display:inline-flex;align-items:center;padding:3px 12px;border-radius:999px;background:rgba(197,188,255,0.12);color:#C5BCFF;font:600 11.5px var(--font-ui)';
-    const billManagePlanDescription = billIsCustom
-      ? 'Negotiated allowance and pricing \u2014 see your contract for details.'
-      : (billManagePlanTier.features || []).join(' \u00B7 ');
-    const btnManagePlanOutline = 'display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 18px;border-radius:9px;border:1px solid rgba(255,255,255,0.3);background:transparent;color:#fff;font:600 13px var(--font-ui);cursor:pointer';
-    const billManagePlanRenewsIcon = this.icon('calendar', '#6148F9', 16);
-    const billCancelPlanOpen = !!S.billCancelPlanOpen;
-    const billOnCancelPlanOpen = () => this.setState({ billCancelPlanOpen: true });
-    const billOnCancelPlanClose = () => this.setState({ billCancelPlanOpen: false });
-    const billOnCancelPlanConfirm = () => {
-      this.setState({ billCancelPlanOpen: false, billToast: 'Your plan will be canceled at the end of the billing period.', billToastKind: null });
-      setTimeout(() => this.setState({ billToast: null }), 3200);
-    };
-    const billOnUpgradePlanClick = () => set({ billingView: 'change-plan' });
-    const billShowCancelBtn = !billIsCustom && billManagePlanTier.id !== 'free';
-    const billShowUpgradeBtn = !billIsCustom;
     const numValid = v => /^\d+(\.\d{1,2})?$/.test(String(v || '').trim()) && parseFloat(v) > 0;
     // Monthly Limit — three states: none / set / editing, always followed by the persistent resets row.
     const billLimitEditing = billShowSpendLimit && !!S.billLimitEditing;
@@ -6567,7 +6287,6 @@ class Component extends DCLogic {
     // the detail header). Identity (icon + invoice number + due/paid subtitle) leads; status is second,
     // matching how every other table in this product opens with the object's identity, not its status.
     const billInvoiceIconTile = this.renderIconTile('invoice', 32, '#9A9AA61E', '#6B6B78');
-    const billUsageHeaderIconTile = this.renderIconTile('bill_cycle', 32, '#9A9AA61E', '#6B6B78');
     const billInvoiceGridStyle = this.renderTableGrid(['minmax(180px,1.3fr)', '170px', '80px', '110px', '120px', '150px', '76px']);
     const billLineHeadStyle = this.renderTableGrid(['minmax(260px,1.6fr)', '150px', '100px', '100px', '110px', '24px']);
     const billInvoiceRow = inv => {
@@ -6723,7 +6442,8 @@ class Component extends DCLogic {
           };
         });
         return {
-          id: t.id, label: t.label + ' · ' + typeModels.length + (typeModels.length === 1 ? ' model' : ' models'), tileStyle: tile.tileStyle, tileIcon: tile.icon,
+          id: t.id, label: t.label, tileStyle: tile.tileStyle, tileIcon: tile.icon,
+          modelCountLabel: typeModels.length + (typeModels.length === 1 ? ' model' : ' models'),
           creditsLabel: this.formatCredits(typeTotal),
           pctLabel: Math.round((typeTotal / billAiTotal) * 100) + '% of AI consumption',
           showPill: !unitsMismatch,
@@ -6734,12 +6454,9 @@ class Component extends DCLogic {
         };
       });
     const billAiTotalLabel = this.formatCredits(billAiTotal);
-    const billHitlTile = this.renderIconTile('people', 44, '#F1F1F4', '#6B6B78');
-    const billHitlRow = this.renderBillHierarchyRow(0, false);
+    const billHitlTile = this.renderIconTile('people', 32, '#7048E81E', '#7048E8');
     const billHitlRows = (bd.hitlRows || []).map(h => Object.assign({}, h, {
-      tileStyle: billHitlTile.tileStyle, tileIcon: billHitlTile.icon,
-      rowStyle: billHitlRow.rowStyle, nameFont: billHitlRow.nameFont,
-      creditsLabel: this.formatCredits(h.credits),
+      tileStyle: billHitlTile.tileStyle, tileIcon: billHitlTile.icon, creditsLabel: this.formatCredits(h.credits),
       pctLabel: Math.round((h.credits / bd.cycleConsumed) * 100) + '% of total',
       // \u00a76: HITL is billed/tracked in credits, never USD \u2014 workflow-chain naming + language pair
       // (with flags) + mixed per-row units, matching production's HITL surface, not the Ollang Credits one.
@@ -6759,14 +6476,13 @@ class Component extends DCLogic {
     const billLotStatusLabel = { active: 'Active', expired: 'Expired', transferred: 'Transferred to Pool' };
     // One shared status palette everywhere (LS_STATUS_STYLE) — no separate green/red/gray per table.
     const billLotStatusToLs = { active: 'Delivered', expired: 'Queued', transferred: 'Queued' };
-    const billLotGridStyle = this.renderTableGrid(['1.1fr', '1.1fr', '1fr', '1fr', '1fr']);
     const billLotRows = bd.lots.map(l => ({
       assignedLabel: this.formatCredits(l.assigned), remainingLabel: this.formatCredits(l.remaining),
       loadedAt: l.loadedAt, expires: l.expires,
       statusLabel: billLotStatusLabel[l.status] || l.status,
-      // Status color reflects only the lot's own status \u2014 never the row's danger/urgency framing above.
       ...(() => {
-        const badge = this.renderBadge('status', billLotStatusToLs[l.status] || 'Queued', { size: 'sm' });
+        const isUrgentActive = l.status === 'active' && l === billNearestLot && billLotUrgent;
+        const badge = this.renderBadge('status', isUrgentActive ? 'Failed' : (billLotStatusToLs[l.status] || 'Queued'), { size: 'sm' });
         return { statusPillStyle: badge.pillStyle, statusDotStyle: badge.dotStyle };
       })(),
     }));
@@ -7302,9 +7018,9 @@ class Component extends DCLogic {
             const canDelete = w.projectCount === 0;
             const hovered = S.wspHoverRow === w.id;
             return {
-              name: w.name, pinned: w.pinned, ownerName: w.ownerName, isMine: w.isMine,
+              name: w.name, pinned: w.pinned, ownerName: w.ownerName, ownerInitials: w.ownerInitials, isMine: w.isMine,
               ownerDisplayName: w.isMine ? 'You' : w.ownerName,
-              ...(() => { const av = this.renderAvatar(w.ownerName, w.ownerInitials, 26, 11); return { ownerAvatarHasPhoto: av.hasPhoto, ownerAvatarNoPhoto: av.noPhoto, ownerAvatarPhotoUrl: av.photoUrl, ownerAvatarPhotoStyle: av.photoStyle, ownerAvatarStyle: av.fallbackStyle, ownerInitials: av.initials }; })(),
+              ownerAvatarStyle: 'width:26px;height:26px;border-radius:50%;background:' + (w.isMine ? '#6148F9' : this.identityColor(w.ownerName)) + ';color:#fff;font:600 11px var(--font-ui);display:flex;align-items:center;justify-content:center;flex:none;line-height:1',
               selected: !!S.wspSel[w.id],
               checkboxStyle: this.chkBoxStyle(!!S.wspSel[w.id]),
               onSelect: e => { e.stopPropagation(); this.setState(prev => ({ wspSel: Object.assign({}, prev.wspSel, { [w.id]: !prev.wspSel[w.id] }) })); },
@@ -8152,7 +7868,7 @@ class Component extends DCLogic {
       // \u00a71 correction: the existing global header breadcrumb (crumbRoot/crumbMid/crumbStep above) is
       // the established "Billing / Invoices" pattern \u2014 Billing's sub-pages just need showBack turned on
       // here, not an invented in-content back button. Home has nothing to go back to within Billing.
-      showBack: !onList && !onWs && !onWc && !onWsd && !onPeople && !(onBilling && billView === 'home'),
+      showBack: !onList && !onWs && !onWc && !onWsd && !(onBilling && billView === 'home'),
       backTitle: onBilling ? ((billView === 'change-plan' || billView === 'buy-credits' || billView === 'credit-monitoring') ? 'Back to Manage Plan' : 'Back to Billing') : onProj ? 'Back to ' + pdWs.name : onDetails ? 'Back to translations' : onWc ? 'Back to workspaces' : 'Exit to translations',
       onBack2: () => onBilling
         ? set({ billingView: (billView === 'change-plan' || billView === 'buy-credits' || billView === 'credit-monitoring') ? 'manage-plan' : 'home' })
@@ -8160,7 +7876,7 @@ class Component extends DCLogic {
         ? set({ page: 'wsdetail', wsDetailWid: S.pdWid, wsDetailTab: 'projects', navOpen: false })
         : set({ page: onWc ? 'workspaces' : 'list', navOpen: false }),
       showCrumbStatus: !onList && !onWs && !onWc && !onWsd && !onProj && !onPeople && !onBilling,
-      learnPageLabel: onPeople ? 'Learn about People' : onBilling ? 'Learn about Billing' : onProj ? 'Learn about Projects' : (onWs || onWc || onWsd) ? 'Learn about Workspaces' : 'Learn about Translation',
+      learnPageLabel: onBilling ? 'Learn about Billing' : onProj ? 'Learn about Projects' : (onWs || onWc || onWsd) ? 'Learn about Workspaces' : 'Learn about Translation',
       onOpenDetails: () => set({ page: 'details', detailTab: 'overview' }),
       onNavTranslations: () => set({ page: S.hasSeenEmptyState.translations ? 'list' : 'list-empty', hasSeenEmptyState: Object.assign({}, S.hasSeenEmptyState, { translations: true }) }),
       onNavWorkspaces: () => set({ page: S.hasSeenEmptyState.workspaces ? 'workspaces' : 'workspaces-empty', hasSeenEmptyState: Object.assign({}, S.hasSeenEmptyState, { workspaces: true }) }),
@@ -8205,29 +7921,26 @@ class Component extends DCLogic {
         const filtered = q2 ? allForPersona.filter(p => p.name.toLowerCase().includes(q2)) : allForPersona;
         const showWsCol = activePersonaForPeople.account === 'organization';
         const peopleCols = showWsCol
-          ? ['minmax(220px,1.6fr)', '160px', '150px', 'minmax(160px,1.2fr)', 'minmax(160px,1.2fr)', '40px']
-          : ['minmax(220px,1.6fr)', '160px', '150px', 'minmax(200px,1.6fr)', '40px'];
+          ? ['minmax(220px,1.6fr)', '160px', 'minmax(160px,1.2fr)', 'minmax(160px,1.2fr)', '40px']
+          : ['minmax(220px,1.6fr)', '160px', 'minmax(200px,1.6fr)', '40px'];
         const peopleGridStyle = this.renderTableGrid(peopleCols);
         const peopleIsEmpty = allForPersona.length === 0;
         const peopleIsNoResults = !peopleIsEmpty && filtered.length === 0;
-        // Invite person (Step 4 redesign): centered modal (email + person type + permission preset),
-        // replacing the old search-existing-directory popover entirely. Person type options are pulled
-        // from PEOPLE_DIRECTORY's own distinct `type` values (Team member / External reviewer / Dubbing
-        // studio) rather than invented. Permission preset has no existing enum anywhere in the file —
-        // flagged as inferred: View and contribute / View only / Full access.
-        const PEOPLE_TYPE_OPTIONS = ['Team member', 'External reviewer', 'Dubbing studio'];
-        const PEOPLE_PERMISSION_PRESETS = ['View and contribute', 'View only', 'Full access'];
-        const peopleInviteOnSend = () => {
-          const email = (S.peopleInviteEmail || '').trim();
-          if (!email) return;
-          set({
-            peopleInvited: invited.concat(email),
-            peopleInviteModalOpen: false, peopleInviteEmail: '',
-            peopleInvitePersonType: 'Team member', peopleInvitePermissionPreset: 'View and contribute', peopleInviteWorkspaces: [],
-          });
-        };
-        const peopleInviteOnClose = () => set({ peopleInviteModalOpen: false, peopleInviteEmail: '', peopleInvitePersonType: 'Team member', peopleInvitePermissionPreset: 'View and contribute', peopleInviteWorkspaces: [] });
-
+        // Distinct from renderPeoplePickerState (which stays on this.PEOPLE for workspace-administration
+        // pickers like wcPeopleGroups — legitimately a separate roster, per Step 6). The People destination's
+        // invite picker is people-domain, so it draws from PEOPLE_DIRECTORY and excludes anyone already
+        // visible to this persona or already queued in peopleInvited.
+        const inviteAdd = (() => {
+          const q = (S.peopleInviteSearch || '').trim().toLowerCase();
+          const filtered = this.PEOPLE_DIRECTORY.filter(p => !allForPersona.some(ap => ap.name === p.name) && !invited.includes(p.name) && (!q || p.name.toLowerCase().includes(q)));
+          return {
+            open: S.peopleInviteOpen,
+            onToggle: () => set({ peopleInviteOpen: !S.peopleInviteOpen, peopleInviteSearch: '' }),
+            search: S.peopleInviteSearch || '', onSearch: e => set({ peopleInviteSearch: e.target.value }),
+            hasOptions: filtered.length > 0,
+            options: filtered.map(p => ({ name: p.name, initials: p.initials, onClick: () => set({ peopleInvited: invited.concat(p.name), peopleInviteSearch: '' }) })),
+          };
+        })();
         // Step 4 fix: tab presence derived from each tab's own tabAbilities entry, not a binary org/
         // standalone flag. People and Review Teams are present (tone never 'not-shown') for all six
         // personas; Workspace access is present only where its tone isn't 'not-shown' (org accounts).
@@ -8254,131 +7967,63 @@ class Component extends DCLogic {
         // PEOPLE_DIRECTORY entry) — WS_ROWS' 9 unrelated workspace names never overlapped these anyway, so
         // the old `w.name === activePersonaForPeople.workspace` filter silently matched zero WS_ROWS rows
         // for every workspace-scoped persona. This card list is keyed on those 3 names directly instead.
+        const waEditable = activePersonaForPeople.id === 'org-owner';
         const PEOPLE_WORKSPACE_NAMES = ['Marketing', 'Product', 'Support'];
         const waAllNames = activePersonaForPeople.scope === 'organization'
           ? PEOPLE_WORKSPACE_NAMES
           : PEOPLE_WORKSPACE_NAMES.filter(n => n === activePersonaForPeople.workspace);
         const waNames = S.peopleWorkspaceFilter ? waAllNames.filter(n => n === S.peopleWorkspaceFilter) : waAllNames;
-        // Invite person (Step 6): Workspace access section reuses waAllNames — the exact same
-        // "workspaces visible to persona X" list already computed above for the Workspace access tab
-        // (org-wide personas see all 3; workspace-scoped personas see only their own workspace) — not
-        // hardcoded. Cross-workspace assignment at invite time is gated on canManageAccess, the same flag
-        // that drives the Workspace access tab's own editability (true only for org-owner); every other
-        // persona in the current data only ever has one workspace in waAllNames anyway, so "locked" only
-        // ever applies to that single row. No persona in PERSONAS was ambiguous on this point.
-        const peopleInviteCanAssignAccess = !!activePersonaForPeople.canManageAccess;
-        const peopleInviteOnOpen = () => set({
-          peopleInviteModalOpen: true,
-          peopleInviteWorkspaces: peopleInviteCanAssignAccess ? [] : waAllNames.slice(),
-        });
-        const peopleInviteWorkspaceRows = waAllNames.map((name, i) => {
-          const checked = (S.peopleInviteWorkspaces || []).includes(name);
+        const personWorkspaceAddState = wsName => {
+          const q = (S.waAddSearch || '').trim().toLowerCase();
+          const filtered = this.PEOPLE_DIRECTORY.filter(p => !(p.workspaces || []).includes(wsName) && (!q || p.name.toLowerCase().includes(q)));
           return {
-            name, checked,
-            rowStyle: 'display:flex;align-items:center;gap:11px;padding:11px 13px;' + (i > 0 ? 'border-top:1px solid rgba(0,0,29,0.06)' : ''),
-            checkboxStyle: this.chkBoxStyle(checked) + (peopleInviteCanAssignAccess ? '' : ';opacity:.4;pointer-events:none'),
-            onToggle: peopleInviteCanAssignAccess ? () => set({
-              peopleInviteWorkspaces: checked ? (S.peopleInviteWorkspaces || []).filter(n => n !== name) : (S.peopleInviteWorkspaces || []).concat(name),
-            }) : null,
+            open: S.waAddOpen === wsName,
+            onToggle: () => set({ waAddOpen: S.waAddOpen === wsName ? '' : wsName, waAddSearch: '' }),
+            search: S.waAddSearch, onSearch: e => set({ waAddSearch: e.target.value }),
+            hasOptions: filtered.length > 0,
+            options: filtered.map(p => ({ name: p.name, initials: p.initials, onClick: () => { p.workspaces = (p.workspaces || []).concat(wsName); set({ waAddOpen: '', waAddSearch: '' }); } })),
           };
-        });
-        // Workspace access tab card visuals (Step 3b): matches the "Recently updated" workspace card
-        // rhythm (icon-square + title/headerSub, stat row, divider) via renderStatCard's own layout —
-        // read only, not modified/reused directly since we need two stats side by side instead of one.
-        // Icon tile now follows the people-avatar-without-photo convention (rgba(97,72,249,0.14) tint,
-        // #4F39D8 solid-violet initials) instead of a saturated per-workspace hue — 3 closely-related
-        // light-violet tints cycle by index so cards stay distinguishable without full-saturation color.
-        // Icon tile: varied color families (not all-violet) so cards read distinctly at a glance, each
-        // still a light tint + matching solid text (same contrast convention as the people-avatar
-        // fallback, just re-keyed per hue family). Family assignment is randomized per workspace name via
-        // a small deterministic hash so it stays stable across renders instead of reshuffling every click.
-        const WA_HUE_FAMILIES = [
-          { bg: 'rgba(97,72,249,0.14)', fg: '#4F39D8' },   // violet
-          { bg: 'rgba(12,166,120,0.14)', fg: '#0C8F66' },  // green
-          { bg: 'rgba(14,124,196,0.14)', fg: '#0B6BAB' },  // celeste
-          { bg: 'rgba(230,119,13,0.14)', fg: '#C4630A' },  // orange
-        ];
-        const waHash = s => { let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0; return h; };
-        // Explicit per-workspace assignment (not a raw hash % length) — with only 3 known workspace
-        // names, a hash mod can collide (Product and Support both landed on the same family). Fixed here
-        // so every workspace gets a distinct hue family; any workspace name outside this map still falls
-        // back to the hash so new/unknown names don't all default to one color.
-        const WA_HUE_ASSIGN = { Marketing: 0, Product: 3, Support: 1 };
-        const WA_ACTIVE_TRANSLATIONS = { Marketing: 12, Product: 8, Support: 5 };
-        const waCards = waNames.map((wsName, i) => {
+        };
+        const waCards = waNames.map(wsName => {
           const members = this.PEOPLE_DIRECTORY.filter(p => (p.workspaces || []).includes(wsName));
-          const adminCount = members.filter(p => /owner|admin/i.test(p.role || '')).length;
-          const hueIdx = WA_HUE_ASSIGN[wsName] != null ? WA_HUE_ASSIGN[wsName] : (waHash(wsName) % WA_HUE_FAMILIES.length);
-          const hue = WA_HUE_FAMILIES[hueIdx];
-          return {
-            name: wsName,
-            initialsStyle: 'display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:9px;flex:none;background:' + hue.bg + ';color:' + hue.fg + ';font:600 12px var(--font-ui)',
-            initialsLabel: wsName.slice(0, 2).toUpperCase(),
-            activeTranslationsLabel: (WA_ACTIVE_TRANSLATIONS[wsName] || 0) + ' active translations',
-            peopleCount: members.length, adminCount,
-          };
+          const add = personWorkspaceAddState(wsName);
+          const field = this.renderPeopleField('Has access', members.map(p => p.name), add, name => {
+            const p = this.PEOPLE_DIRECTORY.find(x => x.name === name);
+            if (p) p.workspaces = (p.workspaces || []).filter(w2 => w2 !== wsName);
+            set({});
+          }, name => {
+            const p = this.PEOPLE_DIRECTORY.find(x => x.name === name);
+            return { role: p ? p.role : '', roleStyle: this.renderBadge('access', p ? p.role : '', {}).pillStyle };
+          });
+          return Object.assign({}, field, { name: wsName, panelStyle: this.renderPanelStyle(false), rowStyle: this.renderPanelRowStyle(0, false), editable: waEditable });
         });
         const peopleTabAbility = (activePersonaForPeople.tabAbilities.find(t => t.tab === 'People') || {}).copy || '';
         const rtAbility = abilityFor('Review Teams');
         const rtEditable = rtAbility.tone === 'allowed';
-        // Review Teams tab card grid (Step 5 redesign) — reuses the Workspace access tab's own grid
-        // container pattern (flex-wrap, flex:1/min/max-width, 14px gap — see waCards above) rather than
-        // building a new grid. Member chips-with-remove/+Add moved off the card face per the new compact
-        // layout — team membership stays editable via the Create review team modal and (per person) the
-        // person detail modal's own Review Teams section; the card itself is now read-oriented. Scope is
-        // hardcoded 'Global' only because REVIEW_TEAMS has no scope field for any team (checked: every
-        // team is account-wide by design, per the comment above REVIEW_TEAMS) — a team.scope value would
-        // be used instead if one ever exists.
         const rtCards = this.REVIEW_TEAMS.map(team => {
-          const members = team.members || [];
-          return {
-            id: team.id, teamName: team.name, desc: team.desc, color: team.color,
-            memberCount: members.length,
-            scopeLabel: team.scope || 'Global',
-            avatars: members.slice(0, 6).map(name => {
-              const av = this.renderAvatar(name, null, 26, 10);
-              return { name, initials: av.initials, hasPhoto: av.hasPhoto, noPhoto: av.noPhoto, photoUrl: av.photoUrl, photoStyle: av.photoStyle, style: av.fallbackStyle };
-            }),
-            overflowCount: Math.max(0, members.length - 6),
-            hasOverflow: members.length > 6,
+          const add = this.reviewTeamAddState(team);
+          const field = this.renderPeopleField('Members', team.members || [], add, name => { team.members = (team.members || []).filter(n => n !== name); this.setState({}); });
+          return Object.assign({}, field, {
+            id: team.id, teamName: team.name, desc: team.desc, memberCount: (team.members || []).length,
+            panelStyle: this.renderPanelStyle(false), row0Style: this.renderPanelRowStyle(0, false), rowStyle: this.renderPanelRowStyle(1, false),
             editable: rtEditable,
-          };
+          });
         });
-        // New review team (Step 4 redesign): centered modal, not a popover. Members field reuses
-        // renderPeopleField (already generic, not team-specific) against a draft rtNewTeamMembers list
-        // that only becomes a real REVIEW_TEAMS team on Create.
-        const rtNewTeamMembersAdd = (() => {
-          const q = (S.rtNewTeamMemberSearch || '').trim().toLowerCase();
-          const filtered = this.PEOPLE_DIRECTORY.filter(p => !(S.rtNewTeamMembers || []).includes(p.name) && (!q || p.name.toLowerCase().includes(q)));
-          return {
-            open: S.rtNewTeamMemberAddOpen,
-            onToggle: () => set({ rtNewTeamMemberAddOpen: !S.rtNewTeamMemberAddOpen, rtNewTeamMemberSearch: '' }),
-            search: S.rtNewTeamMemberSearch || '', onSearch: e => set({ rtNewTeamMemberSearch: e.target.value }),
-            hasOptions: filtered.length > 0,
-            options: filtered.map(p => ({ name: p.name, initials: p.initials, onClick: () => set({ rtNewTeamMembers: (S.rtNewTeamMembers || []).concat(p.name), rtNewTeamMemberAddOpen: false, rtNewTeamMemberSearch: '' }) })),
-          };
-        })();
-        const rtNewTeamMembersField = this.renderPeopleField('Members', S.rtNewTeamMembers || [], rtNewTeamMembersAdd, name => set({ rtNewTeamMembers: (S.rtNewTeamMembers || []).filter(n => n !== name) }));
-        const rtAdd = { onToggle: () => set({ rtNewTeamOpen: !S.rtNewTeamOpen, rtNewTeamName: '', rtNewTeamDesc: '', rtNewTeamMembers: [] }), open: S.rtNewTeamOpen };
+        const rtAdd = { onToggle: () => set({ rtNewTeamOpen: !S.rtNewTeamOpen, rtNewTeamName: '', rtNewTeamDesc: '' }), open: S.rtNewTeamOpen };
         const rtOnCreate = () => {
           const name = (S.rtNewTeamName || '').trim();
           if (!name) return;
-          this.REVIEW_TEAMS.push({ id: 'rt' + Date.now(), name, desc: (S.rtNewTeamDesc || '').trim(), members: (S.rtNewTeamMembers || []).slice(), color: '#6148F9' });
-          set({ rtNewTeamOpen: false, rtNewTeamName: '', rtNewTeamDesc: '', rtNewTeamMembers: [] });
+          this.REVIEW_TEAMS.push({ id: 'rt' + Date.now(), name, desc: (S.rtNewTeamDesc || '').trim(), members: [] });
+          set({ rtNewTeamOpen: false, rtNewTeamName: '', rtNewTeamDesc: '' });
         };
         return {
           peopleDescription: activePersonaForPeople.description,
           peopleCanInvite: activePersonaForPeople.canInvite,
           peopleInviteLabel: (activePersonaForPeople.account === 'organization' && activePersonaForPeople.scope === 'workspace')
             ? ('Invite to ' + activePersonaForPeople.workspace) : 'Invite person',
-          peopleInviteOnToggle: peopleInviteOnOpen,
-          peopleInviteModalOpen: S.peopleInviteModalOpen, peopleInviteOnClose,
-          peopleInviteEmail: S.peopleInviteEmail || '', peopleInviteOnEmail: e => set({ peopleInviteEmail: e.target.value }),
-          peopleInvitePersonType: S.peopleInvitePersonType || 'Team member', peopleInviteOnPersonType: e => set({ peopleInvitePersonType: e.target.value }),
-          peopleInvitePermissionPreset: S.peopleInvitePermissionPreset || 'View and contribute', peopleInviteOnPermissionPreset: e => set({ peopleInvitePermissionPreset: e.target.value }),
-          peopleInviteTypeOptions: PEOPLE_TYPE_OPTIONS, peopleInvitePresetOptions: PEOPLE_PERMISSION_PRESETS,
-          peopleInviteWorkspaceRows,
-          peopleInviteOnSend, peopleInviteSendDisabled: !(S.peopleInviteEmail || '').trim(),
+          peopleInviteOnToggle: inviteAdd.onToggle, peopleInviteOpen: inviteAdd.open,
+          peopleInviteSearch: inviteAdd.search, peopleInviteOnSearch: inviteAdd.onSearch,
+          peopleInviteOptions: inviteAdd.options, peopleInviteNoOptions: !inviteAdd.hasOptions,
           peopleQuery: S.peopleQuery || '', peopleOnQuery: e => set({ peopleQuery: e.target.value }),
           peopleOnClearSearch: () => set({ peopleQuery: '' }),
           peopleShowWorkspaceCol: showWsCol, peopleGridStyle,
@@ -8387,24 +8032,22 @@ class Component extends DCLogic {
           rtNewTeamOpen: S.rtNewTeamOpen, rtOnNewTeamToggle: rtAdd.onToggle,
           rtNewTeamName: S.rtNewTeamName || '', rtOnNewTeamName: e => set({ rtNewTeamName: e.target.value }),
           rtNewTeamDesc: S.rtNewTeamDesc || '', rtOnNewTeamDesc: e => set({ rtNewTeamDesc: e.target.value }),
-          rtNewTeamMembersField, rtNewTeamMembersHasChips: (S.rtNewTeamMembers || []).length > 0,
           rtOnCreate, rtCreateDisabled: !(S.rtNewTeamName || '').trim(),
           peopleIsEmpty, peopleIsNoResults, peopleIsPopulated: !peopleIsEmpty && !peopleIsNoResults,
           peopleEmptyTitle: activePersonaForPeople.account === 'standalone' ? 'No one invited yet' : ('No one assigned to ' + activePersonaForPeople.workspace + ' yet'),
           peopleEmptySub: activePersonaForPeople.canInvite ? 'Invite people to get started.' : 'Ask an owner or admin to invite people here.',
-          peopleDetailModalOpen: S.personDetailOpen,
-          ...this.renderPersonDetailModal(S.personDetailOpen ? this.PEOPLE_DIRECTORY.find(p => p.name === S.personDetailPersonId) : null, activePersonaForPeople),
-          pdmOnClose: () => set({ personDetailOpen: false, personDetailPersonId: '' }),
           peopleRows: filtered.map((p, i) => {
             const rp = this.renderPersonRow(p);
             return {
               name: rp.name, initials: rp.initials, avatarStyle: rp.avatarStyle, emailLine: p.email || '',
-              avatarHasPhoto: rp.avatarHasPhoto, avatarNoPhoto: rp.avatarNoPhoto, avatarPhotoUrl: rp.avatarPhotoUrl, avatarPhotoStyle: rp.avatarPhotoStyle,
-              roleStyle: rp.roleStyle, roleLabel: rp.roleLabel, typeLabel: rp.typeLabel,
+              roleStyle: rp.roleStyle, roleLabel: rp.roleLabel,
               workspaceChips: rp.workspaceChips, noWorkspaces: rp.workspaceChips.length === 0,
               teamChips: rp.teamChips, noTeams: rp.teamChips.length === 0,
               rowStyle: peopleGridStyle + ';padding:12px 16px;align-items:center;' + (i > 0 ? 'border-top:1px solid rgba(0,0,29,0.06)' : ''),
-              onToggleExpand: () => set({ personDetailOpen: true, personDetailPersonId: p.name }),
+              onToggleExpand: () => set({ peopleExpandedId: S.peopleExpandedId === p.name ? '' : p.name }),
+              expanded: S.peopleExpandedId === p.name,
+              isInvited: p.status === 'Invited', invitedBadgeStyle: this.renderBadge('neutral', null, {}).pillStyle,
+              typeLabel: p.type || 'Team member', abilityCopy: peopleTabAbility,
             };
           }),
         };
@@ -8772,8 +8415,8 @@ class Component extends DCLogic {
         const eligible = !team ? [] : (account === 'standalone' ? (team.members || []) : (team.members || []).filter(n => accessHolders.includes(n)));
         const chipFor = name => {
           const person = this.PEOPLE_DIRECTORY.find(p => p.name === name) || this.PEOPLE.find(p => p.name === name) || {};
-          const av = this.renderAvatar(name, person.initials, 22, 10);
-          return { name, initials: av.initials, avatarHasPhoto: av.hasPhoto, avatarNoPhoto: av.noPhoto, avatarPhotoUrl: av.photoUrl, avatarPhotoStyle: av.photoStyle, avatarStyle: av.fallbackStyle };
+          return { name, initials: person.initials || name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase(),
+            avatarStyle: 'width:22px;height:22px;border-radius:50%;background:rgba(97,72,249,0.14);color:#4F39D8;font:600 9.5px var(--font-ui);display:flex;align-items:center;justify-content:center;flex:none' };
         };
         return {
           reviewTeamOpen: S.reviewTeamOpen, onToggleReviewTeam: () => set({ reviewTeamOpen: !S.reviewTeamOpen }),
@@ -8869,10 +8512,6 @@ class Component extends DCLogic {
       billIsCustom, billIsSelfServe: !billIsCustom,
       billOnManagePlan, billManagePlanLinks, billManagePlanName: BL.planName,
       billManagePlanAllowanceLabel: this.formatCredits(BL.planAllowance) + '/mo',
-      billManagePlanCycleLabel, billManagePlanCyclePillStyle, billManagePlanDescription,
-      billManagePlanRenewsIcon, btnManagePlanOutline,
-      billCancelPlanOpen, billOnCancelPlanOpen, billOnCancelPlanClose, billOnCancelPlanConfirm, billOnUpgradePlanClick,
-      billShowCancelBtn, billShowUpgradeBtn, billOnContactSales,
       // C1: same shared container the Workspace Settings panels use — see renderPanelStyle/renderPanelRowStyle.
       billPanelStyle: this.renderPanelStyle(false),
       billRow0Style: this.renderPanelRowStyle(0, false),
@@ -8884,19 +8523,6 @@ class Component extends DCLogic {
       billLotUrgent, billLotCalm: !billLotUrgent,
       billLotUrgentHeadline: this.formatCredits(billNearestLot.remaining) + ' expire' + (billLotDays <= 1 ? ' today' : ' in ' + billLotDays + ' days') + ' (' + billNearestLot.expires + ')',
       billLotCalmLine: this.formatCredits(billNearestLot.remaining) + ' expiring ' + billNearestLot.expires,
-      // Credit lots row: one unified row shell (same anatomy as the translation-type rows). Danger tint is
-      // conditional on billLotUrgent \u2014 never hardcoded \u2014 same flag the calm/urgent split above already uses.
-      billLotsRowStyle: this.renderBillHierarchyRow(0, bd.lots.length > 1).rowStyle,
-      billLotsNameFont: this.renderBillHierarchyRow(0, bd.lots.length > 1).nameFont,
-      billLotsTileStyle: this.renderIconTile('bill_credits', 44, '#F1F1F4', '#6B6B78').tileStyle,
-      billLotsTileIcon: this.renderIconTile('bill_credits', 44, '#F1F1F4', '#6B6B78').icon,
-      billLotsCountLabel: bd.lots.length + (bd.lots.length === 1 ? ' credit lot' : ' credit lots'),
-      billLotsChipStyle: 'display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;font:500 11px var(--font-ui);' + (billLotUrgent ? 'background:#FDEEF0;color:#E5484D' : 'background:#F1F1F4;color:#5B5B66'),
-      billLotsChipLabel: 'Nearest lot expires ' + billNearestLot.expires,
-      billLotsStatColor: billLotUrgent ? '#E5484D' : '#16161A',
-      billLotsStatLabel: this.formatCredits(billNearestLot.remaining),
-      billLotsContextLabel: billLotUrgent ? 'Expiring soon' : 'Nearest lot',
-      billLotsChevronStyle: this.billChevronStyle(!!S.billLotsExpanded),
       billOnViewUsage: () => set({ billingView: 'invoice-detail', billingInvoiceId: bd.invoices[0].id, billInvoiceTab: 'usage' }),
       // ---- Credits & Plan metric cards (Billing home) ----
       billCardShellStyle,
@@ -8922,31 +8548,6 @@ class Component extends DCLogic {
       billCardCyclePctNumber: String(Math.round(billRingPct)),
       billCardCycleBarPct: billRingPct,
       billCardCycleBarColor: billRingPct >= 90 ? '#E5484D' : '#6148F9',
-      billCardPlanSegments: (() => {
-        const n = 60;
-        const tierRank = this.PLAN_TIERS.findIndex(t => t.name === BL.planName);
-        const pct = billIsCustom ? 100 : Math.round(((tierRank + 1) / this.PLAN_TIERS.length) * 100);
-        const filled = Math.round((pct / 100) * n);
-        return Array.from({ length: n }, (_, i) => ({ bg: i < filled ? '#6148F9' : '#F1F1F4' }));
-      })(),
-      billCardCreditsSegments: (() => {
-        const n = 60;
-        const dangerPct = billLotUrgent ? billCardLotPct : 0;
-        const accentPct = billLotUrgent ? (100 - billCardLotPct) : billCardLotPct;
-        const dangerCount = Math.round((dangerPct / 100) * n);
-        const accentCount = Math.round((accentPct / 100) * n);
-        return Array.from({ length: n }, (_, i) => ({ bg: i < dangerCount ? '#E5484D' : i < dangerCount + accentCount ? '#6148F9' : '#F1F1F4' }));
-      })(),
-      billCardCycleSegments: (() => {
-        const n = 60;
-        const filled = Math.round((billRingPct / 100) * n);
-        // Purple\u2192orange gradient across filled segments only, matching the ring's danger-red override.
-        const stops = ['#A855F7', '#B24FE0', '#C2489B', '#D14487', '#DB4172', '#E23F63', '#E75A50', '#EA6B47', '#ED7B41', '#F0893D', '#F3993A', '#F6A937'];
-        const danger = billRingPct >= 90;
-        return Array.from({ length: n }, (_, i) => ({
-          bg: i < filled ? (danger ? '#E5484D' : stops[Math.min(stops.length - 1, Math.round((i / Math.max(1, filled - 1)) * (stops.length - 1)))]) : '#F1F1F4',
-        }));
-      })(),
       billLotsExpanded: !!S.billLotsExpanded,
       billOnToggleLots: () => set({ billLotsExpanded: !S.billLotsExpanded }),
       billLotsToggleLabel: S.billLotsExpanded ? 'Hide all lots' : 'Show all ' + bd.lots.length + ' lots',
@@ -9026,18 +8627,6 @@ class Component extends DCLogic {
       billCurrentInvoiceId: billCurrentInvoice.id, billCurrentInvoiceBadgeStyle: billCurrentBadge.pillStyle,
       billCurrentInvoiceDotStyle: billCurrentBadge.dotStyle, billCurrentInvoiceStatusLabel: billCurrentBadge.label,
       billCurrentInvoiceDateLine: (billCurrentInvoice.status === 'overdue' ? 'Was due ' : billCurrentInvoice.status === 'paid' ? 'Paid ' : 'Due ') + billCurrentInvoice.due,
-      // Invoice detail header: one slot, content swapped by active tab. Status Filter/Download only ever
-      // acted on Transactions' line items, so they (and the invoice-id-as-title treatment) don't belong on
-      // Current usage — that tab leads with what it's actually for, folding the invoice/cycle reference
-      // into the subtitle instead.
-      billInvHeaderIconTileStyle: (S.billInvoiceTab === 'usage') ? billUsageHeaderIconTile.tileStyle : billInvoiceIconTile.tileStyle,
-      billInvHeaderIconTileIcon: (S.billInvoiceTab === 'usage') ? billUsageHeaderIconTile.icon : billInvoiceIconTile.icon,
-      billInvHeaderTitle: (S.billInvoiceTab === 'usage') ? 'Current usage' : billCurrentInvoice.id,
-      billInvHeaderSubtitle: (S.billInvoiceTab === 'usage')
-        ? (billCurrentInvoice.id + ' \u00B7 this cycle \u00B7 renews ' + BL.nextBillingDate)
-        : (billCurrentInvoice.status === 'overdue' ? 'Was due ' : billCurrentInvoice.status === 'paid' ? 'Paid ' : 'Due ') + billCurrentInvoice.due,
-      billInvHeaderShowBadge: S.billInvoiceTab !== 'usage',
-      billInvHeaderShowActions: S.billInvoiceTab !== 'usage',
       billCurrentInvoicePayable: billCurrentPayable,
       billOnPayCurrent: () => billOnOpenPay(billCurrentInvoice.id),
       billInvoiceIconTileStyle: billInvoiceIconTile.tileStyle, billInvoiceIconTileIcon: billInvoiceIconTile.icon,
@@ -9095,7 +8684,7 @@ class Component extends DCLogic {
       billToastKindStyle: S.billToastKind === 'success' ? 'background:#0F7B4F' : S.billToastKind === 'error' ? 'background:#C42B31' : 'background:#16161A',
 
       billUsageCycleLine: 'This cycle \u00B7 renews ' + BL.nextBillingDate,
-      billHierarchy, billAiTotalLabel, billHitlRows, billLotRows, billLotGridStyle,
+      billHierarchy, billAiTotalLabel, billHitlRows, billLotRows,
       billUsageSyncedLabel, billUsageRefreshing: !!S.billUsageRefreshing,
       billOnRefreshUsage,
       billOnGoHome: () => set({ billingView: 'home' }),
@@ -9143,7 +8732,6 @@ class Component extends DCLogic {
       // Profile switcher (Step 2.5) — prototype-only control, sidebar footer. Account type and role are
       // identity; data state is a separate mock-data toggle, kept apart on purpose (see ticket).
       profileSwitcherOpen: S.profileSwitcherOpen,
-      ...(() => { const av = this.renderAvatar('Alex Rivera', 'AR', 30, 11.5); return { profileAvatarHasPhoto: av.hasPhoto, profileAvatarNoPhoto: av.noPhoto, profileAvatarPhotoUrl: av.photoUrl, profileAvatarPhotoStyle: av.photoStyle, profileAvatarStyle: av.fallbackStyle, profileAvatarInitials: av.initials }; })(),
       onToggleProfileSwitcher: () => set({ profileSwitcherOpen: !S.profileSwitcherOpen }),
       onCloseProfileSwitcher: () => set({ profileSwitcherOpen: false }),
       // Fixed flyout, not anchored above the trigger — the trigger sits at the very bottom of a

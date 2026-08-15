@@ -38,10 +38,12 @@ input:focus,textarea:focus{outline:none}
 @keyframes omBarPulse{0%,100%{opacity:.35}50%{opacity:1}}
 @keyframes omOrbPulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(97,72,249,0.28)}50%{transform:scale(1.045);box-shadow:0 0 0 8px rgba(97,72,249,0)}}
 .om-step{animation:omFade .28s ease both}
+.om-rt-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 @media (max-width:720px){
   .om-crumb-root,.om-learn-label{display:none !important}
   .om-header{padding:0 12px !important;gap:8px !important}
   .om-detail-actions{width:100% !important;justify-content:flex-stretch !important}
+  .om-rt-grid{grid-template-columns:repeat(1,minmax(0,1fr)) !important}
 }
 </style>
 </helmet>
@@ -97,6 +99,10 @@ input:focus,textarea:focus{outline:none}
           <span style="font:500 13.5px var(--font-ui);color:#3A3A44">Workflows</span>
         </div>
         <div style="padding:6px 10px 0"><span style="font:600 12.5px var(--font-ui);color:#6148F9;cursor:pointer" style-hover="text-decoration:underline">All library items</span></div>
+        <div onClick="{{ onNavCreditRates }}" style="{{ navCreditRatesStyle }}">
+          <span style="width:18px;height:18px;flex:none;display:flex;align-items:center;justify-content:center;color:{{ navCreditRatesIconColor }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 16C13 16.5523 13.4477 17 14 17C14.5523 17 15 16.5523 15 16H14H13ZM15 8C15 7.44772 14.5523 7 14 7C13.4477 7 13 7.44772 13 8H14H15ZM17 16C17 16.5523 17.4477 17 18 17C18.5523 17 19 16.5523 19 16H18H17ZM19 10C19 9.44772 18.5523 9 18 9C17.4477 9 17 9.44772 17 10H18H19ZM1 10C1 10.5523 1.44772 11 2 11C2.55228 11 3 10.5523 3 10H2H1ZM12 19C11.4477 19 11 19.4477 11 20C11 20.5523 11.4477 21 12 21V20V19ZM14 16H15V8H14H13V16H14ZM18 16H19V10H18H17V16H18ZM4 4V5H20V4V3H4V4ZM22 6H21V18H22H23V6H22ZM22 18H21C21 18.5523 20.5523 19 20 19V20V21C21.6569 21 23 19.6569 23 18H22ZM20 4V5C20.5523 5 21 5.44772 21 6H22H23C23 4.34315 21.6569 3 20 3V4ZM4 4V3C2.34315 3 1 4.34315 1 6H2H3C3 5.44772 3.44772 5 4 5V4ZM2 10H3V6H2H1V10H2ZM20 20V19H12V20V21H20V20Z" fill="currentColor"></path><path d="M9 10C9 10.5523 9.44772 11 10 11C10.5523 11 11 10.5523 11 10H10H9ZM11 8C11 7.44772 10.5523 7 10 7C9.44772 7 9 7.44772 9 8H10H11ZM10 10H11V8H10H9V10H10Z" fill="currentColor"></path><path d="M9.12555 13.8988L8.1969 14.2697V14.2697L9.12555 13.8988ZM9.81619 15.6277L10.7448 15.2568V15.2568L9.81619 15.6277ZM9.47797 17.0935L10.1624 17.8226V17.8226L9.47797 17.0935ZM7.04332 19.3791L7.72775 20.1082L7.72776 20.1082L7.04332 19.3791ZM4.95668 19.3791L5.64112 18.6501L5.64112 18.6501L4.95668 19.3791ZM2.52203 17.0935L1.83759 17.8226L1.83759 17.8226L2.52203 17.0935ZM2.18381 15.6277L3.11246 15.9987V15.9987L2.18381 15.6277ZM2.87445 13.8988L1.9458 13.5278L1.9458 13.5278L2.87445 13.8988ZM2.08868 16.6153L1.19579 17.0656L1.19579 17.0656L2.08868 16.6153ZM2.00011 16.2315L1.00025 16.2149V16.2149L2.00011 16.2315ZM6.28497 19.9576L6.57672 20.9141L6.57673 20.9141L6.28497 19.9576ZM5.71503 19.9576L6.00679 19.0011H6.00679L5.71503 19.9576ZM9.99989 16.2315L10.9998 16.2149V16.2149L9.99989 16.2315ZM9.91132 16.6153L10.8042 17.0656L10.8042 17.0656L9.91132 16.6153ZM8.45542 13.0566L8.11901 13.9983L8.11901 13.9983L8.45542 13.0566ZM8.8193 13.2933L8.09022 13.9778L8.09022 13.9778L8.8193 13.2933ZM3.54458 13.0566L3.88099 13.9983L3.88099 13.9983L3.54458 13.0566ZM3.1807 13.2933L3.90978 13.9778V13.9778L3.1807 13.2933ZM4.25599 13V14H7.74401V13V12H4.25599V13ZM9.12555 13.8988L8.1969 14.2697L8.88754 15.9987L9.81619 15.6277L10.7448 15.2568L10.0542 13.5278L9.12555 13.8988ZM9.47797 17.0935L8.79354 16.3645L6.35888 18.6501L7.04332 19.3791L7.72776 20.1082L10.1624 17.8226L9.47797 17.0935ZM4.95668 19.3791L5.64112 18.6501L3.20646 16.3645L2.52203 17.0935L1.83759 17.8226L4.27224 20.1082L4.95668 19.3791ZM2.18381 15.6277L3.11246 15.9987L3.8031 14.2697L2.87445 13.8988L1.9458 13.5278L1.25516 15.2568L2.18381 15.6277ZM2.52203 17.0935L3.20646 16.3645C3.14432 16.3061 3.09607 16.2608 3.05483 16.2211C3.01368 16.1815 2.98739 16.155 2.96956 16.136C2.93491 16.099 2.95652 16.1154 2.98157 16.165L2.08868 16.6153L1.19579 17.0656C1.36308 17.3973 1.65238 17.6487 1.83759 17.8226L2.52203 17.0935ZM2.18381 15.6277L1.25516 15.2568C1.16461 15.4835 1.0065 15.8368 1.00025 16.2149L2.00011 16.2315L2.99997 16.248C2.99897 16.3086 2.98514 16.3375 2.99908 16.2944C3.00639 16.2718 3.01816 16.2388 3.03795 16.1873C3.0578 16.1356 3.08156 16.0761 3.11246 15.9987L2.18381 15.6277ZM2.08868 16.6153L2.98157 16.165C2.99312 16.1879 3.00049 16.2166 2.99997 16.248L2.00011 16.2315L1.00025 16.2149C0.995343 16.5116 1.06332 16.8029 1.19579 17.0656L2.08868 16.6153ZM7.04332 19.3791L6.35888 18.6501C6.16444 18.8326 6.06147 18.9282 5.98291 18.9908C5.91461 19.0453 5.9297 19.0205 5.99321 19.0011L6.28497 19.9576L6.57673 20.9141C6.85079 20.8305 7.06246 20.6879 7.2294 20.5549C7.38608 20.43 7.557 20.2685 7.72775 20.1082L7.04332 19.3791ZM4.95668 19.3791L4.27224 20.1082C4.44299 20.2685 4.61392 20.43 4.7706 20.5549C4.93754 20.6879 5.14921 20.8305 5.42328 20.9141L5.71503 19.9576L6.00679 19.0011C6.0703 19.0205 6.08539 19.0453 6.01709 18.9908C5.93853 18.9282 5.83556 18.8326 5.64112 18.6501L4.95668 19.3791ZM6.28497 19.9576L5.99321 19.0011C5.9963 19.0002 5.9985 19 6 19C6.0015 19 6.0037 19.0002 6.00679 19.0011L5.71503 19.9576L5.42328 20.9141C5.79867 21.0286 6.20133 21.0286 6.57672 20.9141L6.28497 19.9576ZM9.81619 15.6277L8.88754 15.9987C8.91844 16.0761 8.9422 16.1356 8.96205 16.1873C8.98184 16.2388 8.99361 16.2718 9.00092 16.2944C9.01486 16.3375 9.00103 16.3086 9.00003 16.248L9.99989 16.2315L10.9998 16.2149C10.9935 15.8368 10.8354 15.4835 10.7448 15.2568L9.81619 15.6277ZM9.47797 17.0935L10.1624 17.8226C10.3476 17.6488 10.6369 17.3973 10.8042 17.0656L9.91132 16.6153L9.01843 16.165C9.04348 16.1154 9.06509 16.099 9.03044 16.136C9.0126 16.155 8.98632 16.1815 8.94517 16.2211C8.90393 16.2608 8.85568 16.3061 8.79354 16.3645L9.47797 17.0935ZM9.99989 16.2315L9.00003 16.248C8.99951 16.2166 9.00688 16.1879 9.01842 16.1651L9.91132 16.6153L10.8042 17.0656C10.9367 16.8029 11.0047 16.5116 10.9998 16.2149L9.99989 16.2315ZM7.74401 13V14C7.9407 14 8.0423 14.0005 8.11548 14.0051C8.17753 14.009 8.16107 14.0133 8.11901 13.9983L8.45542 13.0566L8.79183 12.1149C8.43071 11.9859 8.03496 12 7.74401 12V13ZM9.12555 13.8988L10.0542 13.5278C9.95511 13.2798 9.82072 12.899 9.54838 12.6089L8.8193 13.2933L8.09022 13.9778C8.05193 13.937 8.04403 13.9099 8.06558 13.9545C8.07706 13.9783 8.09263 14.0132 8.1154 14.068C8.13824 14.123 8.1638 14.1869 8.1969 14.2697L9.12555 13.8988ZM8.45542 13.0566L8.11901 13.9983C8.11377 13.9964 8.10286 13.9912 8.09022 13.9778L8.8193 13.2933L9.54838 12.6089C9.3377 12.3845 9.07701 12.2168 8.79183 12.1149L8.45542 13.0566ZM4.25599 13V12C3.96504 12 3.56929 11.9859 3.20817 12.1149L3.54458 13.0566L3.88099 13.9983C3.83893 14.0133 3.82247 14.009 3.88452 14.0051C3.9577 14.0005 4.0593 14 4.25599 14V13ZM2.87445 13.8988L3.8031 14.2697C3.8362 14.1869 3.86176 14.123 3.8846 14.068C3.90737 14.0132 3.92294 13.9783 3.93442 13.9545C3.95597 13.9099 3.94807 13.937 3.90978 13.9778L3.1807 13.2933L2.45162 12.6089C2.17928 12.899 2.04489 13.2798 1.9458 13.5278L2.87445 13.8988ZM3.54458 13.0566L3.20817 12.1149C2.92299 12.2168 2.6623 12.3845 2.45162 12.6089L3.1807 13.2933L3.90978 13.9778C3.89714 13.9912 3.88623 13.9964 3.88099 13.9983L3.54458 13.0566Z" fill="currentColor"></path></svg></span>
+          <span style="font:{{ navCreditRatesFont }};color:{{ navCreditRatesTextColor }}">Credit Rates</span>
+        </div>
         <div style="font:600 11px var(--font-ui);color:#9A9AA6;padding:14px 10px 6px">Settings</div>
         <div style="display:flex;align-items:center;gap:11px;padding:8px 10px;border-radius:9px;cursor:pointer;transition:.14s" style-hover="background:rgba(20,20,30,0.045)">
           <span style="width:18px;height:18px;flex:none;display:flex;align-items:center;justify-content:center;color:#4D4D4D"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6h-6M9 6H3M20 12h-8M7 12H3M20 18h-5M11 18H3"></path><path d="M11.5 4v4M7 10v4M15 16v4"></path></svg></span>
@@ -916,9 +922,9 @@ input:focus,textarea:focus{outline:none}
               </div>
             </div>
           </sc-if>
-          <div style="display:flex;gap:14px;flex-wrap:wrap">
+          <div class="om-rt-grid">
             <sc-for list="{{ rtCards }}" as="tc" hint-placeholder-count="3">
-              <div style="flex:1;min-width:210px;max-width:270px;background:#fff;border:1px solid rgba(20,20,30,0.06);border-radius:16px;padding:18px">
+              <div style="background:#fff;border:1px solid rgba(20,20,30,0.06);border-radius:16px;padding:18px">
                 <div style="display:flex;align-items:center;justify-content:space-between">
                   <span style="width:8px;height:8px;border-radius:50%;background:{{ tc.color }};flex:none"></span>
                   <button title="Team actions" style="{{ rowMenuTriggerStyle }}" style-hover="background:rgba(20,20,30,0.06);color:#16161A">
@@ -950,7 +956,7 @@ input:focus,textarea:focus{outline:none}
               </div>
             </sc-for>
             <sc-if value="{{ rtEditable }}" hint-placeholder-val="{{ false }}">
-              <div onClick="{{ rtOnNewTeamToggle }}" style="flex:1;min-width:210px;max-width:270px;background:#FAFAFB;border:1.5px dashed rgba(20,20,30,0.16);border-radius:16px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;color:#6B6B78" style-hover="border-color:#6148F9;color:#4F39D8;background:#FAFAFF">
+              <div onClick="{{ rtOnNewTeamToggle }}" style="background:#FAFAFB;border:1.5px dashed rgba(20,20,30,0.16);border-radius:16px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;color:#6B6B78;box-sizing:border-box" style-hover="border-color:#6148F9;color:#4F39D8;background:#FAFAFF">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
                 <span style="font:600 13px var(--font-ui)">New team</span>
               </div>
@@ -2443,122 +2449,6 @@ input:focus,textarea:focus{outline:none}
               </sc-for>
             </div>
 
-            <div style="border-top:1px solid rgba(0,0,29,0.08);margin:24px 0"></div>
-
-            <div>
-              <div onClick="{{ billOnToggleCreditRates }}" style="display:flex;align-items:flex-start;justify-content:space-between;cursor:pointer;gap:16px">
-                <div>
-                  <div style="font:600 15px var(--font-ui);color:#16161A">Credit rates</div>
-                  <div style="font:400 12.5px var(--font-ui);color:#8A8A96;margin-top:4px">Reference rates for every AI model and provider — informational, not billed separately.</div>
-                </div>
-                <span style="{{ billCreditRatesChevronStyle }};flex:none;margin-top:2px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg></span>
-              </div>
-              <sc-if value="{{ billCreditRatesExpanded }}" hint-placeholder-val="{{ false }}">
-                <div style="margin-top:16px">
-
-                  <div style="font:600 13.5px var(--font-ui);color:#16161A;margin-bottom:2px">AI Credit Consumption Table</div>
-                  <div style="font:400 12px var(--font-ui);color:#8A8A96;margin-bottom:10px">Credits per unit, by model and service.</div>
-                  <input value="{{ billRateFilterValue }}" onChange="{{ billOnRateFilterChange }}" placeholder="Filter by model name" style="height:34px;padding:0 12px;border-radius:8px;border:1px solid rgba(0,0,29,0.14);font:500 13px var(--font-ui);color:#16161A;margin-bottom:12px;width:240px;box-sizing:border-box">
-                  <div style="{{ billPanelStyle }};padding:0;overflow-x:auto;margin-bottom:24px">
-                    <div style="{{ billRateGridStyle }};border-bottom:1px solid rgba(20,20,30,0.07);background:#FAFAFB">
-                      <span style="position:sticky;left:0;background:#FAFAFB;font:600 10.5px var(--font-ui);color:#6B6B78;text-transform:uppercase;letter-spacing:.06em;padding:12px 0 12px 16px">Model</span>
-                      <sc-for list="{{ billRateServiceCols }}" as="col" hint-placeholder-count="7">
-                        <span style="font:600 10.5px var(--font-ui);color:#6B6B78;text-transform:uppercase;letter-spacing:.06em;padding:12px 8px;text-align:right">{{ col.label }}</span>
-                      </sc-for>
-                    </div>
-                    <sc-if value="{{ billRateModelsEmpty }}" hint-placeholder-val="{{ false }}">
-                      <div style="padding:24px;text-align:center;font:400 13px var(--font-ui);color:#8A8A96">No models match "{{ billRateFilterValue }}".</div>
-                    </sc-if>
-                    <sc-for list="{{ billRateModelRows }}" as="mrow" hint-placeholder-count="23">
-                      <div style="{{ billRateGridStyle }};border-bottom:1px solid rgba(20,20,30,0.06)">
-                        <span style="position:sticky;left:0;background:#fff;font:500 12.5px var(--font-ui);color:#3A3A44;padding:11px 0 11px 16px">{{ mrow.name }}</span>
-                        <sc-for list="{{ mrow.cells }}" as="cell" hint-placeholder-count="7">
-                          <span title="{{ cell.flagTitle }}" style="font:400 12.5px var(--font-ui);color:#16161A;padding:11px 8px;text-align:right;font-variant-numeric:tabular-nums">{{ cell.label }}</span>
-                        </sc-for>
-                      </div>
-                    </sc-for>
-                  </div>
-
-                  <div style="font:600 13.5px var(--font-ui);color:#16161A;margin-bottom:2px">Human Editing Credit Consumption Table</div>
-                  <div style="font:400 12px var(--font-ui);color:#8A8A96;margin-bottom:10px">By language cluster — structure pending a separate decision upstream; not redesigned this pass.</div>
-                  <div style="{{ billPanelStyle }};padding:0;overflow-x:auto;margin-bottom:14px">
-                    <div style="{{ billHumanEditGridStyle }};border-bottom:1px solid rgba(20,20,30,0.07);background:#FAFAFB">
-                      <span style="font:600 10.5px var(--font-ui);color:#6B6B78;text-transform:uppercase;letter-spacing:.06em;padding:12px 0 12px 16px">Service</span>
-                      <sc-for list="{{ billHumanEditClusterCols }}" as="cl" hint-placeholder-count="4">
-                        <span style="font:600 10.5px var(--font-ui);color:#6B6B78;text-transform:uppercase;letter-spacing:.06em;padding:12px 8px;text-align:right">{{ cl.name }}</span>
-                      </sc-for>
-                    </div>
-                    <sc-for list="{{ billHumanEditRows }}" as="hrow" hint-placeholder-count="4">
-                      <div style="{{ billHumanEditGridStyle }};border-bottom:1px solid rgba(20,20,30,0.06)">
-                        <span style="font:500 12.5px var(--font-ui);color:#3A3A44;padding:11px 0 11px 16px">{{ hrow.service }}</span>
-                        <sc-for list="{{ hrow.cells }}" as="c" hint-placeholder-count="4">
-                          <span style="font:400 12.5px var(--font-ui);color:#16161A;padding:11px 8px;text-align:right;font-variant-numeric:tabular-nums">{{ c }}</span>
-                        </sc-for>
-                      </div>
-                    </sc-for>
-                  </div>
-                  <div style="{{ billPanelStyle }};margin-bottom:10px">
-                    <div style="{{ billRow0Style }}">
-                      <div style="font:600 12.5px var(--font-ui);color:#3A3A44;margin-bottom:6px">Language Clusters</div>
-                      <sc-for list="{{ billHumanEditClusterCols }}" as="cl2" hint-placeholder-count="4">
-                        <div style="font:400 12px var(--font-ui);color:#5B5B66;margin-top:4px"><b style="color:#16161A">{{ cl2.name }}:</b> {{ cl2.languages }}</div>
-                      </sc-for>
-                    </div>
-                    <div style="{{ billRowBorderStyle }}">
-                      <div style="font:600 12.5px var(--font-ui);color:#3A3A44;margin-bottom:4px">Note on Credit Logic</div>
-                      <div style="font:400 12px var(--font-ui);color:#8A8A96;line-height:1.5">Rates scale with the source→target cluster pairing. The shape shown here is a simplified placeholder — the real per-pair matrix is still pending a decision upstream.</div>
-                    </div>
-                  </div>
-
-                  <div style="margin:24px 0;height:1px;background:rgba(20,20,30,0.08)"></div>
-
-                  <div style="font:600 13.5px var(--font-ui);color:#16161A;margin-bottom:10px">Credit Pricing List</div>
-                  <sc-for list="{{ billPricingAccordions }}" as="acc" hint-placeholder-count="3">
-                    <div style="{{ billPanelStyle }};margin-bottom:12px;padding:0">
-                      <div onClick="{{ acc.onToggle }}" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:16px 18px">
-                        <span style="font:600 13.5px var(--font-ui);color:#16161A">{{ acc.title }}</span>
-                        <span style="{{ acc.chevronStyle }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg></span>
-                      </div>
-                      <sc-if value="{{ acc.isOpen }}" hint-placeholder-val="{{ true }}">
-                        <sc-for list="{{ acc.providers }}" as="p" hint-placeholder-count="3">
-                          <div style="{{ billRowBorderStyle }};display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:14px 18px">
-                            <div style="min-width:0">
-                              <div style="font:600 13px var(--font-ui);color:#16161A">{{ p.name }}</div>
-                              <div style="font:400 12px var(--font-ui);color:#8A8A96;margin-top:2px">{{ p.blurb }}</div>
-                              <sc-if value="{{ p.gapFlag }}" hint-placeholder-val="{{ false }}">
-                                <div style="margin-top:6px;font:500 11.5px var(--font-ui);color:#5B5B66">Gap: no corresponding row in the AI Credit Consumption Table.</div>
-                              </sc-if>
-                              <sc-if value="{{ p.conflictFlag }}" hint-placeholder-val="{{ false }}">
-                                <div style="margin-top:6px;font:500 11.5px var(--font-ui);color:#5B5B66">Sources disagree: {{ p.perMinLabel }} here vs. 1,034/min in the AI Credit Consumption Table.</div>
-                              </sc-if>
-                              <sc-if value="{{ p.namingFlag }}" hint-placeholder-val="{{ false }}">
-                                <div style="margin-top:6px;font:500 11.5px var(--font-ui);color:#5B5B66">{{ p.namingNote }}</div>
-                              </sc-if>
-                            </div>
-                            <div style="text-align:right;flex:none;white-space:nowrap">
-                              <div style="font:600 13px var(--font-ui);color:#16161A;font-variant-numeric:tabular-nums">{{ p.perMinLabel }}</div>
-                              <sc-if value="{{ acc.perWord }}" hint-placeholder-val="{{ false }}">
-                                <div style="font:400 12px var(--font-ui);color:#5B5B66;margin-top:2px;font-variant-numeric:tabular-nums">{{ p.perWordLabel }}</div>
-                              </sc-if>
-                            </div>
-                          </div>
-                        </sc-for>
-                      </sc-if>
-                    </div>
-                  </sc-for>
-
-                  <div style="{{ billNoticeStyle }};margin-top:8px">
-                    <div style="font:600 12.5px var(--font-ui);color:#3A3A44;margin-bottom:6px">Open questions for Dan — not resolved here</div>
-                    <div style="font:400 12px var(--font-ui);color:#5B5B66;line-height:1.6">
-                      Gemini TTS: sources disagree — 1,024/min (Credit Pricing List) vs. 1,034/min (AI Credit Consumption Table).<br>
-                      DeepL and DeepL Extended: both populated in the Credit Pricing List, but neither has a matching row in the AI Credit Consumption Table — gaps, not filled in.<br>
-                      "Agentic Localization" (Credit Pricing List) is not a simple rename of "Ollang Agentic AI" (Consumption Table): two rates match directly (Subtitle Translation 739/min, Document Translation 10/word), but Ollang Agentic AI's Speech to Text rate (544/min) instead matches a different provider, "Agentic STT" — likely a bundle across two agents, not a rename. There is no Speech to Text column in the Translation Agents accordion.
-                    </div>
-                  </div>
-
-                </div>
-              </sc-if>
-            </div>
           </div>
         </sc-if>
 
@@ -2791,6 +2681,118 @@ input:focus,textarea:focus{outline:none}
       </div>
 
   </sc-if></div>
+
+  <div style="{{ creditRatesPane }}">
+    <div data-scrollpane="1" style="flex:1;min-height:0;overflow-y:auto">
+      <div style="max-width:1180px;margin:0 auto;padding:26px 24px 44px">
+        <div style="margin-bottom:24px">
+          <h1 style="font:700 24px var(--font-display);color:#1A1A22;margin:0;letter-spacing:-.02em">Credit Rates</h1>
+          <p style="font:400 13px var(--font-ui);color:#6B6B78;margin:6px 0 0">Reference rates for every AI model and provider — informational, not billed separately.</p>
+        </div>
+
+        <div style="font:600 13.5px var(--font-ui);color:#16161A;margin-bottom:2px">AI Credit Consumption Table</div>
+        <div style="font:400 12px var(--font-ui);color:#8A8A96;margin-bottom:10px">Credits per unit, by model and service.</div>
+        <input value="{{ billRateFilterValue }}" onChange="{{ billOnRateFilterChange }}" placeholder="Filter by model name" style="height:34px;padding:0 12px;border-radius:8px;border:1px solid rgba(0,0,29,0.14);font:500 13px var(--font-ui);color:#16161A;margin-bottom:12px;width:240px;box-sizing:border-box">
+        <div style="{{ billPanelStyle }};padding:0;overflow-x:auto;margin-bottom:24px">
+          <div style="{{ billRateGridStyle }};border-bottom:1px solid rgba(20,20,30,0.07);background:#FAFAFB">
+            <span style="position:sticky;left:0;background:#FAFAFB;font:600 10.5px var(--font-ui);color:#6B6B78;text-transform:uppercase;letter-spacing:.06em;padding:12px 0 12px 16px">Model</span>
+            <sc-for list="{{ billRateServiceCols }}" as="col" hint-placeholder-count="7">
+              <span style="font:600 10.5px var(--font-ui);color:#6B6B78;text-transform:uppercase;letter-spacing:.06em;padding:12px 8px;text-align:right">{{ col.label }}</span>
+            </sc-for>
+          </div>
+          <sc-if value="{{ billRateModelsEmpty }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:24px;text-align:center;font:400 13px var(--font-ui);color:#8A8A96">No models match "{{ billRateFilterValue }}".</div>
+          </sc-if>
+          <sc-for list="{{ billRateModelRows }}" as="mrow" hint-placeholder-count="23">
+            <div style="{{ billRateGridStyle }};border-bottom:1px solid rgba(20,20,30,0.06)">
+              <span style="position:sticky;left:0;background:#fff;font:500 12.5px var(--font-ui);color:#3A3A44;padding:11px 0 11px 16px">{{ mrow.name }}</span>
+              <sc-for list="{{ mrow.cells }}" as="cell" hint-placeholder-count="7">
+                <span title="{{ cell.flagTitle }}" style="font:400 12.5px var(--font-ui);color:#16161A;padding:11px 8px;text-align:right;font-variant-numeric:tabular-nums">{{ cell.label }}</span>
+              </sc-for>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="font:600 13.5px var(--font-ui);color:#16161A;margin-bottom:2px">Human Editing Credit Consumption Table</div>
+        <div style="font:400 12px var(--font-ui);color:#8A8A96;margin-bottom:10px">By language cluster — structure pending a separate decision upstream; not redesigned this pass.</div>
+        <div style="{{ billPanelStyle }};padding:0;overflow-x:auto;margin-bottom:14px">
+          <div style="{{ billHumanEditGridStyle }};border-bottom:1px solid rgba(20,20,30,0.07);background:#FAFAFB">
+            <span style="font:600 10.5px var(--font-ui);color:#6B6B78;text-transform:uppercase;letter-spacing:.06em;padding:12px 0 12px 16px">Service</span>
+            <sc-for list="{{ billHumanEditClusterCols }}" as="cl" hint-placeholder-count="4">
+              <span style="font:600 10.5px var(--font-ui);color:#6B6B78;text-transform:uppercase;letter-spacing:.06em;padding:12px 8px;text-align:right">{{ cl.name }}</span>
+            </sc-for>
+          </div>
+          <sc-for list="{{ billHumanEditRows }}" as="hrow" hint-placeholder-count="4">
+            <div style="{{ billHumanEditGridStyle }};border-bottom:1px solid rgba(20,20,30,0.06)">
+              <span style="font:500 12.5px var(--font-ui);color:#3A3A44;padding:11px 0 11px 16px">{{ hrow.service }}</span>
+              <sc-for list="{{ hrow.cells }}" as="c" hint-placeholder-count="4">
+                <span style="font:400 12.5px var(--font-ui);color:#16161A;padding:11px 8px;text-align:right;font-variant-numeric:tabular-nums">{{ c }}</span>
+              </sc-for>
+            </div>
+          </sc-for>
+        </div>
+        <div style="{{ billPanelStyle }};margin-bottom:10px">
+          <div style="{{ billRow0Style }}">
+            <div style="font:600 12.5px var(--font-ui);color:#3A3A44;margin-bottom:6px">Language Clusters</div>
+            <sc-for list="{{ billHumanEditClusterCols }}" as="cl2" hint-placeholder-count="4">
+              <div style="font:400 12px var(--font-ui);color:#5B5B66;margin-top:4px"><b style="color:#16161A">{{ cl2.name }}:</b> {{ cl2.languages }}</div>
+            </sc-for>
+          </div>
+          <div style="{{ billRowBorderStyle }}">
+            <div style="font:600 12.5px var(--font-ui);color:#3A3A44;margin-bottom:4px">Note on Credit Logic</div>
+            <div style="font:400 12px var(--font-ui);color:#8A8A96;line-height:1.5">Rates scale with the source→target cluster pairing. The shape shown here is a simplified placeholder — the real per-pair matrix is still pending a decision upstream.</div>
+          </div>
+        </div>
+
+        <div style="margin:24px 0;height:1px;background:rgba(20,20,30,0.08)"></div>
+
+        <div style="font:600 13.5px var(--font-ui);color:#16161A;margin-bottom:10px">Credit Pricing List</div>
+        <sc-for list="{{ billPricingAccordions }}" as="acc" hint-placeholder-count="3">
+          <div style="{{ billPanelStyle }};margin-bottom:12px;padding:0">
+            <div onClick="{{ acc.onToggle }}" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:16px 18px">
+              <span style="font:600 13.5px var(--font-ui);color:#16161A">{{ acc.title }}</span>
+              <span style="{{ acc.chevronStyle }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg></span>
+            </div>
+            <sc-if value="{{ acc.isOpen }}" hint-placeholder-val="{{ true }}">
+              <sc-for list="{{ acc.providers }}" as="p" hint-placeholder-count="3">
+                <div style="{{ billRowBorderStyle }};display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:14px 18px">
+                  <div style="min-width:0">
+                    <div style="font:600 13px var(--font-ui);color:#16161A">{{ p.name }}</div>
+                    <div style="font:400 12px var(--font-ui);color:#8A8A96;margin-top:2px">{{ p.blurb }}</div>
+                    <sc-if value="{{ p.gapFlag }}" hint-placeholder-val="{{ false }}">
+                      <div style="margin-top:6px;font:500 11.5px var(--font-ui);color:#5B5B66">Gap: no corresponding row in the AI Credit Consumption Table.</div>
+                    </sc-if>
+                    <sc-if value="{{ p.conflictFlag }}" hint-placeholder-val="{{ false }}">
+                      <div style="margin-top:6px;font:500 11.5px var(--font-ui);color:#5B5B66">Sources disagree: {{ p.perMinLabel }} here vs. 1,034/min in the AI Credit Consumption Table.</div>
+                    </sc-if>
+                    <sc-if value="{{ p.namingFlag }}" hint-placeholder-val="{{ false }}">
+                      <div style="margin-top:6px;font:500 11.5px var(--font-ui);color:#5B5B66">{{ p.namingNote }}</div>
+                    </sc-if>
+                  </div>
+                  <div style="text-align:right;flex:none;white-space:nowrap">
+                    <div style="font:600 13px var(--font-ui);color:#16161A;font-variant-numeric:tabular-nums">{{ p.perMinLabel }}</div>
+                    <sc-if value="{{ acc.perWord }}" hint-placeholder-val="{{ false }}">
+                      <div style="font:400 12px var(--font-ui);color:#5B5B66;margin-top:2px;font-variant-numeric:tabular-nums">{{ p.perWordLabel }}</div>
+                    </sc-if>
+                  </div>
+                </div>
+              </sc-for>
+            </sc-if>
+          </div>
+        </sc-for>
+
+        <div style="{{ billNoticeStyle }};margin-top:8px">
+          <div style="font:600 12.5px var(--font-ui);color:#3A3A44;margin-bottom:6px">Open questions for Dan — not resolved here</div>
+          <div style="font:400 12px var(--font-ui);color:#5B5B66;line-height:1.6">
+            Gemini TTS: sources disagree — 1,024/min (Credit Pricing List) vs. 1,034/min (AI Credit Consumption Table).<br>
+            DeepL and DeepL Extended: both populated in the Credit Pricing List, but neither has a matching row in the AI Credit Consumption Table — gaps, not filled in.<br>
+            "Agentic Localization" (Credit Pricing List) is not a simple rename of "Ollang Agentic AI" (Consumption Table): two rates match directly (Subtitle Translation 739/min, Document Translation 10/word), but Ollang Agentic AI's Speech to Text rate (544/min) instead matches a different provider, "Agentic STT" — likely a bundle across two agents, not a rename. There is no Speech to Text column in the Translation Agents accordion.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
 
   <div style="{{ wizardPane }}">
   <div style="position:relative;z-index:61;flex:none;display:flex;justify-content:center;padding:15px 24px 13px;background:#fff;border-bottom:1px solid rgba(20,20,30,0.07)">
@@ -6133,6 +6135,12 @@ class Component extends DCLogic {
       case 'invoice': return s(pa('M7 3h10v18l-2.5-1.5L12 21l-2.5-1.5L7 21z'), l({ x1: 9, y1: 8, x2: 15, y2: 8 }), l({ x1: 9, y1: 12, x2: 15, y2: 12 }));
       case 'limit': return s(pa('M12 2l8 4v5c0 5.2-3.5 9-8 10-4.5-1-8-4.8-8-10V6z'));
       case 'layers': return s(pa('M12 3l9 5-9 5-9-5z'), pa('M3 13l9 5 9-5'));
+      // Percent glyph reads clearly as "rate" at tile size while staying stroke-based like the rest of
+      // this set (the sidebar's Credit Rates icon is filled artwork, not a fit for this stroked family).
+      case 'rates': return E('svg', { width: size || 19, height: size || 19, viewBox: '0 0 24 24', fill: color || 'currentColor' },
+        E('path', { key: 1, d: 'M21 18V6C21 5.44772 20.5523 5 20 5H4C3.44772 5 3 5.44772 3 6V10C3 10.5523 2.55228 11 2 11C1.44772 11 1 10.5523 1 10V6C1 4.34315 2.34315 3 4 3H20C21.6569 3 23 4.34315 23 6V18C23 19.6569 21.6569 21 20 21H12C11.4477 21 11 20.5523 11 20C11 19.4477 11.4477 19 12 19H20C20.5523 19 21 18.5523 21 18ZM13 16V8C13 7.44772 13.4477 7 14 7C14.5523 7 15 7.44772 15 8V16C15 16.5523 14.5523 17 14 17C13.4477 17 13 16.5523 13 16ZM17 16V10C17 9.44772 17.4477 9 18 9C18.5523 9 19 9.44772 19 10V16C19 16.5523 18.5523 17 18 17C17.4477 17 17 16.5523 17 16Z' }),
+        E('path', { key: 2, d: 'M9 10V8C9 7.44772 9.44772 7 10 7C10.5523 7 11 7.44772 11 8V10C11 10.5523 10.5523 11 10 11C9.44772 11 9 10.5523 9 10Z' }),
+        E('path', { key: 3, d: 'M7.97925 12C8.18853 12.0017 8.42512 12.0134 8.65503 12.0732L8.79175 12.1152L9.00074 12.2031C9.13645 12.2703 9.26452 12.3534 9.3816 12.4512L9.54859 12.6094L9.64429 12.7217C9.85369 12.9922 9.96777 13.3113 10.0544 13.5283L10.7449 15.2568C10.8241 15.4551 10.9543 15.7504 10.99 16.0742L10.9998 16.2148L10.99 16.4365C10.9667 16.6557 10.9036 16.8686 10.8044 17.0654C10.6372 17.3972 10.3471 17.6484 10.1619 17.8223L7.7273 20.1084C7.55667 20.2686 7.38582 20.4299 7.22925 20.5547C7.06239 20.6877 6.85078 20.8304 6.57691 20.9141C6.20152 21.0286 5.798 21.0286 5.42261 20.9141C5.14874 20.8304 4.93713 20.6877 4.77027 20.5547C4.6137 20.4299 4.44285 20.2686 4.27222 20.1084L1.83765 17.8223C1.65245 17.6484 1.36237 17.3972 1.19507 17.0654C1.06271 16.8028 0.994857 16.5114 0.99976 16.2148L1.00953 16.0742C1.04526 15.7504 1.17543 15.4551 1.25464 15.2568L1.94605 13.5283C2.04508 13.2804 2.17889 12.8994 2.45093 12.6094C2.66155 12.385 2.92269 12.2171 3.20777 12.1152C3.47869 12.0185 3.76925 12.0021 4.02027 12H7.97925ZM3.91187 14.0039C3.90411 14.0216 3.89506 14.043 3.88453 14.0684C3.86172 14.1233 3.83553 14.1868 3.80249 14.2695L3.11206 15.999C3.08122 16.0762 3.05766 16.1359 3.03785 16.1875C3.03628 16.1916 3.03443 16.1954 3.03296 16.1992C3.03973 16.2058 3.04665 16.2132 3.05445 16.2207C3.09562 16.2603 3.14383 16.3061 3.20581 16.3643L5.64136 18.6504C5.82121 18.8192 5.92338 18.9129 5.99976 18.9756C6.07614 18.9129 6.17831 18.8192 6.35816 18.6504L8.7937 16.3643C8.85569 16.3061 8.9039 16.2603 8.94507 16.2207C8.95267 16.2134 8.95895 16.2057 8.96558 16.1992C8.96416 16.1955 8.96319 16.1914 8.96167 16.1875C8.94186 16.1359 8.9183 16.0762 8.88745 15.999L8.19703 14.2695C8.16399 14.1868 8.1378 14.1233 8.11499 14.0684C8.10439 14.0428 8.09447 14.0217 8.08667 14.0039C8.0155 14.0007 7.91621 14 7.7439 14H4.25562C4.08252 14 3.98311 14.0007 3.91187 14.0039Z' }));
       default: return null;
     }
   }
@@ -6382,6 +6390,7 @@ class Component extends DCLogic {
     const onProjInPinnedWs = onProj && this.WS_ROWS.some(w => w.id === S.pdWid && w.pinned);
     const onPeople = S.page === 'people';
     const onBilling = S.page === 'billing';
+    const onCR = S.page === 'credit-rates';
     // A12: Billing — the sidebar nav item, the sidebar credit widget's click-through, and the page itself —
     // is role-gated: Owner and Admin only. Manager/Contributor/Viewer keep the balance in the sidebar
     // widget (operationally necessary to know what's left) but the destination doesn't exist for them.
@@ -6486,11 +6495,14 @@ class Component extends DCLogic {
       this.setState({ billToast: 'Redirecting to Stripe Billing Portal\u2026', billToastKind: null });
       setTimeout(() => this.setState({ billToast: null }), 3200);
     };
+    const billOnJumpToRates = () => this.setState({ page: 'credit-rates' });
+    const billOnJumpToRatesFromChangePlan = () => this.setState({ page: 'credit-rates' });
     const billManagePlanLinksRaw = [
       { icon: 'gauge', label: 'Credit Monitoring', sub: 'Spend limits and email notification thresholds', onClick: () => set({ billingView: 'credit-monitoring' }) },
       { icon: 'bill_credits', label: 'Buy Credits', sub: 'Add credits to your balance immediately', onClick: () => set({ billingView: 'buy-credits' }) },
     ].concat(billIsCustom ? [] : [{ icon: 'bill_plan', label: 'Change Plan', sub: 'Compare tiers and switch plans', onClick: () => set({ billingView: 'change-plan' }) }])
-      .concat([{ icon: 'card', label: 'Billing Details', sub: 'Payment methods, billing profile, and tax info \u2014 via Stripe', onClick: billOnBillingDetails }]);
+      .concat([{ icon: 'card', label: 'Billing Details', sub: 'Payment methods, billing profile, and tax info \u2014 via Stripe', onClick: billOnBillingDetails }])
+      .concat([{ icon: 'rates', label: 'Credit Rates', sub: 'Reference rates for every AI model and provider \u2014 informational, not billed separately.', onClick: billOnJumpToRates }]);
     const billManagePlanLinks = billManagePlanLinksRaw.map((l, i) => {
       const tile = this.renderIconTile(l.icon, 34, '#F1F1F4', '#6B6B78');
       return { label: l.label, sub: l.sub, onClick: l.onClick, tileStyle: tile.tileStyle, tileIcon: tile.icon, rowStyle: this.renderPanelRowStyle(i, false) + ';display:flex;align-items:center;gap:14px;cursor:pointer' };
@@ -6827,12 +6839,6 @@ class Component extends DCLogic {
           };
         }),
       }));
-    const billOnToggleCreditRates = () => set({ billCreditRatesExpanded: !S.billCreditRatesExpanded });
-    const billOnJumpToRates = () => this.setState({ billingView: 'home', billCreditRatesExpanded: true });
-    // Change Plan's per-card rates link points at the Manage Plan destination the accordion actually
-    // lives on now (Step 2), kept separate from billOnJumpToRates so home's own "See credit rates" button
-    // (Step 6 territory) isn't touched in this pass.
-    const billOnJumpToRatesFromChangePlan = () => this.setState({ billingView: 'manage-plan', billCreditRatesExpanded: true });
     const billPricingAccordions = this.CREDIT_PRICING.map(acc => {
       const isOpen = S.billPricingOpen[acc.id] !== false; // default open
       return {
@@ -8131,12 +8137,12 @@ class Component extends DCLogic {
           pdOnConfirmCancel: () => this.closePdConfirm(),
         };
       })() : {}),
-      crumbStep: onPeople ? '' : onBilling ? (billView === 'invoice-detail' ? billCurrentInvoice.id : billView === 'manage-plan' ? 'Manage Plan' : billView === 'change-plan' ? 'Change Plan' : billView === 'buy-credits' ? 'Buy Credits' : billView === 'credit-monitoring' ? 'Credit Monitoring' : '') : onWc ? 'New workspace' : onProj ? (S.pdNameOverride || (pdProj || {}).name || 'Project') : onWsd ? wsdRow.name : onWs ? 'All workspaces' : onList ? 'All translations' : onDetails ? row.name : ['File', 'Languages', 'Destination', 'Cost', 'Done'][S.step - 1],
-      crumbStatus: (onList || onWs || onWc || onWsd || onProj || onPeople || onBilling) ? '' : onDetails ? dtStatus.label : (S.step === 5 ? 'Submitted' : 'Draft'),
-      crumbRoot: onPeople ? 'People' : onBilling ? 'Billing' : onWc ? 'Workspaces' : onProj ? 'Workspaces' : onWsd ? 'Workspaces' : onWs ? 'Workspaces' : onList ? 'Translations' : onDetails ? 'Translations' : 'New Translation',
+      crumbStep: onCR ? '' : onPeople ? '' : onBilling ? (billView === 'invoice-detail' ? billCurrentInvoice.id : billView === 'manage-plan' ? 'Manage Plan' : billView === 'change-plan' ? 'Change Plan' : billView === 'buy-credits' ? 'Buy Credits' : billView === 'credit-monitoring' ? 'Credit Monitoring' : '') : onWc ? 'New workspace' : onProj ? (S.pdNameOverride || (pdProj || {}).name || 'Project') : onWsd ? wsdRow.name : onWs ? 'All workspaces' : onList ? 'All translations' : onDetails ? row.name : ['File', 'Languages', 'Destination', 'Cost', 'Done'][S.step - 1],
+      crumbStatus: (onList || onWs || onWc || onWsd || onProj || onPeople || onBilling || onCR) ? '' : onDetails ? dtStatus.label : (S.step === 5 ? 'Submitted' : 'Draft'),
+      crumbRoot: onCR ? 'Credit Rates' : onPeople ? 'People' : onBilling ? 'Billing' : onWc ? 'Workspaces' : onProj ? 'Workspaces' : onWsd ? 'Workspaces' : onWs ? 'Workspaces' : onList ? 'Translations' : onDetails ? 'Translations' : 'New Translation',
       crumbMid: onProj ? pdWs.name : ((billView === 'change-plan' || billView === 'buy-credits' || billView === 'credit-monitoring') ? 'Manage Plan' : ''),
       showCrumbMid: onProj || (onBilling && (billView === 'change-plan' || billView === 'buy-credits' || billView === 'credit-monitoring')),
-      showCrumbStep: !onPeople && !(onBilling && billView === 'home'),
+      showCrumbStep: !onPeople && !onCR && !(onBilling && billView === 'home'),
       onCrumbRoot: (onBilling && billView !== 'home') ? (() => set({ billingView: 'home' })) : (() => {}),
       onCrumbMid: onProj ? (() => set({ page: 'wsdetail', wsDetailWid: S.pdWid, wsDetailTab: 'projects' })) : (() => set({ billingView: 'manage-plan' })),
       // A collection has no single status, so no status badge here. The project hero already carries this
@@ -8152,15 +8158,15 @@ class Component extends DCLogic {
       // \u00a71 correction: the existing global header breadcrumb (crumbRoot/crumbMid/crumbStep above) is
       // the established "Billing / Invoices" pattern \u2014 Billing's sub-pages just need showBack turned on
       // here, not an invented in-content back button. Home has nothing to go back to within Billing.
-      showBack: !onList && !onWs && !onWc && !onWsd && !onPeople && !(onBilling && billView === 'home'),
+      showBack: !onList && !onWs && !onWc && !onWsd && !onPeople && !onCR && !(onBilling && billView === 'home'),
       backTitle: onBilling ? ((billView === 'change-plan' || billView === 'buy-credits' || billView === 'credit-monitoring') ? 'Back to Manage Plan' : 'Back to Billing') : onProj ? 'Back to ' + pdWs.name : onDetails ? 'Back to translations' : onWc ? 'Back to workspaces' : 'Exit to translations',
       onBack2: () => onBilling
         ? set({ billingView: (billView === 'change-plan' || billView === 'buy-credits' || billView === 'credit-monitoring') ? 'manage-plan' : 'home' })
         : onProj
         ? set({ page: 'wsdetail', wsDetailWid: S.pdWid, wsDetailTab: 'projects', navOpen: false })
         : set({ page: onWc ? 'workspaces' : 'list', navOpen: false }),
-      showCrumbStatus: !onList && !onWs && !onWc && !onWsd && !onProj && !onPeople && !onBilling,
-      learnPageLabel: onPeople ? 'Learn about People' : onBilling ? 'Learn about Billing' : onProj ? 'Learn about Projects' : (onWs || onWc || onWsd) ? 'Learn about Workspaces' : 'Learn about Translation',
+      showCrumbStatus: !onList && !onWs && !onWc && !onWsd && !onProj && !onPeople && !onBilling && !onCR,
+      learnPageLabel: onCR ? 'Learn about Credit Rates' : onPeople ? 'Learn about People' : onBilling ? 'Learn about Billing' : onProj ? 'Learn about Projects' : (onWs || onWc || onWsd) ? 'Learn about Workspaces' : 'Learn about Translation',
       onOpenDetails: () => set({ page: 'details', detailTab: 'overview' }),
       onNavTranslations: () => set({ page: S.hasSeenEmptyState.translations ? 'list' : 'list-empty', hasSeenEmptyState: Object.assign({}, S.hasSeenEmptyState, { translations: true }) }),
       onNavWorkspaces: () => set({ page: S.hasSeenEmptyState.workspaces ? 'workspaces' : 'workspaces-empty', hasSeenEmptyState: Object.assign({}, S.hasSeenEmptyState, { workspaces: true }) }),
@@ -8191,7 +8197,13 @@ class Component extends DCLogic {
       navBillingIconColor: onBilling ? '#6148F9' : '#4D4D4D',
       navBillingFont: onBilling ? '600 13.5px var(--font-ui)' : '500 13.5px var(--font-ui)',
       navBillingTextColor: onBilling ? '#4F39D8' : '#3A3A44',
-      wizardPane: (onDetails || onList || onWs || onWc || onWsd || onProj || onPeople || onBilling) ? 'display:none' : 'flex:1;min-height:0;display:flex;flex-direction:column',
+      wizardPane: (onDetails || onList || onWs || onWc || onWsd || onProj || onPeople || onBilling || onCR) ? 'display:none' : 'flex:1;min-height:0;display:flex;flex-direction:column',
+      creditRatesPane: onCR ? 'flex:1;min-height:0;display:flex;flex-direction:column' : 'display:none',
+      onNavCreditRates: () => set({ page: 'credit-rates', navOpen: false }),
+      navCreditRatesStyle: 'display:flex;align-items:center;gap:11px;padding:8px 10px;border-radius:9px;cursor:pointer;transition:.14s;' + (onCR ? 'background:rgba(97,72,249,0.1)' : ''),
+      navCreditRatesIconColor: onCR ? '#6148F9' : '#4D4D4D',
+      navCreditRatesFont: onCR ? '600 13.5px var(--font-ui)' : '500 13.5px var(--font-ui)',
+      navCreditRatesTextColor: onCR ? '#4F39D8' : '#3A3A44',
       onNavPeople: () => set({ page: 'people', navOpen: false, peopleWorkspaceFilter: '' }),
       navPeopleStyle: 'display:flex;align-items:center;gap:11px;padding:8px 10px;border-radius:9px;cursor:pointer;transition:.14s;' + (onPeople ? 'background:rgba(97,72,249,0.1)' : ''),
       navPeopleIconColor: onPeople ? '#6148F9' : '#4D4D4D',
@@ -9104,9 +9116,7 @@ class Component extends DCLogic {
       billOnUsageTabOllang: () => set({ billUsageTab: 'ollang' }), billOnUsageTabHitl: () => set({ billUsageTab: 'hitl' }),
       billUsageTabOllangStyle: billUsageTabBtnStyle(billUsageTab === 'ollang'), billUsageTabHitlStyle: billUsageTabBtnStyle(billUsageTab === 'hitl'),
 
-      // ---- \u00a77 Credit rates ----
-      billCreditRatesExpanded: !!S.billCreditRatesExpanded, billOnToggleCreditRates,
-      billCreditRatesChevronStyle: 'display:inline-block;transition:.15s;color:#8A8A96;' + (S.billCreditRatesExpanded ? 'transform:rotate(180deg)' : ''),
+      // ---- \u00a77 Credit rates (now on the Library > Credit Rates page) ----
       billRateServiceCols: this.CREDIT_RATE_SERVICES,
       billRateGridStyle: 'display:grid;grid-template-columns:170px repeat(7,112px);gap:0;min-width:954px',
       billRateFilterValue, billOnRateFilterChange: e => set({ billRateFilter: e.target.value }),

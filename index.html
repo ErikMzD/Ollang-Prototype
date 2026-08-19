@@ -802,7 +802,8 @@ input:focus,textarea:focus{outline:none}
                 <input value="{{ peopleInviteEmail }}" onChange="{{ peopleInviteOnEmail }}" placeholder="name@company.com" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui);color:#16161A;margin-bottom:14px">
                 <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Person types</label>
                 <div style="position:relative;margin-bottom:8px" data-pop="1">
-                  <input value="{{ peopleInviteRoleAdd.search }}" onChange="{{ peopleInviteRoleAdd.onSearch }}" onClick="{{ peopleInviteRoleAdd.onToggle }}" placeholder="Add a person type" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui)">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A8A96" stroke-width="2" stroke-linecap="round" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);pointer-events:none"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                  <input value="{{ peopleInviteRoleAdd.search }}" onChange="{{ peopleInviteRoleAdd.onSearch }}" onClick="{{ peopleInviteRoleAdd.onToggle }}" placeholder="Add a person type" style="width:100%;height:38px;padding:0 11px 0 34px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui)">
                   <sc-if value="{{ peopleInviteRoleAdd.open }}" hint-placeholder-val="{{ false }}">
                     <div style="position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:30;background:#fff;border:1px solid rgba(0,0,29,0.12);border-radius:11px;box-shadow:0 14px 32px -8px rgba(16,16,20,0.28);padding:8px;max-height:200px;overflow-y:auto">
                       <sc-for list="{{ peopleInviteRoleAdd.options }}" as="op" hint-placeholder-count="3">
@@ -821,7 +822,7 @@ input:focus,textarea:focus{outline:none}
                     </sc-for>
                   </div>
                 </sc-if>
-                <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Workspace access</label>
+                <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Spaces</label>
                 <div style="border:1px solid rgba(0,0,29,0.08);border-radius:10px;margin-bottom:8px">
                   <sc-for list="{{ peopleInviteWorkspaceRows }}" as="wr" hint-placeholder-count="3">
                     <div style="{{ wr.rowStyle }}">
@@ -830,7 +831,7 @@ input:focus,textarea:focus{outline:none}
                     </div>
                   </sc-for>
                 </div>
-                <div style="font:400 12px var(--font-ui);color:#8A8A96;line-height:1.5;margin-bottom:14px">Workspace access controls where this person can work. Review Teams can be assigned after they accept.</div>
+                <div style="font:400 12px var(--font-ui);color:#8A8A96;line-height:1.5;margin-bottom:14px">Space access controls where this person can work. Review Teams can be assigned after they accept.</div>
                 <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Permission preset</label>
                 <select value="{{ peopleInvitePermissionPreset }}" onChange="{{ peopleInviteOnPermissionPreset }}" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui);color:#16161A;background:#fff">
                   <sc-for list="{{ peopleInvitePresetOptions }}" as="opt" hint-placeholder-count="3">
@@ -873,8 +874,33 @@ input:focus,textarea:focus{outline:none}
                   <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Name</label>
                   <input value="{{ spNewSpaceName }}" onChange="{{ spOnNewSpaceName }}" placeholder="e.g. Design" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui);margin-bottom:14px">
                   <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Description</label>
-                  <input value="{{ spNewSpaceDesc }}" onChange="{{ spOnNewSpaceDesc }}" placeholder="What this space is for" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui)">
-                  <div style="font:400 12px var(--font-ui);color:#8A8A96;line-height:1.5;margin-top:12px">This is a placeholder for Space creation pending the full field set.</div>
+                  <input value="{{ spNewSpaceDesc }}" onChange="{{ spOnNewSpaceDesc }}" placeholder="What this space is for" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui);margin-bottom:14px">
+                  <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Members</label>
+                  <div style="position:relative" data-pop="1">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A8A96" stroke-width="2" stroke-linecap="round" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);pointer-events:none"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input value="{{ spNewSpaceMembersField.addSearch }}" onChange="{{ spNewSpaceMembersField.onAddSearch }}" onClick="{{ spNewSpaceMembersField.onAddToggle }}" placeholder="Search and add people" style="width:100%;height:38px;padding:0 11px 0 34px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui)">
+                    <sc-if value="{{ spNewSpaceMembersField.addOpen }}" hint-placeholder-val="{{ false }}">
+                      <div style="position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:30;background:#fff;border:1px solid rgba(0,0,29,0.12);border-radius:11px;box-shadow:0 14px 32px -8px rgba(16,16,20,0.28);padding:8px;max-height:200px;overflow-y:auto">
+                        <sc-for list="{{ spNewSpaceMembersField.addOptions }}" as="op" hint-placeholder-count="3">
+                          <div onClick="{{ op.onClick }}" style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:7px;cursor:pointer" style-hover="background:#F5F5F7">
+                            <span style="width:22px;height:22px;border-radius:50%;background:rgba(97,72,249,0.14);color:#4F39D8;font:600 10px var(--font-ui);display:flex;align-items:center;justify-content:center;flex:none">{{ op.initials }}</span>
+                            <span style="font:500 12.5px var(--font-ui);color:#16161A">{{ op.name }}</span>
+                          </div>
+                        </sc-for>
+                      </div>
+                    </sc-if>
+                  </div>
+                  <sc-if value="{{ spNewSpaceMembersHasChips }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px">
+                      <sc-for list="{{ spNewSpaceMembersField.chips }}" as="ch" hint-placeholder-count="2">
+                        <span style="display:inline-flex;align-items:center;gap:6px;padding:4px 6px 4px 4px;border-radius:999px;background:#F5F5F7">
+                          <sc-if value="{{ ch.avatarHasPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ ch.avatarPhotoUrl }}" style="{{ ch.avatarPhotoStyle }}" alt="{{ ch.name }}"></sc-if><sc-if value="{{ ch.avatarNoPhoto }}" hint-placeholder-val="{{ true }}"><span style="{{ ch.avatarStyle }}">{{ ch.initials }}</span></sc-if>
+                          <span style="font:500 12.5px var(--font-ui);color:#16161A">{{ ch.name }}</span>
+                          <button onClick="{{ ch.onRemoveClick }}" title="Remove" style="width:16px;height:16px;border-radius:50%;border:none;background:transparent;color:#8A8A96;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;line-height:1">×</button>
+                        </span>
+                      </sc-for>
+                    </div>
+                  </sc-if>
                 </div>
                 <div style="display:flex;justify-content:flex-end;gap:9px;padding:16px 20px;border-top:1px solid rgba(0,0,29,0.08)">
                   <button onClick="{{ spOnNewSpaceToggle }}" style="{{ btnSecondaryMd }}" style-hover="{{ btnSecondaryHover }}">Cancel</button>
@@ -897,8 +923,33 @@ input:focus,textarea:focus{outline:none}
                   <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Name</label>
                   <input value="{{ spEditName }}" onChange="{{ spOnEditName }}" placeholder="e.g. Design" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui);margin-bottom:14px">
                   <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Description</label>
-                  <input value="{{ spEditDesc }}" onChange="{{ spOnEditDesc }}" placeholder="What this space is for" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui)">
-                  <div style="font:400 12px var(--font-ui);color:#8A8A96;line-height:1.5;margin-top:12px">This is a placeholder for Space editing pending the full field set.</div>
+                  <input value="{{ spEditDesc }}" onChange="{{ spOnEditDesc }}" placeholder="What this space is for" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui);margin-bottom:14px">
+                  <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Members</label>
+                  <div style="position:relative" data-pop="1">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A8A96" stroke-width="2" stroke-linecap="round" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);pointer-events:none"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input value="{{ spEditMembersField.addSearch }}" onChange="{{ spEditMembersField.onAddSearch }}" onClick="{{ spEditMembersField.onAddToggle }}" placeholder="Search and add people" style="width:100%;height:38px;padding:0 11px 0 34px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui)">
+                    <sc-if value="{{ spEditMembersField.addOpen }}" hint-placeholder-val="{{ false }}">
+                      <div style="position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:30;background:#fff;border:1px solid rgba(0,0,29,0.12);border-radius:11px;box-shadow:0 14px 32px -8px rgba(16,16,20,0.28);padding:8px;max-height:200px;overflow-y:auto">
+                        <sc-for list="{{ spEditMembersField.addOptions }}" as="op" hint-placeholder-count="3">
+                          <div onClick="{{ op.onClick }}" style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:7px;cursor:pointer" style-hover="background:#F5F5F7">
+                            <span style="width:22px;height:22px;border-radius:50%;background:rgba(97,72,249,0.14);color:#4F39D8;font:600 10px var(--font-ui);display:flex;align-items:center;justify-content:center;flex:none">{{ op.initials }}</span>
+                            <span style="font:500 12.5px var(--font-ui);color:#16161A">{{ op.name }}</span>
+                          </div>
+                        </sc-for>
+                      </div>
+                    </sc-if>
+                  </div>
+                  <sc-if value="{{ spEditMembersHasChips }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px">
+                      <sc-for list="{{ spEditMembersField.chips }}" as="ch" hint-placeholder-count="2">
+                        <span style="display:inline-flex;align-items:center;gap:6px;padding:4px 6px 4px 4px;border-radius:999px;background:#F5F5F7">
+                          <sc-if value="{{ ch.avatarHasPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ ch.avatarPhotoUrl }}" style="{{ ch.avatarPhotoStyle }}" alt="{{ ch.name }}"></sc-if><sc-if value="{{ ch.avatarNoPhoto }}" hint-placeholder-val="{{ true }}"><span style="{{ ch.avatarStyle }}">{{ ch.initials }}</span></sc-if>
+                          <span style="font:500 12.5px var(--font-ui);color:#16161A">{{ ch.name }}</span>
+                          <button onClick="{{ ch.onRemoveClick }}" title="Remove" style="width:16px;height:16px;border-radius:50%;border:none;background:transparent;color:#8A8A96;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;line-height:1">×</button>
+                        </span>
+                      </sc-for>
+                    </div>
+                  </sc-if>
                 </div>
                 <div style="display:flex;justify-content:flex-end;gap:9px;padding:16px 20px;border-top:1px solid rgba(0,0,29,0.08)">
                   <button onClick="{{ spOnEditClose }}" style="{{ btnSecondaryMd }}" style-hover="{{ btnSecondaryHover }}">Cancel</button>
@@ -974,7 +1025,8 @@ input:focus,textarea:focus{outline:none}
                   <input value="{{ rtNewTeamDesc }}" onChange="{{ rtOnNewTeamDesc }}" placeholder="What this team reviews" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui);margin-bottom:14px">
                   <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Members</label>
                   <div style="position:relative" data-pop="1">
-                    <input value="{{ rtNewTeamMembersField.addSearch }}" onChange="{{ rtNewTeamMembersField.onAddSearch }}" onClick="{{ rtNewTeamMembersField.onAddToggle }}" placeholder="Search and add people" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui)">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A8A96" stroke-width="2" stroke-linecap="round" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);pointer-events:none"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input value="{{ rtNewTeamMembersField.addSearch }}" onChange="{{ rtNewTeamMembersField.onAddSearch }}" onClick="{{ rtNewTeamMembersField.onAddToggle }}" placeholder="Search and add people" style="width:100%;height:38px;padding:0 11px 0 34px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui)">
                     <sc-if value="{{ rtNewTeamMembersField.addOpen }}" hint-placeholder-val="{{ false }}">
                       <div style="position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:30;background:#fff;border:1px solid rgba(0,0,29,0.12);border-radius:11px;box-shadow:0 14px 32px -8px rgba(16,16,20,0.28);padding:8px;max-height:200px;overflow-y:auto">
                         <sc-for list="{{ rtNewTeamMembersField.addOptions }}" as="op" hint-placeholder-count="3">
@@ -1023,7 +1075,8 @@ input:focus,textarea:focus{outline:none}
                   <input value="{{ rtEditDesc }}" onChange="{{ rtOnEditDesc }}" placeholder="What this team reviews" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui);margin-bottom:14px">
                   <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Members</label>
                   <div style="position:relative" data-pop="1">
-                    <input value="{{ rtEditMembersField.addSearch }}" onChange="{{ rtEditMembersField.onAddSearch }}" onClick="{{ rtEditMembersField.onAddToggle }}" placeholder="Search and add people" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui)">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A8A96" stroke-width="2" stroke-linecap="round" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);pointer-events:none"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input value="{{ rtEditMembersField.addSearch }}" onChange="{{ rtEditMembersField.onAddSearch }}" onClick="{{ rtEditMembersField.onAddToggle }}" placeholder="Search and add people" style="width:100%;height:38px;padding:0 11px 0 34px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui)">
                     <sc-if value="{{ rtEditMembersField.addOpen }}" hint-placeholder-val="{{ false }}">
                       <div style="position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:30;background:#fff;border:1px solid rgba(0,0,29,0.12);border-radius:11px;box-shadow:0 14px 32px -8px rgba(16,16,20,0.28);padding:8px;max-height:200px;overflow-y:auto">
                         <sc-for list="{{ rtEditMembersField.addOptions }}" as="op" hint-placeholder-count="3">
@@ -4530,10 +4583,10 @@ class Component extends DCLogic {
     peopleInviteModalOpen: false, peopleInviteEmail: '', peopleInviteRoles: ['Team member'], peopleInviteRoleSearch: '', peopleInviteRoleAddOpen: false, peopleInvitePermissionPreset: 'View and contribute', peopleInviteWorkspaces: [],
     peopleTab: 'people', waAddOpen: '', waAddSearch: '', peopleWorkspaceFilter: '',
     rtNewTeamOpen: false, rtNewTeamName: '', rtNewTeamDesc: '', rtNewTeamMembers: [], rtNewTeamMemberSearch: '', rtNewTeamMemberAddOpen: false,
-    spNewSpaceOpen: false, spNewSpaceName: '', spNewSpaceDesc: '',
+    spNewSpaceOpen: false, spNewSpaceName: '', spNewSpaceDesc: '', spNewSpaceMembers: [], spNewSpaceMemberSearch: '', spNewSpaceMemberAddOpen: false,
     rtMenuFor: '', spMenuFor: '',
     rtEditOpen: false, rtEditId: '', rtEditName: '', rtEditDesc: '', rtEditMembers: [], rtEditMemberSearch: '', rtEditMemberAddOpen: false,
-    spEditOpen: false, spEditOldName: '', spEditName: '', spEditDesc: '',
+    spEditOpen: false, spEditOldName: '', spEditName: '', spEditDesc: '', spEditMembers: [], spEditMemberSearch: '', spEditMemberAddOpen: false,
   };
 
   DURATION_MIN = 8.4;
@@ -8561,15 +8614,31 @@ class Component extends DCLogic {
           this.REVIEW_TEAMS.push({ id: 'rt' + Date.now(), name, desc: (S.rtNewTeamDesc || '').trim(), members: (S.rtNewTeamMembers || []).slice(), color: '#6148F9' });
           set({ rtNewTeamOpen: false, rtNewTeamName: '', rtNewTeamDesc: '', rtNewTeamMembers: [] });
         };
-        // "New space" modal (Step 6, new): its own scoped state/handlers, not shared with any other
-        // modal. Placeholder shape (Name + Description only) pending Dan's confirmation on the real
-        // Space field set and creation permissions — see waEditableTab comment above.
-        const spAdd = { onToggle: () => set({ spNewSpaceOpen: !S.spNewSpaceOpen, spNewSpaceName: '', spNewSpaceDesc: '' }) };
+        // "New space" modal (Step 6, new; Members added per product owner sign-off on the Space field
+        // set — Name, Description, Members, matching Create review team): its own scoped state/handlers,
+        // not shared with any other modal. Members reuses renderPeopleField, same as review teams.
+        const spNewSpaceMembersAdd = (() => {
+          const q = (S.spNewSpaceMemberSearch || '').trim().toLowerCase();
+          const filtered = this.PEOPLE_DIRECTORY.filter(p => !(S.spNewSpaceMembers || []).includes(p.name) && (!q || p.name.toLowerCase().includes(q)));
+          return {
+            open: S.spNewSpaceMemberAddOpen,
+            onToggle: () => set({ spNewSpaceMemberAddOpen: !S.spNewSpaceMemberAddOpen, spNewSpaceMemberSearch: '' }),
+            search: S.spNewSpaceMemberSearch || '', onSearch: e => set({ spNewSpaceMemberSearch: e.target.value }),
+            hasOptions: filtered.length > 0,
+            options: filtered.map(p => ({ name: p.name, initials: p.initials, onClick: () => set({ spNewSpaceMembers: (S.spNewSpaceMembers || []).concat(p.name), spNewSpaceMemberAddOpen: false, spNewSpaceMemberSearch: '' }) })),
+          };
+        })();
+        const spNewSpaceMembersField = this.renderPeopleField('Members', S.spNewSpaceMembers || [], spNewSpaceMembersAdd, name => set({ spNewSpaceMembers: (S.spNewSpaceMembers || []).filter(n => n !== name) }));
+        const spAdd = { onToggle: () => set({ spNewSpaceOpen: !S.spNewSpaceOpen, spNewSpaceName: '', spNewSpaceDesc: '', spNewSpaceMembers: [] }) };
         const spOnCreate = () => {
           const name = (S.spNewSpaceName || '').trim();
           if (!name) return;
           this.PEOPLE_WORKSPACE_NAMES.push(name);
-          set({ spNewSpaceOpen: false, spNewSpaceName: '', spNewSpaceDesc: '' });
+          (S.spNewSpaceMembers || []).forEach(mName => {
+            const person = this.PEOPLE_DIRECTORY.find(p => p.name === mName);
+            if (person) person.workspaces = (person.workspaces || []).concat(name);
+          });
+          set({ spNewSpaceOpen: false, spNewSpaceName: '', spNewSpaceDesc: '', spNewSpaceMembers: [] });
         };
         // Edit review team modal (Step 7, new) — fully separate component from the Create review team
         // modal above: its own state (rtEditOpen/rtEditId/rtEditName/rtEditDesc/rtEditMembers*) and its own
@@ -8604,13 +8673,30 @@ class Component extends DCLogic {
           this.PEOPLE_DIRECTORY.forEach(p => { if (p.teams) p.teams = p.teams.filter(t => t !== team.name); });
           set({ rtMenuFor: '' });
         };
-        // Edit space modal (Step 7, new) — fully separate component from the Create space modal above.
+        // Edit space modal (Step 7, new) — fully separate component from the Create space modal above,
+        // with its own Members draft (spEditMembers*) seeded from the space's current membership on open.
         // Renames the space in place (updates PEOPLE_WORKSPACE_NAMES and every PEOPLE_DIRECTORY person's
-        // workspaces list referencing the old name, so People table chips/assignments stay consistent).
-        // Description isn't persisted anywhere, matching Create space's own Description field, which also
-        // isn't persisted (see spOnCreate above) — same placeholder limitation, not a new gap.
-        const spOnEditOpen = name => set({ spEditOpen: true, spEditOldName: name, spEditName: name, spEditDesc: '' });
-        const spOnEditClose = () => set({ spEditOpen: false, spEditOldName: '', spEditName: '', spEditDesc: '' });
+        // workspaces list referencing the old name, so People table chips/assignments stay consistent), then
+        // reconciles membership against the edited Members list the same way. Description isn't persisted
+        // anywhere, matching Create space's own Description field (see spOnCreate above).
+        const spEditMembersAdd = (() => {
+          const q = (S.spEditMemberSearch || '').trim().toLowerCase();
+          const filtered = this.PEOPLE_DIRECTORY.filter(p => !(S.spEditMembers || []).includes(p.name) && (!q || p.name.toLowerCase().includes(q)));
+          return {
+            open: S.spEditMemberAddOpen,
+            onToggle: () => set({ spEditMemberAddOpen: !S.spEditMemberAddOpen, spEditMemberSearch: '' }),
+            search: S.spEditMemberSearch || '', onSearch: e => set({ spEditMemberSearch: e.target.value }),
+            hasOptions: filtered.length > 0,
+            options: filtered.map(p => ({ name: p.name, initials: p.initials, onClick: () => set({ spEditMembers: (S.spEditMembers || []).concat(p.name), spEditMemberAddOpen: false, spEditMemberSearch: '' }) })),
+          };
+        })();
+        const spEditMembersField = this.renderPeopleField('Members', S.spEditMembers || [], spEditMembersAdd, name => set({ spEditMembers: (S.spEditMembers || []).filter(n => n !== name) }));
+        const spOnEditOpen = name => set({
+          spEditOpen: true, spEditOldName: name, spEditName: name, spEditDesc: '',
+          spEditMembers: this.PEOPLE_DIRECTORY.filter(p => (p.workspaces || []).includes(name)).map(p => p.name),
+          spEditMemberSearch: '', spEditMemberAddOpen: false,
+        });
+        const spOnEditClose = () => set({ spEditOpen: false, spEditOldName: '', spEditName: '', spEditDesc: '', spEditMembers: [] });
         const spOnSaveEdit = () => {
           const name = (S.spEditName || '').trim();
           if (!name) return;
@@ -8619,6 +8705,13 @@ class Component extends DCLogic {
           if (name !== S.spEditOldName) {
             this.PEOPLE_DIRECTORY.forEach(p => { if (p.workspaces) p.workspaces = p.workspaces.map(w => w === S.spEditOldName ? name : w); });
           }
+          const finalMembers = (S.spEditMembers || []).slice();
+          this.PEOPLE_DIRECTORY.forEach(p => {
+            const isMember = finalMembers.includes(p.name);
+            const has = (p.workspaces || []).includes(name);
+            if (isMember && !has) p.workspaces = (p.workspaces || []).concat(name);
+            if (!isMember && has) p.workspaces = (p.workspaces || []).filter(w => w !== name);
+          });
           spOnEditClose();
         };
         const spOnDelete = name => {
@@ -8647,10 +8740,12 @@ class Component extends DCLogic {
           waEditableTab, spNewSpaceOpen: S.spNewSpaceOpen, spOnNewSpaceToggle: spAdd.onToggle,
           spNewSpaceName: S.spNewSpaceName || '', spOnNewSpaceName: e => set({ spNewSpaceName: e.target.value }),
           spNewSpaceDesc: S.spNewSpaceDesc || '', spOnNewSpaceDesc: e => set({ spNewSpaceDesc: e.target.value }),
+          spNewSpaceMembersField, spNewSpaceMembersHasChips: (S.spNewSpaceMembers || []).length > 0,
           spOnCreate, spCreateDisabled: !(S.spNewSpaceName || '').trim(),
           spEditOpen: S.spEditOpen, spOnEditClose,
           spEditName: S.spEditName || '', spOnEditName: e => set({ spEditName: e.target.value }),
           spEditDesc: S.spEditDesc || '', spOnEditDesc: e => set({ spEditDesc: e.target.value }),
+          spEditMembersField, spEditMembersHasChips: (S.spEditMembers || []).length > 0,
           spOnSaveEdit, spSaveDisabled: !(S.spEditName || '').trim(),
           peopleTabIsTeams, rtCards, rtEditable,
           rtEditOpen: S.rtEditOpen, rtOnEditClose,

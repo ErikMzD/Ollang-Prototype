@@ -38,6 +38,10 @@ input:focus,textarea:focus{outline:none}
 @keyframes omBarPulse{0%,100%{opacity:.35}50%{opacity:1}}
 @keyframes omOrbPulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(97,72,249,0.28)}50%{transform:scale(1.045);box-shadow:0 0 0 8px rgba(97,72,249,0)}}
 .om-step{animation:omFade .28s ease both}
+/* Fixed-column grid — shared by the Review Teams AND Spaces card grids (incl. their New team/New
+   space add-tiles). Do NOT change to auto-fit/auto-fill or add flex/width overrides on grid items —
+   that reintroduces the bug where a lone last-row item (e.g. the add-tile alone in the final row)
+   stretches to fill the row instead of matching card width. This has regressed silently before. */
 .om-rt-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 @media (max-width:720px){
   .om-crumb-root,.om-learn-label{display:none !important}
@@ -796,12 +800,27 @@ input:focus,textarea:focus{outline:none}
               <div style="padding:20px">
                 <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Email</label>
                 <input value="{{ peopleInviteEmail }}" onChange="{{ peopleInviteOnEmail }}" placeholder="name@company.com" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui);color:#16161A;margin-bottom:14px">
-                <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Person type</label>
-                <select value="{{ peopleInvitePersonType }}" onChange="{{ peopleInviteOnPersonType }}" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui);color:#16161A;margin-bottom:14px;background:#fff">
-                  <sc-for list="{{ peopleInviteTypeOptions }}" as="opt" hint-placeholder-count="3">
-                    <option value="{{ opt }}">{{ opt }}</option>
-                  </sc-for>
-                </select>
+                <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Person types</label>
+                <div style="position:relative;margin-bottom:8px" data-pop="1">
+                  <input value="{{ peopleInviteRoleAdd.search }}" onChange="{{ peopleInviteRoleAdd.onSearch }}" onClick="{{ peopleInviteRoleAdd.onToggle }}" placeholder="Add a person type" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui)">
+                  <sc-if value="{{ peopleInviteRoleAdd.open }}" hint-placeholder-val="{{ false }}">
+                    <div style="position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:30;background:#fff;border:1px solid rgba(0,0,29,0.12);border-radius:11px;box-shadow:0 14px 32px -8px rgba(16,16,20,0.28);padding:8px;max-height:200px;overflow-y:auto">
+                      <sc-for list="{{ peopleInviteRoleAdd.options }}" as="op" hint-placeholder-count="3">
+                        <div onClick="{{ op.onClick }}" style="padding:6px 8px;border-radius:7px;cursor:pointer;font:500 12.5px var(--font-ui);color:#16161A" style-hover="background:#F5F5F7">{{ op.name }}</div>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                </div>
+                <sc-if value="{{ peopleInviteRolesHasChips }}" hint-placeholder-val="{{ true }}">
+                  <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px">
+                    <sc-for list="{{ peopleInviteRoleChips }}" as="ch" hint-placeholder-count="1">
+                      <span style="display:inline-flex;align-items:center;gap:6px;padding:5px 6px 5px 10px;border-radius:999px;background:#F5F5F7">
+                        <span style="font:500 12.5px var(--font-ui);color:#16161A">{{ ch.name }}</span>
+                        <button onClick="{{ ch.onRemoveClick }}" title="Remove" style="width:16px;height:16px;border-radius:50%;border:none;background:transparent;color:#8A8A96;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;line-height:1">×</button>
+                      </span>
+                    </sc-for>
+                  </div>
+                </sc-if>
                 <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Workspace access</label>
                 <div style="border:1px solid rgba(0,0,29,0.08);border-radius:10px;margin-bottom:8px">
                   <sc-for list="{{ peopleInviteWorkspaceRows }}" as="wr" hint-placeholder-count="3">
@@ -837,33 +856,98 @@ input:focus,textarea:focus{outline:none}
 
         <sc-if value="{{ peopleTabIsAccess }}" hint-placeholder-val="{{ false }}">
           <div style="margin-bottom:16px">
-            <div style="font:600 15px var(--font-ui);color:#16161A">Workspace access</div>
+            <div style="font:600 15px var(--font-ui);color:#16161A">Spaces</div>
             <div style="font:400 12.5px var(--font-ui);color:#6B6B78;margin-top:4px">This is the people-specific view of workspace membership. Review Teams stay global.</div>
           </div>
-          <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:14px">
-            <sc-for list="{{ waCards }}" as="wc" hint-placeholder-count="3">
-              <div style="flex:1;min-width:210px;max-width:270px;background:#fff;border:1px solid rgba(20,20,30,0.06);border-radius:16px;padding:18px">
-                <div style="display:flex;align-items:center;gap:10px;min-width:0">
-                  <span style="{{ wc.initialsStyle }}">{{ wc.initialsLabel }}</span>
-                  <div style="min-width:0">
-                    <div style="font:600 14px var(--font-ui);color:#16161A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ wc.name }}</div>
-                    <div style="font:400 12px var(--font-ui);color:#9A9AA6;margin-top:2px">{{ wc.activeTranslationsLabel }}</div>
-                  </div>
+          <sc-if value="{{ spNewSpaceOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position:fixed;inset:0;background:rgba(16,16,20,0.4);z-index:100;display:flex;align-items:center;justify-content:center;padding:24px" onClick="{{ spOnNewSpaceToggle }}">
+              <div style="width:100%;max-width:440px;background:#fff;border-radius:14px;box-shadow:0 24px 60px -12px rgba(16,16,20,0.4)" onClick="{{ stopClick }}">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 20px">
+                  <div style="font:600 16px var(--font-ui);color:#16161A">Create space</div>
+                  <button onClick="{{ spOnNewSpaceToggle }}" title="Close" style="width:28px;height:28px;border-radius:8px;border:none;background:transparent;color:#8A8A96;cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:#F1F1F4">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                  </button>
                 </div>
+                <div style="border-top:1px solid rgba(0,0,29,0.08)"></div>
+                <div style="padding:20px">
+                  <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Name</label>
+                  <input value="{{ spNewSpaceName }}" onChange="{{ spOnNewSpaceName }}" placeholder="e.g. Design" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui);margin-bottom:14px">
+                  <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Description</label>
+                  <input value="{{ spNewSpaceDesc }}" onChange="{{ spOnNewSpaceDesc }}" placeholder="What this space is for" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui)">
+                  <div style="font:400 12px var(--font-ui);color:#8A8A96;line-height:1.5;margin-top:12px">This is a placeholder for Space creation pending the full field set.</div>
+                </div>
+                <div style="display:flex;justify-content:flex-end;gap:9px;padding:16px 20px;border-top:1px solid rgba(0,0,29,0.08)">
+                  <button onClick="{{ spOnNewSpaceToggle }}" style="{{ btnSecondaryMd }}" style-hover="{{ btnSecondaryHover }}">Cancel</button>
+                  <button onClick="{{ spOnCreate }}" disabled="{{ spCreateDisabled }}" style="{{ btnPrimaryMd }}" style-hover="background:#4F39D8">Create space</button>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ spEditOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position:fixed;inset:0;background:rgba(16,16,20,0.4);z-index:100;display:flex;align-items:center;justify-content:center;padding:24px" onClick="{{ spOnEditClose }}">
+              <div style="width:100%;max-width:440px;background:#fff;border-radius:14px;box-shadow:0 24px 60px -12px rgba(16,16,20,0.4)" onClick="{{ stopClick }}">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 20px">
+                  <div style="font:600 16px var(--font-ui);color:#16161A">Edit space</div>
+                  <button onClick="{{ spOnEditClose }}" title="Close" style="width:28px;height:28px;border-radius:8px;border:none;background:transparent;color:#8A8A96;cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:#F1F1F4">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                  </button>
+                </div>
+                <div style="border-top:1px solid rgba(0,0,29,0.08)"></div>
+                <div style="padding:20px">
+                  <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Name</label>
+                  <input value="{{ spEditName }}" onChange="{{ spOnEditName }}" placeholder="e.g. Design" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui);margin-bottom:14px">
+                  <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Description</label>
+                  <input value="{{ spEditDesc }}" onChange="{{ spOnEditDesc }}" placeholder="What this space is for" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui)">
+                  <div style="font:400 12px var(--font-ui);color:#8A8A96;line-height:1.5;margin-top:12px">This is a placeholder for Space editing pending the full field set.</div>
+                </div>
+                <div style="display:flex;justify-content:flex-end;gap:9px;padding:16px 20px;border-top:1px solid rgba(0,0,29,0.08)">
+                  <button onClick="{{ spOnEditClose }}" style="{{ btnSecondaryMd }}" style-hover="{{ btnSecondaryHover }}">Cancel</button>
+                  <button onClick="{{ spOnSaveEdit }}" disabled="{{ spSaveDisabled }}" style="{{ btnPrimaryMd }}" style-hover="background:#4F39D8">Save changes</button>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+          <div class="om-rt-grid" style="align-items:start">
+            <sc-for list="{{ waCards }}" as="wc" hint-placeholder-count="3">
+              <div style="background:#fff;border:1px solid rgba(20,20,30,0.06);border-radius:16px;padding:18px">
+                <div style="display:flex;align-items:center;justify-content:space-between">
+                  <span style="{{ wc.initialsStyle }}">{{ wc.initialsLabel }}</span>
+                  <sc-if value="{{ wc.showMenu }}" hint-placeholder-val="{{ false }}">
+                  <div style="position:relative" data-pop="1">
+                    <button onClick="{{ wc.onMenu }}" title="Space actions" style="{{ rowMenuTriggerStyle }}" style-hover="background:rgba(20,20,30,0.06);color:#16161A">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"></circle><circle cx="12" cy="12" r="2"></circle><circle cx="19" cy="12" r="2"></circle></svg>
+                    </button>
+                    <sc-if value="{{ wc.menuOpen }}" hint-placeholder-val="{{ false }}">
+                      <div style="position:absolute;top:calc(100% + 4px);right:0;z-index:40;min-width:150px;background:#fff;border:1px solid rgba(0,0,29,0.12);border-radius:11px;box-shadow:0 14px 32px -8px rgba(16,16,20,0.28);padding:6px">
+                        <sc-for list="{{ wc.menuItems }}" as="mi" hint-placeholder-count="2">
+                          <div onClick="{{ mi.onClick }}" style="{{ mi.rowStyle }}" style-hover="background:#F5F5F7">{{ mi.label }}</div>
+                        </sc-for>
+                      </div>
+                    </sc-if>
+                  </div>
+                  </sc-if>
+                </div>
+                <div style="font:600 15px var(--font-ui);color:#16161A;margin-top:10px">{{ wc.name }}</div>
+                <div style="font:400 13px var(--font-ui);color:#6B6B78;margin-top:3px">{{ wc.activeTranslationsLabel }}</div>
                 <div style="border-top:1px solid rgba(20,20,30,0.07);margin:14px 0 12px"></div>
                 <div style="display:flex;align-items:center;gap:20px">
                   <div>
-                    <div style="font:600 20px var(--font-ui);color:#16161A;letter-spacing:-.01em">{{ wc.peopleCount }}</div>
+                    <div style="font: 500 22px var(--font-ui); color: #16161A; letter-spacing: -.01em; font-size: 26px; font-weight: 600">{{ wc.peopleCount }}</div>
                     <div style="font:400 12px var(--font-ui);color:#9A9AA6;margin-top:2px">People</div>
                   </div>
                   <div>
-                    <div style="font:600 20px var(--font-ui);color:#16161A;letter-spacing:-.01em">{{ wc.adminCount }}</div>
+                    <div style="font: 500 22px var(--font-ui); color: #16161A; letter-spacing: -.01em; font-size: 26px; font-weight: 600">{{ wc.adminCount }}</div>
                     <div style="font:400 12px var(--font-ui);color:#9A9AA6;margin-top:2px">Admins</div>
                   </div>
-                  <span style="{{ badgeCountNeutralDemoStyle }};font:600 10px var(--font-ui);letter-spacing:.03em;margin-left:auto">Access scope</span>
                 </div>
               </div>
             </sc-for>
+            <sc-if value="{{ waEditableTab }}" hint-placeholder-val="{{ false }}">
+              <div onClick="{{ spOnNewSpaceToggle }}" style="background:#FAFAFB;border:1.5px dashed rgba(20,20,30,0.16);border-radius:16px;padding:18px;min-height:168px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;color:#6B6B78;box-sizing:border-box" style-hover="border-color:#6148F9;color:#4F39D8;background:#FAFAFF">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
+                <span style="font:600 13px var(--font-ui)">New space</span>
+              </div>
+            </sc-if>
           </div>
         </sc-if>
 
@@ -922,17 +1006,76 @@ input:focus,textarea:focus{outline:none}
               </div>
             </div>
           </sc-if>
-          <div class="om-rt-grid">
+          <sc-if value="{{ rtEditOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position:fixed;inset:0;background:rgba(16,16,20,0.4);z-index:100;display:flex;align-items:center;justify-content:center;padding:24px" onClick="{{ rtOnEditClose }}">
+              <div style="width:100%;max-width:440px;background:#fff;border-radius:14px;box-shadow:0 24px 60px -12px rgba(16,16,20,0.4)" onClick="{{ stopClick }}">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 20px">
+                  <div style="font:600 16px var(--font-ui);color:#16161A">Edit review team</div>
+                  <button onClick="{{ rtOnEditClose }}" title="Close" style="width:28px;height:28px;border-radius:8px;border:none;background:transparent;color:#8A8A96;cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:#F1F1F4">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                  </button>
+                </div>
+                <div style="border-top:1px solid rgba(0,0,29,0.08)"></div>
+                <div style="padding:20px">
+                  <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Name</label>
+                  <input value="{{ rtEditName }}" onChange="{{ rtOnEditName }}" placeholder="e.g. Medical review" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui);margin-bottom:14px">
+                  <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Description</label>
+                  <input value="{{ rtEditDesc }}" onChange="{{ rtOnEditDesc }}" placeholder="What this team reviews" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui);margin-bottom:14px">
+                  <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Members</label>
+                  <div style="position:relative" data-pop="1">
+                    <input value="{{ rtEditMembersField.addSearch }}" onChange="{{ rtEditMembersField.onAddSearch }}" onClick="{{ rtEditMembersField.onAddToggle }}" placeholder="Search and add people" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui)">
+                    <sc-if value="{{ rtEditMembersField.addOpen }}" hint-placeholder-val="{{ false }}">
+                      <div style="position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:30;background:#fff;border:1px solid rgba(0,0,29,0.12);border-radius:11px;box-shadow:0 14px 32px -8px rgba(16,16,20,0.28);padding:8px;max-height:200px;overflow-y:auto">
+                        <sc-for list="{{ rtEditMembersField.addOptions }}" as="op" hint-placeholder-count="3">
+                          <div onClick="{{ op.onClick }}" style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:7px;cursor:pointer" style-hover="background:#F5F5F7">
+                            <span style="width:22px;height:22px;border-radius:50%;background:rgba(97,72,249,0.14);color:#4F39D8;font:600 10px var(--font-ui);display:flex;align-items:center;justify-content:center;flex:none">{{ op.initials }}</span>
+                            <span style="font:500 12.5px var(--font-ui);color:#16161A">{{ op.name }}</span>
+                          </div>
+                        </sc-for>
+                      </div>
+                    </sc-if>
+                  </div>
+                  <sc-if value="{{ rtEditMembersHasChips }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px">
+                      <sc-for list="{{ rtEditMembersField.chips }}" as="ch" hint-placeholder-count="2">
+                        <span style="display:inline-flex;align-items:center;gap:6px;padding:4px 6px 4px 4px;border-radius:999px;background:#F5F5F7">
+                          <sc-if value="{{ ch.avatarHasPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ ch.avatarPhotoUrl }}" style="{{ ch.avatarPhotoStyle }}" alt="{{ ch.name }}"></sc-if><sc-if value="{{ ch.avatarNoPhoto }}" hint-placeholder-val="{{ true }}"><span style="{{ ch.avatarStyle }}">{{ ch.initials }}</span></sc-if>
+                          <span style="font:500 12.5px var(--font-ui);color:#16161A">{{ ch.name }}</span>
+                          <button onClick="{{ ch.onRemoveClick }}" title="Remove" style="width:16px;height:16px;border-radius:50%;border:none;background:transparent;color:#8A8A96;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;line-height:1">×</button>
+                        </span>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                </div>
+                <div style="display:flex;justify-content:flex-end;gap:9px;padding:16px 20px;border-top:1px solid rgba(0,0,29,0.08)">
+                  <button onClick="{{ rtOnEditClose }}" style="{{ btnSecondaryMd }}" style-hover="{{ btnSecondaryHover }}">Cancel</button>
+                  <button onClick="{{ rtOnSaveEdit }}" disabled="{{ rtSaveDisabled }}" style="{{ btnPrimaryMd }}" style-hover="background:#4F39D8">Save changes</button>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+          <div class="om-rt-grid" style="align-items:start">
             <sc-for list="{{ rtCards }}" as="tc" hint-placeholder-count="3">
               <div style="background:#fff;border:1px solid rgba(20,20,30,0.06);border-radius:16px;padding:18px">
                 <div style="display:flex;align-items:center;justify-content:space-between">
-                  <span style="width:8px;height:8px;border-radius:50%;background:{{ tc.color }};flex:none"></span>
-                  <button title="Team actions" style="{{ rowMenuTriggerStyle }}" style-hover="background:rgba(20,20,30,0.06);color:#16161A">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"></circle><circle cx="12" cy="12" r="2"></circle><circle cx="19" cy="12" r="2"></circle></svg>
-                  </button>
+                  <span style="{{ tc.iconStyle }}">{{ tc.iconInitials }}</span>
+                  <sc-if value="{{ tc.showMenu }}" hint-placeholder-val="{{ false }}">
+                  <div style="position:relative" data-pop="1">
+                    <button onClick="{{ tc.onMenu }}" title="Team actions" style="{{ rowMenuTriggerStyle }}" style-hover="background:rgba(20,20,30,0.06);color:#16161A">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"></circle><circle cx="12" cy="12" r="2"></circle><circle cx="19" cy="12" r="2"></circle></svg>
+                    </button>
+                    <sc-if value="{{ tc.menuOpen }}" hint-placeholder-val="{{ false }}">
+                      <div style="position:absolute;top:calc(100% + 4px);right:0;z-index:40;min-width:150px;background:#fff;border:1px solid rgba(0,0,29,0.12);border-radius:11px;box-shadow:0 14px 32px -8px rgba(16,16,20,0.28);padding:6px">
+                        <sc-for list="{{ tc.menuItems }}" as="mi" hint-placeholder-count="2">
+                          <div onClick="{{ mi.onClick }}" style="{{ mi.rowStyle }}" style-hover="background:#F5F5F7">{{ mi.label }}</div>
+                        </sc-for>
+                      </div>
+                    </sc-if>
+                  </div>
+                  </sc-if>
                 </div>
-                <div style="font:600 14px var(--font-ui);color:#16161A;margin-top:10px">{{ tc.teamName }}</div>
-                <div style="font:400 12.5px var(--font-ui);color:#6B6B78;margin-top:3px">{{ tc.desc }}</div>
+                <div style="font:600 15px var(--font-ui);color:#16161A;margin-top:10px">{{ tc.teamName }}</div>
+                <div style="font:400 13px var(--font-ui);color:#6B6B78;margin-top:3px">{{ tc.desc }}</div>
                 <div style="display:flex;align-items:center;margin-top:14px">
                   <sc-for list="{{ tc.avatars }}" as="av" hint-placeholder-count="3">
                     <sc-if value="{{ av.hasPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ av.photoUrl }}" style="{{ av.photoStyle }};margin-left:-6px;border:2px solid #fff" alt="{{ av.name }}"></sc-if>
@@ -943,20 +1086,14 @@ input:focus,textarea:focus{outline:none}
                   </sc-if>
                 </div>
                 <div style="border-top:1px solid rgba(20,20,30,0.07);margin:14px 0 12px"></div>
-                <div style="display:flex;gap:24px">
-                  <div>
-                    <div style="font:600 26px var(--font-ui);color:#16161A;letter-spacing:-.02em">{{ tc.memberCount }}</div>
-                    <div style="font:400 12px var(--font-ui);color:#9A9AA6;margin-top:2px">Members</div>
-                  </div>
-                  <div>
-                    <div style="font:600 26px var(--font-ui);color:#16161A;letter-spacing:-.02em">{{ tc.scopeLabel }}</div>
-                    <div style="font:400 12px var(--font-ui);color:#9A9AA6;margin-top:2px">Scope</div>
-                  </div>
+                <div>
+                  <div style="font: 500 22px var(--font-ui); color: #16161A; letter-spacing: -.01em; font-size: 26px; font-weight: 600">{{ tc.memberCount }}</div>
+                  <div style="font:400 12px var(--font-ui);color:#9A9AA6;margin-top:2px">Members</div>
                 </div>
               </div>
             </sc-for>
             <sc-if value="{{ rtEditable }}" hint-placeholder-val="{{ false }}">
-              <div onClick="{{ rtOnNewTeamToggle }}" style="background:#FAFAFB;border:1.5px dashed rgba(20,20,30,0.16);border-radius:16px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;color:#6B6B78;box-sizing:border-box" style-hover="border-color:#6148F9;color:#4F39D8;background:#FAFAFF">
+              <div onClick="{{ rtOnNewTeamToggle }}" style="background:#FAFAFB;border:1.5px dashed rgba(20,20,30,0.16);border-radius:16px;padding:18px;min-height:224px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;color:#6B6B78;box-sizing:border-box" style-hover="border-color:#6148F9;color:#4F39D8;background:#FAFAFF">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
                 <span style="font:600 13px var(--font-ui)">New team</span>
               </div>
@@ -998,13 +1135,13 @@ input:focus,textarea:focus{outline:none}
               <div style="font:600 11px var(--font-ui);letter-spacing:.04em;text-transform:uppercase;color:#9A9AA6">Role</div>
               <div style="font:600 11px var(--font-ui);letter-spacing:.04em;text-transform:uppercase;color:#9A9AA6">Type</div>
               <sc-if value="{{ peopleShowWorkspaceCol }}" hint-placeholder-val="{{ true }}">
-                <div style="font:600 11px var(--font-ui);letter-spacing:.04em;text-transform:uppercase;color:#9A9AA6">Workspaces</div>
+                <div style="font:600 11px var(--font-ui);letter-spacing:.04em;text-transform:uppercase;color:#9A9AA6">Spaces</div>
               </sc-if>
               <div style="font:600 11px var(--font-ui);letter-spacing:.04em;text-transform:uppercase;color:#9A9AA6">Review Teams</div>
               <div></div>
             </div>
             <sc-for list="{{ peopleRows }}" as="pr" hint-placeholder-count="5">
-              <div style="{{ pr.rowStyle }}">
+              <div style="{{ pr.rowStyle }}" onClick="{{ pr.onRowClick }}" style-hover="background:#FAFAFB">
                 <div style="display:flex;align-items:center;gap:10px;min-width:0">
                   <sc-if value="{{ pr.avatarHasPhoto }}" hint-placeholder-val="{{ false }}">
                     <img src="{{ pr.avatarPhotoUrl }}" style="{{ pr.avatarPhotoStyle }}" alt="{{ pr.name }}">
@@ -1070,7 +1207,6 @@ input:focus,textarea:focus{outline:none}
             <div>
               <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
                 <span style="font:600 11px var(--font-ui);letter-spacing:.04em;text-transform:uppercase;color:#9A9AA6">Account permissions</span>
-                <span style="{{ badgeCountNeutralDemoStyle }};font:600 10px var(--font-ui);letter-spacing:.03em">{{ pdmAccountStateLabel }}</span>
               </div>
               <div style="display:flex;flex-wrap:wrap;gap:6px">
                 <span style="{{ pdmAccountChipStyle }}">{{ pdmAccountChipLabel }}</span>
@@ -1080,7 +1216,7 @@ input:focus,textarea:focus{outline:none}
             <sc-if value="{{ pdmShowWorkspace }}" hint-placeholder-val="{{ true }}">
               <div>
                 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-                  <span style="font:600 11px var(--font-ui);letter-spacing:.04em;text-transform:uppercase;color:#9A9AA6">Workspace access</span>
+                  <span style="font:600 11px var(--font-ui);letter-spacing:.04em;text-transform:uppercase;color:#9A9AA6">Spaces</span>
                   <span style="{{ badgeCountNeutralDemoStyle }};font:600 10px var(--font-ui);letter-spacing:.03em">{{ pdmWorkspaceStateLabel }}</span>
                 </div>
                 <div style="border:1px solid rgba(0,0,29,0.08);border-radius:10px">
@@ -1088,7 +1224,6 @@ input:focus,textarea:focus{outline:none}
                     <div style="{{ wr.rowStyle }}">
                       <div onClick="{{ wr.onToggle }}" style="{{ wr.checkboxStyle }}"><sc-if value="{{ wr.checked }}" hint-placeholder-val="{{ false }}"><svg width="10" height="8" viewBox="0 0 10 8" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 4 7 9 1"></polyline></svg></sc-if></div>
                       <span style="font:500 13px var(--font-ui);color:#16161A">{{ wr.name }}</span>
-                      <span style="margin-left:auto;font:400 12px var(--font-ui);color:#8A8A96">Has access</span>
                     </div>
                   </sc-for>
                 </div>
@@ -1108,6 +1243,17 @@ input:focus,textarea:focus{outline:none}
                     <span style="margin-left:auto;font:400 12px var(--font-ui);color:#8A8A96">{{ tr.desc }}</span>
                   </div>
                 </sc-for>
+              </div>
+            </div>
+
+            <div style="border-top:1px solid rgba(0,0,29,0.08);padding-top:16px">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+                <span style="font:600 11px var(--font-ui);letter-spacing:.04em;text-transform:uppercase;color:#9A9AA6">Account status</span>
+                <span style="{{ badgeCountNeutralDemoStyle }};font:600 10px var(--font-ui);letter-spacing:.03em">{{ pdmAccountStatusStateLabel }}</span>
+              </div>
+              <div style="border:1px solid rgba(0,0,29,0.08);border-radius:10px;display:flex;align-items:center;gap:11px;padding:12px 14px">
+                <span style="font:500 13px var(--font-ui);color:#16161A">{{ pdmAccountStatusLabel }}</span>
+                <button onClick="{{ pdmOnToggleActive }}" disabled="{{ pdmToggleActionDisabled }}" style="{{ pdmToggleActionStyle }};margin-left:auto">{{ pdmToggleActionLabel }}</button>
               </div>
             </div>
 
@@ -4381,9 +4527,13 @@ class Component extends DCLogic {
     profileAccountType: 'custom', profileRole: 'Owner', profileSwitcherOpen: false,
     peopleOrgAxis: 'organization', activePersonaId: 'org-owner',
     peopleQuery: '', peopleInvited: [], personDetailOpen: false, personDetailPersonId: '',
-    peopleInviteModalOpen: false, peopleInviteEmail: '', peopleInvitePersonType: 'Team member', peopleInvitePermissionPreset: 'View and contribute', peopleInviteWorkspaces: [],
+    peopleInviteModalOpen: false, peopleInviteEmail: '', peopleInviteRoles: ['Team member'], peopleInviteRoleSearch: '', peopleInviteRoleAddOpen: false, peopleInvitePermissionPreset: 'View and contribute', peopleInviteWorkspaces: [],
     peopleTab: 'people', waAddOpen: '', waAddSearch: '', peopleWorkspaceFilter: '',
     rtNewTeamOpen: false, rtNewTeamName: '', rtNewTeamDesc: '', rtNewTeamMembers: [], rtNewTeamMemberSearch: '', rtNewTeamMemberAddOpen: false,
+    spNewSpaceOpen: false, spNewSpaceName: '', spNewSpaceDesc: '',
+    rtMenuFor: '', spMenuFor: '',
+    rtEditOpen: false, rtEditId: '', rtEditName: '', rtEditDesc: '', rtEditMembers: [], rtEditMemberSearch: '', rtEditMemberAddOpen: false,
+    spEditOpen: false, spEditOldName: '', spEditName: '', spEditDesc: '',
   };
 
   DURATION_MIN = 8.4;
@@ -5098,13 +5248,13 @@ class Component extends DCLogic {
   // array, e.g. Alex Rivera: ["Organization owner","Create orders","Manage team"]) — collapsed to roles[0]
   // since renderPersonRow's role slot is singular; a real People list would likely show all of them.
   PEOPLE_DIRECTORY = [
-    { name: 'Alex Rivera', initials: 'AR', email: 'alex@atlas.co', role: 'Organization owner', status: 'Active', type: 'Team member', workspaces: ['Marketing', 'Product', 'Support'], teams: ['Brand review', 'Final QA'] },
-    { name: 'Maya Patel', initials: 'MP', email: 'maya@atlas.co', role: 'Workspace admin', status: 'Active', type: 'Team member', workspaces: ['Marketing', 'Product'], teams: ['Brand review', 'Legal review'] },
-    { name: 'Diego Morales', initials: 'DM', email: 'diego@northstar.review', role: 'Reviewer', status: 'Active', type: 'External reviewer', workspaces: ['Marketing'], teams: ['Spanish LATAM', 'Brand review'] },
-    { name: 'Hana Kim', initials: 'HK', email: 'hana@atlas.co', role: 'Workspace member', status: 'Active', type: 'Team member', workspaces: ['Product'], teams: ['Final QA'] },
-    { name: 'Leila Haddad', initials: 'LH', email: 'leila@atlas.co', role: 'Workspace member', status: 'Invited', type: 'Team member', workspaces: ['Support'], teams: ['Arabic review'] },
-    { name: 'Noah Williams', initials: 'NW', email: 'noah@atlas.co', role: 'Workspace admin + Manage team', status: 'Active', type: 'Team member', workspaces: ['Marketing', 'Support'], teams: ['Final QA'] },
-    { name: 'Javier Cruz', initials: 'JC', email: 'javier@sonora.studio', role: 'External collaborator', status: 'Active', type: 'Dubbing studio', workspaces: ['Product', 'Support'], teams: ['Spanish LATAM'] },
+    { name: 'Alex Rivera', initials: 'AR', email: 'alex@atlas.co', role: 'Organization owner', status: 'Active', type: 'Team member', workspaces: ['Marketing', 'Product', 'Support'], teams: ['Brand review', 'Final QA'], active: true },
+    { name: 'Maya Patel', initials: 'MP', email: 'maya@atlas.co', role: 'Workspace admin', status: 'Active', type: 'Team member', workspaces: ['Marketing', 'Product'], teams: ['Brand review', 'Legal review'], active: true },
+    { name: 'Diego Morales', initials: 'DM', email: 'diego@northstar.review', role: 'Reviewer', status: 'Active', type: 'External reviewer', workspaces: ['Marketing'], teams: ['Spanish LATAM', 'Brand review'], active: true },
+    { name: 'Hana Kim', initials: 'HK', email: 'hana@atlas.co', role: 'Workspace member', status: 'Active', type: 'Team member', workspaces: ['Product'], teams: ['Final QA'], active: true },
+    { name: 'Leila Haddad', initials: 'LH', email: 'leila@atlas.co', role: 'Workspace member', status: 'Invited', type: 'Team member', workspaces: ['Support'], teams: ['Arabic review'], active: true },
+    { name: 'Noah Williams', initials: 'NW', email: 'noah@atlas.co', role: 'Workspace admin + Manage team', status: 'Active', type: 'Team member', workspaces: ['Marketing', 'Support'], teams: ['Final QA'], active: true },
+    { name: 'Javier Cruz', initials: 'JC', email: 'javier@sonora.studio', role: 'External collaborator', status: 'Active', type: 'Dubbing studio', workspaces: ['Product', 'Support'], teams: ['Spanish LATAM'], active: true },
   ];
 
   // Which of PEOPLE_DIRECTORY a given persona sees on the People list — transcribed from the founder
@@ -5135,8 +5285,8 @@ class Component extends DCLogic {
   renderPersonRow(person) {
     const av = this.renderAvatar(person.name, person.initials, 30, 11);
     const wsChips = (person.workspaces || []).map(w => Object.assign({ label: w }, this.renderBadge('outlined', w, {})));
-    // Review Team chips carry that team's own color identity (same color shown as the dot on its card in
-    // the Review Teams tab) instead of a generic gray \u2014 tinted background, full-strength text.
+    // Review Team chips carry that team's own color identity (same color used on its card icon in
+    // the Review Teams tab) instead of neutral gray — restored per founder feedback.
     const teamChips = (person.teams || []).map(t => {
       const team = this.REVIEW_TEAMS.find(rt => rt.name === t);
       const color = team ? team.color : '#6B6B78';
@@ -5210,6 +5360,7 @@ class Component extends DCLogic {
       };
     });
     const anyEditable = (showWorkspaceSection && waEditable) || rtEditableHere;
+    const isActive = person.active !== false;
     return {
       pdmOpen: true,
       pdmAvatarHasPhoto: av.hasPhoto, pdmAvatarNoPhoto: av.noPhoto, pdmAvatarPhotoUrl: av.photoUrl, pdmAvatarPhotoStyle: av.photoStyle, pdmAvatarStyle: av.fallbackStyle, pdmInitials: av.initials,
@@ -5221,6 +5372,17 @@ class Component extends DCLogic {
       pdmWorkspaceRows: wsRows,
       pdmTeamsStateLabel: rtEditableHere ? 'EDITABLE · GLOBAL' : 'GLOBAL · VIEW ONLY',
       pdmTeamRows: teamRows,
+      pdmAccountStatusStateLabel: accountEditable ? 'EDITABLE' : 'SUMMARY',
+      pdmIsActive: isActive,
+      pdmAccountStatusLabel: isActive ? 'Active' : 'Disabled',
+      pdmToggleActionLabel: isActive ? 'Disable user' : 'Enable user',
+      pdmToggleActionStyle: accountEditable
+        ? (isActive
+          ? 'height:34px;padding:0 14px;border-radius:8px;border:1px solid rgba(240,62,62,0.35);background:#fff;color:#E03131;font:600 12.5px var(--font-ui);cursor:pointer'
+          : 'height:34px;padding:0 14px;border-radius:8px;border:1px solid rgba(0,0,29,0.14);background:#fff;color:#16161A;font:600 12.5px var(--font-ui);cursor:pointer')
+        : 'height:34px;padding:0 14px;border-radius:8px;border:1px solid rgba(0,0,29,0.1);background:#F4F4F6;color:#B8B8C0;font:600 12.5px var(--font-ui);cursor:not-allowed',
+      pdmToggleActionDisabled: !accountEditable,
+      pdmOnToggleActive: accountEditable ? () => { person.active = !isActive; this.setState({}); } : null,
       pdmFooterEditable: anyEditable,
       pdmFooterReadOnly: !anyEditable,
     };
@@ -5307,12 +5469,16 @@ class Component extends DCLogic {
   // MOCK DATA — Review Teams from the founder's walkthrough, transcribed with member names resolved
   // from PEOPLE_DIRECTORY initials (AR/MP/DM/HK/LH/NW/JC). Global to the account, per the source model
   // overview — no per-workspace scope field exists here on purpose.
+  // Space names for the Spaces tab card grid — a class field (not a render-local const) so the
+  // "New space" placeholder modal can push a new name onto it and see the card grid update.
+  PEOPLE_WORKSPACE_NAMES = ['Marketing', 'Product', 'Support'];
   REVIEW_TEAMS = [
     { id: 'brand', name: 'Brand review', desc: 'Voice, terminology, and market fit', members: ['Alex Rivera', 'Maya Patel', 'Diego Morales'], color: '#7048E8' },
     { id: 'finalqa', name: 'Final QA', desc: 'Final quality gate before delivery', members: ['Alex Rivera', 'Hana Kim', 'Noah Williams'], color: '#0CA678' },
     { id: 'latam', name: 'Spanish LATAM', desc: 'Regional Spanish language reviewers', members: ['Diego Morales', 'Javier Cruz'], color: '#E8590C' },
     { id: 'legal', name: 'Legal review', desc: 'Regulatory and legal terminology', members: ['Maya Patel'], color: '#4C6EF5' },
     { id: 'arabic', name: 'Arabic review', desc: 'Arabic language and cultural review', members: ['Leila Haddad'], color: '#E64980' },
+    { id: 'global-launch', name: 'Global launch', desc: 'Cross-market review for major releases', members: ['Alex Rivera', 'Maya Patel', 'Diego Morales', 'Hana Kim', 'Noah Williams', 'Javier Cruz'], color: '#F08C00' },
   ];
 
   // THE person-list field composite: an uppercase/label row with an inline "+ Add" trigger (no bordered
@@ -5861,6 +6027,7 @@ class Component extends DCLogic {
       if (this.state.lsMenu || this.state.lsColsOpen) this.setState({ lsMenu: '', lsColsOpen: false });
       if (this.state.pairSaveOpen || this.state.pairMenuFor) this.setState({ pairSaveOpen: false, pairMenuFor: 0 });
       if (this.state.wspMenuFor || this.state.wspFiltersOpen) this.setState({ wspMenuFor: 0, wspFiltersOpen: false });
+      if (this.state.rtMenuFor || this.state.spMenuFor) this.setState({ rtMenuFor: '', spMenuFor: '' });
       const s = this.state;
       if (s.wcOwnerOpen || s.wcManagersOpen || s.wcContribsOpen || s.wcFollowersOpen) {
         this.setState({ wcOwnerOpen: false, wcManagersOpen: false, wcContribsOpen: false, wcFollowersOpen: false });
@@ -8235,10 +8402,10 @@ class Component extends DCLogic {
           set({
             peopleInvited: invited.concat(email),
             peopleInviteModalOpen: false, peopleInviteEmail: '',
-            peopleInvitePersonType: 'Team member', peopleInvitePermissionPreset: 'View and contribute', peopleInviteWorkspaces: [],
+            peopleInviteRoles: ['Team member'], peopleInviteRoleSearch: '', peopleInviteRoleAddOpen: false, peopleInvitePermissionPreset: 'View and contribute', peopleInviteWorkspaces: [],
           });
         };
-        const peopleInviteOnClose = () => set({ peopleInviteModalOpen: false, peopleInviteEmail: '', peopleInvitePersonType: 'Team member', peopleInvitePermissionPreset: 'View and contribute', peopleInviteWorkspaces: [] });
+        const peopleInviteOnClose = () => set({ peopleInviteModalOpen: false, peopleInviteEmail: '', peopleInviteRoles: ['Team member'], peopleInviteRoleSearch: '', peopleInviteRoleAddOpen: false, peopleInvitePermissionPreset: 'View and contribute', peopleInviteWorkspaces: [] });
 
         // Step 4 fix: tab presence derived from each tab's own tabAbilities entry, not a binary org/
         // standalone flag. People and Review Teams are present (tone never 'not-shown') for all six
@@ -8246,7 +8413,7 @@ class Component extends DCLogic {
         const abilityFor = tabName => activePersonaForPeople.tabAbilities.find(t => t.tab === tabName) || {};
         const PEOPLE_TAB_DEFS = [
           { id: 'people', label: 'People', ability: 'People' },
-          { id: 'access', label: 'Workspace access', ability: 'Workspace access' },
+          { id: 'access', label: 'Spaces', ability: 'Workspace access' },
           { id: 'teams', label: 'Review Teams', ability: 'Review Teams' },
         ].filter(t => abilityFor(t.ability).tone !== 'not-shown');
         const activeTabId = PEOPLE_TAB_DEFS.some(t => t.id === S.peopleTab) ? S.peopleTab : 'people';
@@ -8266,7 +8433,7 @@ class Component extends DCLogic {
         // PEOPLE_DIRECTORY entry) — WS_ROWS' 9 unrelated workspace names never overlapped these anyway, so
         // the old `w.name === activePersonaForPeople.workspace` filter silently matched zero WS_ROWS rows
         // for every workspace-scoped persona. This card list is keyed on those 3 names directly instead.
-        const PEOPLE_WORKSPACE_NAMES = ['Marketing', 'Product', 'Support'];
+        const PEOPLE_WORKSPACE_NAMES = this.PEOPLE_WORKSPACE_NAMES;
         const waAllNames = activePersonaForPeople.scope === 'organization'
           ? PEOPLE_WORKSPACE_NAMES
           : PEOPLE_WORKSPACE_NAMES.filter(n => n === activePersonaForPeople.workspace);
@@ -8278,6 +8445,17 @@ class Component extends DCLogic {
         // that drives the Workspace access tab's own editability (true only for org-owner); every other
         // persona in the current data only ever has one workspace in waAllNames anyway, so "locked" only
         // ever applies to that single row. No persona in PERSONAS was ambiguous on this point.
+        const peopleInviteRolesVal = S.peopleInviteRoles || [];
+        const roleQ = (S.peopleInviteRoleSearch || '').trim().toLowerCase();
+        const roleFiltered = PEOPLE_TYPE_OPTIONS.filter(o => !peopleInviteRolesVal.includes(o) && (!roleQ || o.toLowerCase().includes(roleQ)));
+        const peopleInviteRoleAdd = {
+          open: S.peopleInviteRoleAddOpen, search: S.peopleInviteRoleSearch || '',
+          onToggle: () => set({ peopleInviteRoleAddOpen: !S.peopleInviteRoleAddOpen, peopleInviteRoleSearch: '' }),
+          onSearch: e => set({ peopleInviteRoleSearch: e.target.value }),
+          hasOptions: roleFiltered.length > 0,
+          options: roleFiltered.map(o => ({ name: o, onClick: () => set({ peopleInviteRoles: peopleInviteRolesVal.concat(o), peopleInviteRoleSearch: '' }) })),
+        };
+        const peopleInviteRoleChips = peopleInviteRolesVal.map(o => ({ name: o, onRemoveClick: () => set({ peopleInviteRoles: peopleInviteRolesVal.filter(r => r !== o) }) }));
         const peopleInviteCanAssignAccess = !!activePersonaForPeople.canManageAccess;
         const peopleInviteOnOpen = () => set({
           peopleInviteModalOpen: true,
@@ -8294,40 +8472,36 @@ class Component extends DCLogic {
             }) : null,
           };
         });
-        // Workspace access tab card visuals (Step 3b): matches the "Recently updated" workspace card
-        // rhythm (icon-square + title/headerSub, stat row, divider) via renderStatCard's own layout —
-        // read only, not modified/reused directly since we need two stats side by side instead of one.
-        // Icon tile now follows the people-avatar-without-photo convention (rgba(97,72,249,0.14) tint,
-        // #4F39D8 solid-violet initials) instead of a saturated per-workspace hue — 3 closely-related
-        // light-violet tints cycle by index so cards stay distinguishable without full-saturation color.
-        // Icon tile: varied color families (not all-violet) so cards read distinctly at a glance, each
-        // still a light tint + matching solid text (same contrast convention as the people-avatar
-        // fallback, just re-keyed per hue family). Family assignment is randomized per workspace name via
-        // a small deterministic hash so it stays stable across renders instead of reshuffling every click.
-        const WA_HUE_FAMILIES = [
-          { bg: 'rgba(97,72,249,0.14)', fg: '#4F39D8' },   // violet
-          { bg: 'rgba(12,166,120,0.14)', fg: '#0C8F66' },  // green
-          { bg: 'rgba(14,124,196,0.14)', fg: '#0B6BAB' },  // celeste
-          { bg: 'rgba(230,119,13,0.14)', fg: '#C4630A' },  // orange
-        ];
-        const waHash = s => { let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0; return h; };
-        // Explicit per-workspace assignment (not a raw hash % length) — with only 3 known workspace
-        // names, a hash mod can collide (Product and Support both landed on the same family). Fixed here
-        // so every workspace gets a distinct hue family; any workspace name outside this map still falls
-        // back to the hash so new/unknown names don't all default to one color.
-        const WA_HUE_ASSIGN = { Marketing: 0, Product: 3, Support: 1 };
+        // Workspace access tab card visuals (Step 6 unify): icon tile uses only the violet accent —
+        // same rgba(97,72,249,0.14)/#4F39D8 convention as the people-avatar fallback — no per-workspace
+        // hue coding, matching the Review Teams card icon slot exactly.
         const WA_ACTIVE_TRANSLATIONS = { Marketing: 12, Product: 8, Support: 5 };
+        // Card icon slot shared by Spaces + Review Teams cards (Step 6 unify): 32px rounded-square,
+        // violet-tint bg with violet initials — same palette as renderAvatar's fallback, just square
+        // instead of circular, and photo-first if this.PERSON_PHOTOS ever gains a workspace/team entry.
+        const cardIconStyle = 'display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:9px;flex:none;background:rgba(97,72,249,0.14);color:#4F39D8;font:600 12px var(--font-ui)';
+        // "New space" tile / kebab gating (Step 6/7): mirrors rtEditable's pattern exactly (ability tone
+        // for the tab === 'allowed') against the Workspace access tab ability, since actual Space
+        // creation/editing permissions haven't been confirmed by the product owner yet — placeholder gating.
+        const waAbility = abilityFor('Workspace access');
+        const waEditableTab = waAbility.tone === 'allowed';
+        const menuItemRowStyle = danger => 'padding:8px 10px;border-radius:7px;cursor:pointer;font:500 13px var(--font-ui);' + (danger ? 'color:#C42B31' : 'color:#16161A');
         const waCards = waNames.map((wsName, i) => {
           const members = this.PEOPLE_DIRECTORY.filter(p => (p.workspaces || []).includes(wsName));
           const adminCount = members.filter(p => /owner|admin/i.test(p.role || '')).length;
-          const hueIdx = WA_HUE_ASSIGN[wsName] != null ? WA_HUE_ASSIGN[wsName] : (waHash(wsName) % WA_HUE_FAMILIES.length);
-          const hue = WA_HUE_FAMILIES[hueIdx];
           return {
             name: wsName,
-            initialsStyle: 'display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:9px;flex:none;background:' + hue.bg + ';color:' + hue.fg + ';font:600 12px var(--font-ui)',
+            initialsStyle: cardIconStyle,
             initialsLabel: wsName.slice(0, 2).toUpperCase(),
             activeTranslationsLabel: (WA_ACTIVE_TRANSLATIONS[wsName] || 0) + ' active translations',
             peopleCount: members.length, adminCount,
+            showMenu: waEditableTab,
+            menuOpen: S.spMenuFor === wsName,
+            onMenu: () => set({ spMenuFor: S.spMenuFor === wsName ? '' : wsName }),
+            menuItems: [
+              { id: 'edit', label: 'Edit', rowStyle: menuItemRowStyle(false), onClick: () => { set({ spMenuFor: '' }); spOnEditOpen(wsName); } },
+              { id: 'delete', label: 'Delete', rowStyle: menuItemRowStyle(true), onClick: () => spOnDelete(wsName) },
+            ],
           };
         });
         const peopleTabAbility = (activePersonaForPeople.tabAbilities.find(t => t.tab === 'People') || {}).copy || '';
@@ -8343,17 +8517,26 @@ class Component extends DCLogic {
         // be used instead if one ever exists.
         const rtCards = this.REVIEW_TEAMS.map(team => {
           const members = team.members || [];
+          const teamIconStyle = 'display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:9px;flex:none;background:' + team.color + '1E;color:' + team.color + ';font:600 12px var(--font-ui)';
           return {
             id: team.id, teamName: team.name, desc: team.desc, color: team.color,
+            iconStyle: teamIconStyle, iconInitials: team.name.slice(0, 2).toUpperCase(),
             memberCount: members.length,
             scopeLabel: team.scope || 'Global',
-            avatars: members.slice(0, 6).map(name => {
+            avatars: members.slice(0, 4).map(name => {
               const av = this.renderAvatar(name, null, 26, 10);
               return { name, initials: av.initials, hasPhoto: av.hasPhoto, noPhoto: av.noPhoto, photoUrl: av.photoUrl, photoStyle: av.photoStyle, style: av.fallbackStyle };
             }),
-            overflowCount: Math.max(0, members.length - 6),
-            hasOverflow: members.length > 6,
+            overflowCount: Math.max(0, members.length - 4),
+            hasOverflow: members.length > 4,
             editable: rtEditable,
+            showMenu: rtEditable,
+            menuOpen: S.rtMenuFor === team.id,
+            onMenu: () => set({ rtMenuFor: S.rtMenuFor === team.id ? '' : team.id }),
+            menuItems: [
+              { id: 'edit', label: 'Edit', rowStyle: menuItemRowStyle(false), onClick: () => { set({ rtMenuFor: '' }); rtOnEditOpen(team); } },
+              { id: 'delete', label: 'Delete', rowStyle: menuItemRowStyle(true), onClick: () => rtOnDelete(team) },
+            ],
           };
         });
         // New review team (Step 4 redesign): centered modal, not a popover. Members field reuses
@@ -8378,6 +8561,72 @@ class Component extends DCLogic {
           this.REVIEW_TEAMS.push({ id: 'rt' + Date.now(), name, desc: (S.rtNewTeamDesc || '').trim(), members: (S.rtNewTeamMembers || []).slice(), color: '#6148F9' });
           set({ rtNewTeamOpen: false, rtNewTeamName: '', rtNewTeamDesc: '', rtNewTeamMembers: [] });
         };
+        // "New space" modal (Step 6, new): its own scoped state/handlers, not shared with any other
+        // modal. Placeholder shape (Name + Description only) pending Dan's confirmation on the real
+        // Space field set and creation permissions — see waEditableTab comment above.
+        const spAdd = { onToggle: () => set({ spNewSpaceOpen: !S.spNewSpaceOpen, spNewSpaceName: '', spNewSpaceDesc: '' }) };
+        const spOnCreate = () => {
+          const name = (S.spNewSpaceName || '').trim();
+          if (!name) return;
+          this.PEOPLE_WORKSPACE_NAMES.push(name);
+          set({ spNewSpaceOpen: false, spNewSpaceName: '', spNewSpaceDesc: '' });
+        };
+        // Edit review team modal (Step 7, new) — fully separate component from the Create review team
+        // modal above: its own state (rtEditOpen/rtEditId/rtEditName/rtEditDesc/rtEditMembers*) and its own
+        // Members add-field draft, so the Create modal's own state/handlers are never touched by editing.
+        const rtEditMembersAdd = (() => {
+          const q = (S.rtEditMemberSearch || '').trim().toLowerCase();
+          const filtered = this.PEOPLE_DIRECTORY.filter(p => !(S.rtEditMembers || []).includes(p.name) && (!q || p.name.toLowerCase().includes(q)));
+          return {
+            open: S.rtEditMemberAddOpen,
+            onToggle: () => set({ rtEditMemberAddOpen: !S.rtEditMemberAddOpen, rtEditMemberSearch: '' }),
+            search: S.rtEditMemberSearch || '', onSearch: e => set({ rtEditMemberSearch: e.target.value }),
+            hasOptions: filtered.length > 0,
+            options: filtered.map(p => ({ name: p.name, initials: p.initials, onClick: () => set({ rtEditMembers: (S.rtEditMembers || []).concat(p.name), rtEditMemberAddOpen: false, rtEditMemberSearch: '' }) })),
+          };
+        })();
+        const rtEditMembersField = this.renderPeopleField('Members', S.rtEditMembers || [], rtEditMembersAdd, name => set({ rtEditMembers: (S.rtEditMembers || []).filter(n => n !== name) }));
+        const rtOnEditOpen = team => set({
+          rtEditOpen: true, rtEditId: team.id, rtEditName: team.name, rtEditDesc: team.desc || '',
+          rtEditMembers: (team.members || []).slice(), rtEditMemberSearch: '', rtEditMemberAddOpen: false,
+        });
+        const rtOnEditClose = () => set({ rtEditOpen: false, rtEditId: '', rtEditName: '', rtEditDesc: '', rtEditMembers: [] });
+        const rtOnSaveEdit = () => {
+          const name = (S.rtEditName || '').trim();
+          if (!name) return;
+          const team = this.REVIEW_TEAMS.find(t => t.id === S.rtEditId);
+          if (team) { team.name = name; team.desc = (S.rtEditDesc || '').trim(); team.members = (S.rtEditMembers || []).slice(); }
+          rtOnEditClose();
+        };
+        const rtOnDelete = team => {
+          if (!window.confirm('Delete "' + team.name + '"? This cannot be undone.')) return;
+          this.REVIEW_TEAMS = this.REVIEW_TEAMS.filter(t => t.id !== team.id);
+          this.PEOPLE_DIRECTORY.forEach(p => { if (p.teams) p.teams = p.teams.filter(t => t !== team.name); });
+          set({ rtMenuFor: '' });
+        };
+        // Edit space modal (Step 7, new) — fully separate component from the Create space modal above.
+        // Renames the space in place (updates PEOPLE_WORKSPACE_NAMES and every PEOPLE_DIRECTORY person's
+        // workspaces list referencing the old name, so People table chips/assignments stay consistent).
+        // Description isn't persisted anywhere, matching Create space's own Description field, which also
+        // isn't persisted (see spOnCreate above) — same placeholder limitation, not a new gap.
+        const spOnEditOpen = name => set({ spEditOpen: true, spEditOldName: name, spEditName: name, spEditDesc: '' });
+        const spOnEditClose = () => set({ spEditOpen: false, spEditOldName: '', spEditName: '', spEditDesc: '' });
+        const spOnSaveEdit = () => {
+          const name = (S.spEditName || '').trim();
+          if (!name) return;
+          const idx = this.PEOPLE_WORKSPACE_NAMES.indexOf(S.spEditOldName);
+          if (idx > -1) this.PEOPLE_WORKSPACE_NAMES[idx] = name;
+          if (name !== S.spEditOldName) {
+            this.PEOPLE_DIRECTORY.forEach(p => { if (p.workspaces) p.workspaces = p.workspaces.map(w => w === S.spEditOldName ? name : w); });
+          }
+          spOnEditClose();
+        };
+        const spOnDelete = name => {
+          if (!window.confirm('Delete "' + name + '"? This cannot be undone.')) return;
+          this.PEOPLE_WORKSPACE_NAMES = this.PEOPLE_WORKSPACE_NAMES.filter(n => n !== name);
+          this.PEOPLE_DIRECTORY.forEach(p => { if (p.workspaces) p.workspaces = p.workspaces.filter(w => w !== name); });
+          set({ spMenuFor: '' });
+        };
         return {
           peopleDescription: activePersonaForPeople.description,
           peopleCanInvite: activePersonaForPeople.canInvite,
@@ -8386,16 +8635,29 @@ class Component extends DCLogic {
           peopleInviteOnToggle: peopleInviteOnOpen,
           peopleInviteModalOpen: S.peopleInviteModalOpen, peopleInviteOnClose,
           peopleInviteEmail: S.peopleInviteEmail || '', peopleInviteOnEmail: e => set({ peopleInviteEmail: e.target.value }),
-          peopleInvitePersonType: S.peopleInvitePersonType || 'Team member', peopleInviteOnPersonType: e => set({ peopleInvitePersonType: e.target.value }),
+          peopleInviteRoles: peopleInviteRolesVal, peopleInviteRoleAdd, peopleInviteRoleChips, peopleInviteRolesHasChips: peopleInviteRolesVal.length > 0,
           peopleInvitePermissionPreset: S.peopleInvitePermissionPreset || 'View and contribute', peopleInviteOnPermissionPreset: e => set({ peopleInvitePermissionPreset: e.target.value }),
-          peopleInviteTypeOptions: PEOPLE_TYPE_OPTIONS, peopleInvitePresetOptions: PEOPLE_PERMISSION_PRESETS,
+          peopleInvitePresetOptions: PEOPLE_PERMISSION_PRESETS,
           peopleInviteWorkspaceRows,
           peopleInviteOnSend, peopleInviteSendDisabled: !(S.peopleInviteEmail || '').trim(),
           peopleQuery: S.peopleQuery || '', peopleOnQuery: e => set({ peopleQuery: e.target.value }),
           peopleOnClearSearch: () => set({ peopleQuery: '' }),
           peopleShowWorkspaceCol: showWsCol, peopleGridStyle,
           peopleShowTabBar: peopleTabs.length > 1, peopleTabs, peopleTabIsPeople, peopleTabIsAccess, waCards,
+          waEditableTab, spNewSpaceOpen: S.spNewSpaceOpen, spOnNewSpaceToggle: spAdd.onToggle,
+          spNewSpaceName: S.spNewSpaceName || '', spOnNewSpaceName: e => set({ spNewSpaceName: e.target.value }),
+          spNewSpaceDesc: S.spNewSpaceDesc || '', spOnNewSpaceDesc: e => set({ spNewSpaceDesc: e.target.value }),
+          spOnCreate, spCreateDisabled: !(S.spNewSpaceName || '').trim(),
+          spEditOpen: S.spEditOpen, spOnEditClose,
+          spEditName: S.spEditName || '', spOnEditName: e => set({ spEditName: e.target.value }),
+          spEditDesc: S.spEditDesc || '', spOnEditDesc: e => set({ spEditDesc: e.target.value }),
+          spOnSaveEdit, spSaveDisabled: !(S.spEditName || '').trim(),
           peopleTabIsTeams, rtCards, rtEditable,
+          rtEditOpen: S.rtEditOpen, rtOnEditClose,
+          rtEditName: S.rtEditName || '', rtOnEditName: e => set({ rtEditName: e.target.value }),
+          rtEditDesc: S.rtEditDesc || '', rtOnEditDesc: e => set({ rtEditDesc: e.target.value }),
+          rtEditMembersField, rtEditMembersHasChips: (S.rtEditMembers || []).length > 0,
+          rtOnSaveEdit, rtSaveDisabled: !(S.rtEditName || '').trim(),
           rtNewTeamOpen: S.rtNewTeamOpen, rtOnNewTeamToggle: rtAdd.onToggle,
           rtNewTeamName: S.rtNewTeamName || '', rtOnNewTeamName: e => set({ rtNewTeamName: e.target.value }),
           rtNewTeamDesc: S.rtNewTeamDesc || '', rtOnNewTeamDesc: e => set({ rtNewTeamDesc: e.target.value }),
@@ -8415,8 +8677,9 @@ class Component extends DCLogic {
               roleStyle: rp.roleStyle, roleLabel: rp.roleLabel, typeLabel: rp.typeLabel,
               workspaceChips: rp.workspaceChips, noWorkspaces: rp.workspaceChips.length === 0,
               teamChips: rp.teamChips, noTeams: rp.teamChips.length === 0,
-              rowStyle: peopleGridStyle + ';padding:12px 16px;align-items:center;' + (i > 0 ? 'border-top:1px solid rgba(0,0,29,0.06)' : ''),
+              rowStyle: peopleGridStyle + ';padding:12px 16px;align-items:center;cursor:pointer;' + (i > 0 ? 'border-top:1px solid rgba(0,0,29,0.06)' : ''),
               onToggleExpand: () => set({ personDetailOpen: true, personDetailPersonId: p.name }),
+              onRowClick: () => set({ personDetailOpen: true, personDetailPersonId: p.name }),
             };
           }),
         };

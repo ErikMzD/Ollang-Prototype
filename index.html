@@ -833,11 +833,19 @@ input:focus,textarea:focus{outline:none}
                 </div>
                 <div style="font:400 12px var(--font-ui);color:#8A8A96;line-height:1.5;margin-bottom:14px">Space access controls where this person can work. Review Teams can be assigned after they accept.</div>
                 <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Permission preset</label>
-                <select value="{{ peopleInvitePermissionPreset }}" onChange="{{ peopleInviteOnPermissionPreset }}" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui);color:#16161A;background:#fff">
-                  <sc-for list="{{ peopleInvitePresetOptions }}" as="opt" hint-placeholder-count="3">
-                    <option value="{{ opt }}">{{ opt }}</option>
-                  </sc-for>
-                </select>
+                <div style="position:relative" data-pop="1">
+                  <button onClick="{{ peopleInviteOnPresetToggle }}" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui);color:#16161A;background:#fff;display:flex;align-items:center;justify-content:space-between;cursor:pointer">
+                    {{ peopleInvitePermissionPreset }}
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A8A96" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+                  </button>
+                  <sc-if value="{{ peopleInvitePresetOpen }}" hint-placeholder-val="{{ false }}">
+                    <div style="position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:40;background:#fff;border:1px solid rgba(0,0,29,0.1);border-radius:10px;box-shadow:0 14px 34px -10px rgba(16,16,20,0.22);padding:5px">
+                      <sc-for list="{{ peopleInvitePresetOpts }}" as="opt" hint-placeholder-count="3">
+                        <div onClick="{{ opt.onClick }}" style="{{ opt.style }}">{{ opt.label }}</div>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                </div>
               </div>
               <div style="display:flex;justify-content:flex-end;gap:9px;padding:16px 20px;border-top:1px solid rgba(0,0,29,0.08)">
                 <button onClick="{{ peopleInviteOnClose }}" style="{{ btnSecondaryMd }}" style-hover="{{ btnSecondaryHover }}">Cancel</button>
@@ -860,77 +868,28 @@ input:focus,textarea:focus{outline:none}
             <div style="font:600 15px var(--font-ui);color:#16161A">Spaces</div>
             <div style="font:400 12.5px var(--font-ui);color:#6B6B78;margin-top:4px">This is the people-specific view of workspace membership. Review Teams stay global.</div>
           </div>
-          <sc-if value="{{ spNewSpaceOpen }}" hint-placeholder-val="{{ false }}">
-            <div style="position:fixed;inset:0;background:rgba(16,16,20,0.4);z-index:100;display:flex;align-items:center;justify-content:center;padding:24px" onClick="{{ spOnNewSpaceToggle }}">
-              <div style="width:100%;max-width:440px;background:#fff;border-radius:14px;box-shadow:0 24px 60px -12px rgba(16,16,20,0.4)" onClick="{{ stopClick }}">
-                <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 20px">
-                  <div style="font:600 16px var(--font-ui);color:#16161A">Create space</div>
-                  <button onClick="{{ spOnNewSpaceToggle }}" title="Close" style="width:28px;height:28px;border-radius:8px;border:none;background:transparent;color:#8A8A96;cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:#F1F1F4">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                  </button>
-                </div>
-                <div style="border-top:1px solid rgba(0,0,29,0.08)"></div>
-                <div style="padding:20px">
-                  <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Name</label>
-                  <input value="{{ spNewSpaceName }}" onChange="{{ spOnNewSpaceName }}" placeholder="e.g. Design" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui);margin-bottom:14px">
-                  <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Description</label>
-                  <input value="{{ spNewSpaceDesc }}" onChange="{{ spOnNewSpaceDesc }}" placeholder="What this space is for" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui);margin-bottom:14px">
-                  <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Members</label>
-                  <div style="position:relative" data-pop="1">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A8A96" stroke-width="2" stroke-linecap="round" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);pointer-events:none"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                    <input value="{{ spNewSpaceMembersField.addSearch }}" onChange="{{ spNewSpaceMembersField.onAddSearch }}" onClick="{{ spNewSpaceMembersField.onAddToggle }}" placeholder="Search and add people" style="width:100%;height:38px;padding:0 11px 0 34px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui)">
-                    <sc-if value="{{ spNewSpaceMembersField.addOpen }}" hint-placeholder-val="{{ false }}">
-                      <div style="position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:30;background:#fff;border:1px solid rgba(0,0,29,0.12);border-radius:11px;box-shadow:0 14px 32px -8px rgba(16,16,20,0.28);padding:8px;max-height:200px;overflow-y:auto">
-                        <sc-for list="{{ spNewSpaceMembersField.addOptions }}" as="op" hint-placeholder-count="3">
-                          <div onClick="{{ op.onClick }}" style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:7px;cursor:pointer" style-hover="background:#F5F5F7">
-                            <span style="width:22px;height:22px;border-radius:50%;background:rgba(97,72,249,0.14);color:#4F39D8;font:600 10px var(--font-ui);display:flex;align-items:center;justify-content:center;flex:none">{{ op.initials }}</span>
-                            <span style="font:500 12.5px var(--font-ui);color:#16161A">{{ op.name }}</span>
-                          </div>
-                        </sc-for>
-                      </div>
-                    </sc-if>
-                  </div>
-                  <sc-if value="{{ spNewSpaceMembersHasChips }}" hint-placeholder-val="{{ false }}">
-                    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px">
-                      <sc-for list="{{ spNewSpaceMembersField.chips }}" as="ch" hint-placeholder-count="2">
-                        <span style="display:inline-flex;align-items:center;gap:6px;padding:4px 6px 4px 4px;border-radius:999px;background:#F5F5F7">
-                          <sc-if value="{{ ch.avatarHasPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ ch.avatarPhotoUrl }}" style="{{ ch.avatarPhotoStyle }}" alt="{{ ch.name }}"></sc-if><sc-if value="{{ ch.avatarNoPhoto }}" hint-placeholder-val="{{ true }}"><span style="{{ ch.avatarStyle }}">{{ ch.initials }}</span></sc-if>
-                          <span style="font:500 12.5px var(--font-ui);color:#16161A">{{ ch.name }}</span>
-                          <button onClick="{{ ch.onRemoveClick }}" title="Remove" style="width:16px;height:16px;border-radius:50%;border:none;background:transparent;color:#8A8A96;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;line-height:1">×</button>
-                        </span>
-                      </sc-for>
-                    </div>
-                  </sc-if>
-                </div>
-                <div style="display:flex;justify-content:flex-end;gap:9px;padding:16px 20px;border-top:1px solid rgba(0,0,29,0.08)">
-                  <button onClick="{{ spOnNewSpaceToggle }}" style="{{ btnSecondaryMd }}" style-hover="{{ btnSecondaryHover }}">Cancel</button>
-                  <button onClick="{{ spOnCreate }}" disabled="{{ spCreateDisabled }}" style="{{ btnPrimaryMd }}" style-hover="background:#4F39D8">Create space</button>
-                </div>
+          <sc-if value="{{ spFullOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position:fixed;inset:0;background:rgba(16,16,20,0.4);z-index:100" onClick="{{ spFullOnClose }}"></div>
+            <div style="position:fixed;top:0;right:0;bottom:0;width:420px;max-width:92vw;background:#fff;z-index:101;box-shadow:-24px 0 60px -12px rgba(16,16,20,0.3);display:flex;flex-direction:column">
+              <div style="flex:none;padding:20px 22px;border-bottom:1px solid rgba(0,0,29,0.08);display:flex;align-items:center;justify-content:space-between;gap:12px">
+                <div style="font:600 16px var(--font-ui);color:#16161A">{{ spFullTitle }}</div>
+                <button onClick="{{ spFullOnClose }}" title="Close" style="width:28px;height:28px;flex:none;border-radius:8px;border:none;background:transparent;color:#8A8A96;cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:#F1F1F4">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
               </div>
-            </div>
-          </sc-if>
-          <sc-if value="{{ spEditOpen }}" hint-placeholder-val="{{ false }}">
-            <div style="position:fixed;inset:0;background:rgba(16,16,20,0.4);z-index:100;display:flex;align-items:center;justify-content:center;padding:24px" onClick="{{ spOnEditClose }}">
-              <div style="width:100%;max-width:440px;background:#fff;border-radius:14px;box-shadow:0 24px 60px -12px rgba(16,16,20,0.4)" onClick="{{ stopClick }}">
-                <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 20px">
-                  <div style="font:600 16px var(--font-ui);color:#16161A">Edit space</div>
-                  <button onClick="{{ spOnEditClose }}" title="Close" style="width:28px;height:28px;border-radius:8px;border:none;background:transparent;color:#8A8A96;cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:#F1F1F4">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                  </button>
-                </div>
-                <div style="border-top:1px solid rgba(0,0,29,0.08)"></div>
-                <div style="padding:20px">
+              <div data-scrollpane="1" style="flex:1;min-height:0;overflow-y:auto;padding:20px 22px">
                   <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Name</label>
-                  <input value="{{ spEditName }}" onChange="{{ spOnEditName }}" placeholder="e.g. Design" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui);margin-bottom:14px">
+                  <input value="{{ spFullName }}" onChange="{{ spFullOnName }}" placeholder="e.g. Design" style="width:100%;height:40px;padding:0 12px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui);margin-bottom:18px">
                   <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Description</label>
-                  <input value="{{ spEditDesc }}" onChange="{{ spOnEditDesc }}" placeholder="What this space is for" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui);margin-bottom:14px">
+                  <input value="{{ spFullDesc }}" onChange="{{ spFullOnDesc }}" placeholder="What this space is for" style="width:100%;height:40px;padding:0 12px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui);margin-bottom:24px">
+
                   <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Members</label>
                   <div style="position:relative" data-pop="1">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A8A96" stroke-width="2" stroke-linecap="round" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);pointer-events:none"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                    <input value="{{ spEditMembersField.addSearch }}" onChange="{{ spEditMembersField.onAddSearch }}" onClick="{{ spEditMembersField.onAddToggle }}" placeholder="Search and add people" style="width:100%;height:38px;padding:0 11px 0 34px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui)">
-                    <sc-if value="{{ spEditMembersField.addOpen }}" hint-placeholder-val="{{ false }}">
+                    <input value="{{ spFullMembersField.addSearch }}" onChange="{{ spFullMembersField.onAddSearch }}" onClick="{{ spFullMembersField.onAddToggle }}" placeholder="Search and add people" style="width:100%;height:38px;padding:0 11px 0 34px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui)">
+                    <sc-if value="{{ spFullMembersField.addOpen }}" hint-placeholder-val="{{ false }}">
                       <div style="position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:30;background:#fff;border:1px solid rgba(0,0,29,0.12);border-radius:11px;box-shadow:0 14px 32px -8px rgba(16,16,20,0.28);padding:8px;max-height:200px;overflow-y:auto">
-                        <sc-for list="{{ spEditMembersField.addOptions }}" as="op" hint-placeholder-count="3">
+                        <sc-for list="{{ spFullMembersField.addOptions }}" as="op" hint-placeholder-count="3">
                           <div onClick="{{ op.onClick }}" style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:7px;cursor:pointer" style-hover="background:#F5F5F7">
                             <span style="width:22px;height:22px;border-radius:50%;background:rgba(97,72,249,0.14);color:#4F39D8;font:600 10px var(--font-ui);display:flex;align-items:center;justify-content:center;flex:none">{{ op.initials }}</span>
                             <span style="font:500 12.5px var(--font-ui);color:#16161A">{{ op.name }}</span>
@@ -939,22 +898,32 @@ input:focus,textarea:focus{outline:none}
                       </div>
                     </sc-if>
                   </div>
-                  <sc-if value="{{ spEditMembersHasChips }}" hint-placeholder-val="{{ false }}">
-                    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px">
-                      <sc-for list="{{ spEditMembersField.chips }}" as="ch" hint-placeholder-count="2">
-                        <span style="display:inline-flex;align-items:center;gap:6px;padding:4px 6px 4px 4px;border-radius:999px;background:#F5F5F7">
-                          <sc-if value="{{ ch.avatarHasPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ ch.avatarPhotoUrl }}" style="{{ ch.avatarPhotoStyle }}" alt="{{ ch.name }}"></sc-if><sc-if value="{{ ch.avatarNoPhoto }}" hint-placeholder-val="{{ true }}"><span style="{{ ch.avatarStyle }}">{{ ch.initials }}</span></sc-if>
-                          <span style="font:500 12.5px var(--font-ui);color:#16161A">{{ ch.name }}</span>
-                          <button onClick="{{ ch.onRemoveClick }}" title="Remove" style="width:16px;height:16px;border-radius:50%;border:none;background:transparent;color:#8A8A96;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;line-height:1">×</button>
-                        </span>
+
+                  <sc-if value="{{ spFullHasMembers }}" hint-placeholder-val="{{ false }}">
+                    <div style="margin-top:12px;border:1px solid rgba(0,0,29,0.08);border-radius:11px">
+                      <sc-for list="{{ spFullRoster }}" as="m" hint-placeholder-count="2">
+                        <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid rgba(0,0,29,0.06)">
+                          <sc-if value="{{ m.avatarHasPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ m.avatarPhotoUrl }}" style="{{ m.avatarPhotoStyle }}" alt="{{ m.name }}"></sc-if><sc-if value="{{ m.avatarNoPhoto }}" hint-placeholder-val="{{ true }}"><span style="{{ m.avatarStyle }}">{{ m.initials }}</span></sc-if>
+                          <span style="font:500 13.5px var(--font-ui);color:#16161A;flex:1">{{ m.name }}</span>
+                          <div style="position:relative" data-pop="1">
+                            <button onClick="{{ m.onRoleToggle }}" style="{{ m.roleBtnStyle }}">{{ m.role }}<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg></button>
+                            <sc-if value="{{ m.roleMenuOpen }}" hint-placeholder-val="{{ false }}">
+                              <div style="position:absolute;top:calc(100% + 6px);right:0;z-index:40;min-width:150px;background:#fff;border:1px solid rgba(0,0,29,0.1);border-radius:10px;box-shadow:0 14px 34px -10px rgba(16,16,20,0.22);padding:5px">
+                                <sc-for list="{{ m.roleOptions }}" as="ro" hint-placeholder-count="2">
+                                  <div onClick="{{ ro.onClick }}" style="{{ ro.style }}">{{ ro.label }}</div>
+                                </sc-for>
+                              </div>
+                            </sc-if>
+                          </div>
+                          <button onClick="{{ m.onRemove }}" title="Remove" style="width:26px;height:26px;border-radius:7px;border:none;background:transparent;color:#8A8A96;cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:#FDECEC;color:#C42B31">{{ m.removeIcon }}</button>
+                        </div>
                       </sc-for>
                     </div>
                   </sc-if>
-                </div>
-                <div style="display:flex;justify-content:flex-end;gap:9px;padding:16px 20px;border-top:1px solid rgba(0,0,29,0.08)">
-                  <button onClick="{{ spOnEditClose }}" style="{{ btnSecondaryMd }}" style-hover="{{ btnSecondaryHover }}">Cancel</button>
-                  <button onClick="{{ spOnSaveEdit }}" disabled="{{ spSaveDisabled }}" style="{{ btnPrimaryMd }}" style-hover="background:#4F39D8">Save changes</button>
-                </div>
+              </div>
+              <div style="flex:none;display:flex;justify-content:flex-end;gap:9px;padding:16px 22px;border-top:1px solid rgba(0,0,29,0.08)">
+                <button onClick="{{ spFullOnClose }}" style="{{ btnSecondaryMd }}" style-hover="{{ btnSecondaryHover }}">Cancel</button>
+                <button onClick="{{ spFullOnSave }}" disabled="{{ spFullSaveDisabled }}" style="{{ btnPrimaryMd }}" style-hover="background:#4F39D8">{{ spFullSaveLabel }}</button>
               </div>
             </div>
           </sc-if>
@@ -994,7 +963,7 @@ input:focus,textarea:focus{outline:none}
               </div>
             </sc-for>
             <sc-if value="{{ waEditableTab }}" hint-placeholder-val="{{ false }}">
-              <div onClick="{{ spOnNewSpaceToggle }}" style="background:#FAFAFB;border:1.5px dashed rgba(20,20,30,0.16);border-radius:16px;padding:18px;min-height:168px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;color:#6B6B78;box-sizing:border-box" style-hover="border-color:#6148F9;color:#4F39D8;background:#FAFAFF">
+              <div onClick="{{ spFullOnOpenCreate }}" style="background:#FAFAFB;border:1.5px dashed rgba(20,20,30,0.16);border-radius:16px;padding:18px;min-height:168px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;color:#6B6B78;box-sizing:border-box" style-hover="border-color:#6148F9;color:#4F39D8;background:#FAFAFF">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
                 <span style="font:600 13px var(--font-ui)">New space</span>
               </div>
@@ -4580,13 +4549,12 @@ class Component extends DCLogic {
     profileAccountType: 'custom', profileRole: 'Owner', profileSwitcherOpen: false,
     peopleOrgAxis: 'organization', activePersonaId: 'org-owner',
     peopleQuery: '', peopleInvited: [], personDetailOpen: false, personDetailPersonId: '',
-    peopleInviteModalOpen: false, peopleInviteEmail: '', peopleInviteRoles: ['Team member'], peopleInviteRoleSearch: '', peopleInviteRoleAddOpen: false, peopleInvitePermissionPreset: 'View and contribute', peopleInviteWorkspaces: [],
+    peopleInviteModalOpen: false, peopleInviteEmail: '', peopleInviteRoles: ['Team member'], peopleInviteRoleSearch: '', peopleInviteRoleAddOpen: false, peopleInvitePermissionPreset: 'View and contribute', peopleInvitePresetOpen: false, peopleInviteWorkspaces: [],
     peopleTab: 'people', waAddOpen: '', waAddSearch: '', peopleWorkspaceFilter: '',
     rtNewTeamOpen: false, rtNewTeamName: '', rtNewTeamDesc: '', rtNewTeamMembers: [], rtNewTeamMemberSearch: '', rtNewTeamMemberAddOpen: false,
-    spNewSpaceOpen: false, spNewSpaceName: '', spNewSpaceDesc: '', spNewSpaceMembers: [], spNewSpaceMemberSearch: '', spNewSpaceMemberAddOpen: false,
+    spFullOpen: false, spFullMode: 'create', spFullOldName: '', spFullName: '', spFullDesc: '', spFullMembers: [], spFullMemberSearch: '', spFullMemberAddOpen: false, spFullRoleMenuFor: '',
     rtMenuFor: '', spMenuFor: '',
     rtEditOpen: false, rtEditId: '', rtEditName: '', rtEditDesc: '', rtEditMembers: [], rtEditMemberSearch: '', rtEditMemberAddOpen: false,
-    spEditOpen: false, spEditOldName: '', spEditName: '', spEditDesc: '', spEditMembers: [], spEditMemberSearch: '', spEditMemberAddOpen: false,
   };
 
   DURATION_MIN = 8.4;
@@ -5525,6 +5493,9 @@ class Component extends DCLogic {
   // Space names for the Spaces tab card grid — a class field (not a render-local const) so the
   // "New space" placeholder modal can push a new name onto it and see the card grid update.
   PEOPLE_WORKSPACE_NAMES = ['Marketing', 'Product', 'Support'];
+  // Space-scoped member roles (Admin/Regular user), keyed by space name then person name. Deliberately
+  // separate from PEOPLE_DIRECTORY's account-level role field — never merge the two concepts.
+  SPACE_MEMBER_ROLES = {};
   REVIEW_TEAMS = [
     { id: 'brand', name: 'Brand review', desc: 'Voice, terminology, and market fit', members: ['Alex Rivera', 'Maya Patel', 'Diego Morales'], color: '#7048E8' },
     { id: 'finalqa', name: 'Final QA', desc: 'Final quality gate before delivery', members: ['Alex Rivera', 'Hana Kim', 'Noah Williams'], color: '#0CA678' },
@@ -6081,6 +6052,8 @@ class Component extends DCLogic {
       if (this.state.pairSaveOpen || this.state.pairMenuFor) this.setState({ pairSaveOpen: false, pairMenuFor: 0 });
       if (this.state.wspMenuFor || this.state.wspFiltersOpen) this.setState({ wspMenuFor: 0, wspFiltersOpen: false });
       if (this.state.rtMenuFor || this.state.spMenuFor) this.setState({ rtMenuFor: '', spMenuFor: '' });
+      if (this.state.spFullRoleMenuFor) this.setState({ spFullRoleMenuFor: '' });
+      if (this.state.peopleInvitePresetOpen) this.setState({ peopleInvitePresetOpen: false });
       const s = this.state;
       if (s.wcOwnerOpen || s.wcManagersOpen || s.wcContribsOpen || s.wcFollowersOpen) {
         this.setState({ wcOwnerOpen: false, wcManagersOpen: false, wcContribsOpen: false, wcFollowersOpen: false });
@@ -8552,7 +8525,7 @@ class Component extends DCLogic {
             menuOpen: S.spMenuFor === wsName,
             onMenu: () => set({ spMenuFor: S.spMenuFor === wsName ? '' : wsName }),
             menuItems: [
-              { id: 'edit', label: 'Edit', rowStyle: menuItemRowStyle(false), onClick: () => { set({ spMenuFor: '' }); spOnEditOpen(wsName); } },
+              { id: 'edit', label: 'Edit', rowStyle: menuItemRowStyle(false), onClick: () => { set({ spMenuFor: '' }); spFullOnOpenEdit(wsName); } },
               { id: 'delete', label: 'Delete', rowStyle: menuItemRowStyle(true), onClick: () => spOnDelete(wsName) },
             ],
           };
@@ -8614,32 +8587,6 @@ class Component extends DCLogic {
           this.REVIEW_TEAMS.push({ id: 'rt' + Date.now(), name, desc: (S.rtNewTeamDesc || '').trim(), members: (S.rtNewTeamMembers || []).slice(), color: '#6148F9' });
           set({ rtNewTeamOpen: false, rtNewTeamName: '', rtNewTeamDesc: '', rtNewTeamMembers: [] });
         };
-        // "New space" modal (Step 6, new; Members added per product owner sign-off on the Space field
-        // set — Name, Description, Members, matching Create review team): its own scoped state/handlers,
-        // not shared with any other modal. Members reuses renderPeopleField, same as review teams.
-        const spNewSpaceMembersAdd = (() => {
-          const q = (S.spNewSpaceMemberSearch || '').trim().toLowerCase();
-          const filtered = this.PEOPLE_DIRECTORY.filter(p => !(S.spNewSpaceMembers || []).includes(p.name) && (!q || p.name.toLowerCase().includes(q)));
-          return {
-            open: S.spNewSpaceMemberAddOpen,
-            onToggle: () => set({ spNewSpaceMemberAddOpen: !S.spNewSpaceMemberAddOpen, spNewSpaceMemberSearch: '' }),
-            search: S.spNewSpaceMemberSearch || '', onSearch: e => set({ spNewSpaceMemberSearch: e.target.value }),
-            hasOptions: filtered.length > 0,
-            options: filtered.map(p => ({ name: p.name, initials: p.initials, onClick: () => set({ spNewSpaceMembers: (S.spNewSpaceMembers || []).concat(p.name), spNewSpaceMemberAddOpen: false, spNewSpaceMemberSearch: '' }) })),
-          };
-        })();
-        const spNewSpaceMembersField = this.renderPeopleField('Members', S.spNewSpaceMembers || [], spNewSpaceMembersAdd, name => set({ spNewSpaceMembers: (S.spNewSpaceMembers || []).filter(n => n !== name) }));
-        const spAdd = { onToggle: () => set({ spNewSpaceOpen: !S.spNewSpaceOpen, spNewSpaceName: '', spNewSpaceDesc: '', spNewSpaceMembers: [] }) };
-        const spOnCreate = () => {
-          const name = (S.spNewSpaceName || '').trim();
-          if (!name) return;
-          this.PEOPLE_WORKSPACE_NAMES.push(name);
-          (S.spNewSpaceMembers || []).forEach(mName => {
-            const person = this.PEOPLE_DIRECTORY.find(p => p.name === mName);
-            if (person) person.workspaces = (person.workspaces || []).concat(name);
-          });
-          set({ spNewSpaceOpen: false, spNewSpaceName: '', spNewSpaceDesc: '', spNewSpaceMembers: [] });
-        };
         // Edit review team modal (Step 7, new) — fully separate component from the Create review team
         // modal above: its own state (rtEditOpen/rtEditId/rtEditName/rtEditDesc/rtEditMembers*) and its own
         // Members add-field draft, so the Create modal's own state/handlers are never touched by editing.
@@ -8673,53 +8620,91 @@ class Component extends DCLogic {
           this.PEOPLE_DIRECTORY.forEach(p => { if (p.teams) p.teams = p.teams.filter(t => t !== team.name); });
           set({ rtMenuFor: '' });
         };
-        // Edit space modal (Step 7, new) — fully separate component from the Create space modal above,
-        // with its own Members draft (spEditMembers*) seeded from the space's current membership on open.
-        // Renames the space in place (updates PEOPLE_WORKSPACE_NAMES and every PEOPLE_DIRECTORY person's
-        // workspaces list referencing the old name, so People table chips/assignments stay consistent), then
-        // reconciles membership against the edited Members list the same way. Description isn't persisted
-        // anywhere, matching Create space's own Description field (see spOnCreate above).
-        const spEditMembersAdd = (() => {
-          const q = (S.spEditMemberSearch || '').trim().toLowerCase();
-          const filtered = this.PEOPLE_DIRECTORY.filter(p => !(S.spEditMembers || []).includes(p.name) && (!q || p.name.toLowerCase().includes(q)));
+        // Full-screen Space view (replaces the old separate small "Create space"/"Edit space" modals):
+        // one component for both, own state (spFull*), covers the whole viewport. Members carry a
+        // Space-scoped role (Admin/Regular user) tracked in SPACE_MEMBER_ROLES — kept apart from the
+        // account-level role system used elsewhere in People. The add/search box reuses renderPeopleField's
+        // add-logic (options/search), same pattern as review teams; the roster rows (with role selects)
+        // are custom since renderPeopleField's chips don't carry a role control.
+        const spFullMembersAdd = (() => {
+          const q = (S.spFullMemberSearch || '').trim().toLowerCase();
+          const filtered = this.PEOPLE_DIRECTORY.filter(p => !(S.spFullMembers || []).some(m => m.name === p.name) && (!q || p.name.toLowerCase().includes(q)));
           return {
-            open: S.spEditMemberAddOpen,
-            onToggle: () => set({ spEditMemberAddOpen: !S.spEditMemberAddOpen, spEditMemberSearch: '' }),
-            search: S.spEditMemberSearch || '', onSearch: e => set({ spEditMemberSearch: e.target.value }),
+            open: S.spFullMemberAddOpen,
+            onToggle: () => set({ spFullMemberAddOpen: !S.spFullMemberAddOpen, spFullMemberSearch: '' }),
+            search: S.spFullMemberSearch || '', onSearch: e => set({ spFullMemberSearch: e.target.value }),
             hasOptions: filtered.length > 0,
-            options: filtered.map(p => ({ name: p.name, initials: p.initials, onClick: () => set({ spEditMembers: (S.spEditMembers || []).concat(p.name), spEditMemberAddOpen: false, spEditMemberSearch: '' }) })),
+            options: filtered.map(p => ({ name: p.name, initials: p.initials, onClick: () => set({ spFullMembers: (S.spFullMembers || []).concat({ name: p.name, role: 'Regular user' }), spFullMemberAddOpen: false, spFullMemberSearch: '' }) })),
           };
         })();
-        const spEditMembersField = this.renderPeopleField('Members', S.spEditMembers || [], spEditMembersAdd, name => set({ spEditMembers: (S.spEditMembers || []).filter(n => n !== name) }));
-        const spOnEditOpen = name => set({
-          spEditOpen: true, spEditOldName: name, spEditName: name, spEditDesc: '',
-          spEditMembers: this.PEOPLE_DIRECTORY.filter(p => (p.workspaces || []).includes(name)).map(p => p.name),
-          spEditMemberSearch: '', spEditMemberAddOpen: false,
+        const spFullMembersField = this.renderPeopleField('Members', (S.spFullMembers || []).map(m => m.name), spFullMembersAdd, name => set({ spFullMembers: (S.spFullMembers || []).filter(m => m.name !== name) }));
+        const spFullRoleBtnStyle = 'display:inline-flex;align-items:center;justify-content:space-between;gap:6px;width:128px;height:32px;padding:0 10px;border-radius:8px;cursor:pointer;font:500 12.5px var(--font-ui);color:#16161A;background:#fff;border:1px solid rgba(0,0,29,0.15)';
+        const spFullTrashIcon = this.icon('trash', '#8A8A96', 14);
+        const spFullRoster = (S.spFullMembers || []).map(m => {
+          const av = this.renderAvatar(m.name, null, 30, 11);
+          const menuOpen = S.spFullRoleMenuFor === m.name;
+          return {
+            name: m.name, initials: av.initials, avatarHasPhoto: av.hasPhoto, avatarNoPhoto: av.noPhoto,
+            avatarPhotoUrl: av.photoUrl, avatarPhotoStyle: av.photoStyle, avatarStyle: av.fallbackStyle,
+            role: m.role, roleBtnStyle: spFullRoleBtnStyle,
+            onRoleToggle: () => set({ spFullRoleMenuFor: menuOpen ? '' : m.name }),
+            roleMenuOpen: menuOpen,
+            roleOptions: ['Admin', 'Regular user'].map(r => ({
+              label: r,
+              style: 'padding:8px 9px;border-radius:7px;cursor:pointer;font:500 13px var(--font-ui);color:#16161A;' + (m.role === r ? 'background:rgba(97,72,249,0.07)' : ''),
+              onClick: () => set({ spFullMembers: (S.spFullMembers || []).map(x => x.name === m.name ? Object.assign({}, x, { role: r }) : x), spFullRoleMenuFor: '' }),
+            })),
+            onRemove: () => set({ spFullMembers: (S.spFullMembers || []).filter(x => x.name !== m.name) }),
+            removeIcon: spFullTrashIcon,
+          };
         });
-        const spOnEditClose = () => set({ spEditOpen: false, spEditOldName: '', spEditName: '', spEditDesc: '', spEditMembers: [] });
-        const spOnSaveEdit = () => {
-          const name = (S.spEditName || '').trim();
+        const spFullOnOpenCreate = () => set({
+          spFullOpen: true, spFullMode: 'create', spFullOldName: '', spFullName: '', spFullDesc: '',
+          spFullMembers: [], spFullMemberSearch: '', spFullMemberAddOpen: false,
+        });
+        const spFullOnOpenEdit = name => {
+          const roles = this.SPACE_MEMBER_ROLES[name] || {};
+          const members = this.PEOPLE_DIRECTORY.filter(p => (p.workspaces || []).includes(name)).map(p => ({ name: p.name, role: roles[p.name] || 'Regular user' }));
+          set({
+            spFullOpen: true, spFullMode: 'edit', spFullOldName: name, spFullName: name, spFullDesc: '',
+            spFullMembers: members, spFullMemberSearch: '', spFullMemberAddOpen: false,
+          });
+        };
+        const spFullOnClose = () => set({ spFullOpen: false });
+        const spFullOnSave = () => {
+          const name = (S.spFullName || '').trim();
           if (!name) return;
-          const idx = this.PEOPLE_WORKSPACE_NAMES.indexOf(S.spEditOldName);
-          if (idx > -1) this.PEOPLE_WORKSPACE_NAMES[idx] = name;
-          if (name !== S.spEditOldName) {
-            this.PEOPLE_DIRECTORY.forEach(p => { if (p.workspaces) p.workspaces = p.workspaces.map(w => w === S.spEditOldName ? name : w); });
+          if (S.spFullMode === 'create') {
+            this.PEOPLE_WORKSPACE_NAMES.push(name);
+          } else {
+            const idx = this.PEOPLE_WORKSPACE_NAMES.indexOf(S.spFullOldName);
+            if (idx > -1) this.PEOPLE_WORKSPACE_NAMES[idx] = name;
+            if (name !== S.spFullOldName) {
+              this.PEOPLE_DIRECTORY.forEach(p => { if (p.workspaces) p.workspaces = p.workspaces.map(w => w === S.spFullOldName ? name : w); });
+              if (this.SPACE_MEMBER_ROLES[S.spFullOldName]) { this.SPACE_MEMBER_ROLES[name] = this.SPACE_MEMBER_ROLES[S.spFullOldName]; delete this.SPACE_MEMBER_ROLES[S.spFullOldName]; }
+            }
           }
-          const finalMembers = (S.spEditMembers || []).slice();
+          const members = S.spFullMembers || [];
+          const memberNames = members.map(m => m.name);
           this.PEOPLE_DIRECTORY.forEach(p => {
-            const isMember = finalMembers.includes(p.name);
+            const isMember = memberNames.includes(p.name);
             const has = (p.workspaces || []).includes(name);
             if (isMember && !has) p.workspaces = (p.workspaces || []).concat(name);
             if (!isMember && has) p.workspaces = (p.workspaces || []).filter(w => w !== name);
           });
-          spOnEditClose();
+          const rolesMap = {};
+          members.forEach(m => { rolesMap[m.name] = m.role; });
+          this.SPACE_MEMBER_ROLES[name] = rolesMap;
+          set({ spFullOpen: false });
         };
         const spOnDelete = name => {
           if (!window.confirm('Delete "' + name + '"? This cannot be undone.')) return;
           this.PEOPLE_WORKSPACE_NAMES = this.PEOPLE_WORKSPACE_NAMES.filter(n => n !== name);
           this.PEOPLE_DIRECTORY.forEach(p => { if (p.workspaces) p.workspaces = p.workspaces.filter(w => w !== name); });
+          delete this.SPACE_MEMBER_ROLES[name];
           set({ spMenuFor: '' });
         };
+        // Edit review team modal (Step 7, new) — fully separate component from the Create review team
         return {
           peopleDescription: activePersonaForPeople.description,
           peopleCanInvite: activePersonaForPeople.canInvite,
@@ -8729,24 +8714,29 @@ class Component extends DCLogic {
           peopleInviteModalOpen: S.peopleInviteModalOpen, peopleInviteOnClose,
           peopleInviteEmail: S.peopleInviteEmail || '', peopleInviteOnEmail: e => set({ peopleInviteEmail: e.target.value }),
           peopleInviteRoles: peopleInviteRolesVal, peopleInviteRoleAdd, peopleInviteRoleChips, peopleInviteRolesHasChips: peopleInviteRolesVal.length > 0,
-          peopleInvitePermissionPreset: S.peopleInvitePermissionPreset || 'View and contribute', peopleInviteOnPermissionPreset: e => set({ peopleInvitePermissionPreset: e.target.value }),
-          peopleInvitePresetOptions: PEOPLE_PERMISSION_PRESETS,
+          peopleInvitePermissionPreset: S.peopleInvitePermissionPreset || 'View and contribute',
+          peopleInvitePresetOpen: S.peopleInvitePresetOpen,
+          peopleInviteOnPresetToggle: () => set({ peopleInvitePresetOpen: !S.peopleInvitePresetOpen }),
+          peopleInvitePresetOpts: PEOPLE_PERMISSION_PRESETS.map(opt => ({
+            label: opt,
+            style: 'padding:9px 11px;border-radius:8px;cursor:pointer;font:500 13.5px var(--font-ui);color:#16161A;' + ((S.peopleInvitePermissionPreset || 'View and contribute') === opt ? 'background:rgba(97,72,249,0.07)' : ''),
+            onClick: () => set({ peopleInvitePermissionPreset: opt, peopleInvitePresetOpen: false }),
+          })),
           peopleInviteWorkspaceRows,
           peopleInviteOnSend, peopleInviteSendDisabled: !(S.peopleInviteEmail || '').trim(),
           peopleQuery: S.peopleQuery || '', peopleOnQuery: e => set({ peopleQuery: e.target.value }),
           peopleOnClearSearch: () => set({ peopleQuery: '' }),
           peopleShowWorkspaceCol: showWsCol, peopleGridStyle,
           peopleShowTabBar: peopleTabs.length > 1, peopleTabs, peopleTabIsPeople, peopleTabIsAccess, waCards,
-          waEditableTab, spNewSpaceOpen: S.spNewSpaceOpen, spOnNewSpaceToggle: spAdd.onToggle,
-          spNewSpaceName: S.spNewSpaceName || '', spOnNewSpaceName: e => set({ spNewSpaceName: e.target.value }),
-          spNewSpaceDesc: S.spNewSpaceDesc || '', spOnNewSpaceDesc: e => set({ spNewSpaceDesc: e.target.value }),
-          spNewSpaceMembersField, spNewSpaceMembersHasChips: (S.spNewSpaceMembers || []).length > 0,
-          spOnCreate, spCreateDisabled: !(S.spNewSpaceName || '').trim(),
-          spEditOpen: S.spEditOpen, spOnEditClose,
-          spEditName: S.spEditName || '', spOnEditName: e => set({ spEditName: e.target.value }),
-          spEditDesc: S.spEditDesc || '', spOnEditDesc: e => set({ spEditDesc: e.target.value }),
-          spEditMembersField, spEditMembersHasChips: (S.spEditMembers || []).length > 0,
-          spOnSaveEdit, spSaveDisabled: !(S.spEditName || '').trim(),
+          waEditableTab, spFullOnOpenCreate,
+          spFullOpen: S.spFullOpen, spFullMode: S.spFullMode, spFullIsCreate: S.spFullMode === 'create',
+          spFullTitle: S.spFullMode === 'create' ? 'Create space' : 'Edit space',
+          spFullSaveLabel: S.spFullMode === 'create' ? 'Create space' : 'Save changes',
+          spFullOnClose,
+          spFullName: S.spFullName || '', spFullOnName: e => set({ spFullName: e.target.value }),
+          spFullDesc: S.spFullDesc || '', spFullOnDesc: e => set({ spFullDesc: e.target.value }),
+          spFullMembersField, spFullRoster, spFullHasMembers: spFullRoster.length > 0,
+          spFullOnSave, spFullSaveDisabled: !(S.spFullName || '').trim(),
           peopleTabIsTeams, rtCards, rtEditable,
           rtEditOpen: S.rtEditOpen, rtOnEditClose,
           rtEditName: S.rtEditName || '', rtOnEditName: e => set({ rtEditName: e.target.value }),

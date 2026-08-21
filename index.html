@@ -2959,9 +2959,9 @@ input:focus,textarea:focus{outline:none}
         </sc-if>
 
         <sc-if value="{{ devTabIsKeys }}" hint-placeholder-val="{{ false }}">
-          <div style="position:relative;border-radius:12px;overflow:hidden;background:#0F1729 url(assets/manage-plan-bg.svg) center/cover no-repeat;margin-bottom:16px;padding:28px 32px">
+          <div style="position:relative;border-radius:12px;overflow:hidden;background:#0F1729 url(assets/manage-plan-bg.svg) center/cover no-repeat;margin-bottom:16px;padding:28px 32px;display:flex;align-items:center;gap:28px">
             <img src="assets/manage-plan-mark.svg" style="position:absolute;top:0;right:0;height:100%;width:auto;opacity:0.5;pointer-events:none" alt="">
-            <div style="position:relative;z-index:1;max-width:460px">
+            <div style="position:relative;z-index:1;flex:1;min-width:0;max-width:460px">
               <div style="font:600 10.5px var(--font-ui);color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:.06em">developer access</div>
               <div style="font:700 22px var(--font-display);color:#fff;letter-spacing:-.01em;margin-top:8px">Personal access tokens</div>
               <p style="font:400 13px var(--font-ui);color:#DFFBCA;margin:10px 0 0;line-height:1.55">Personal access tokens authenticate your requests to the Ollang REST API. Anyone with a key can act on your account — store them like passwords.</p>
@@ -2970,8 +2970,30 @@ input:focus,textarea:focus{outline:none}
                 <button style="{{ devBannerOutlineBtn }}" style-hover="border-color:rgba(255,255,255,0.6);background:rgba(255,255,255,0.06)">API reference {{ devExternalIconWhite }}</button>
               </div>
             </div>
+            <div style="position:relative;flex:none;width:186px;align-self:center;margin-left:auto;margin-right:74px;z-index:2;pointer-events:none">
+              <div style="position:absolute;left:14px;top:16px;right:-10px;bottom:-14px;border-radius:16px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);box-shadow:0 12px 28px -10px rgba(0,0,0,0.45);transform:rotate(5deg);filter:blur(0.6px);opacity:0.85"></div>
+              <div style="position:relative;background:rgba(255,255,255,0.09);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,0.18);border-radius:16px;padding:18px 16px;box-shadow:0 2px 6px -1px rgba(0,0,0,0.28),0 12px 24px -8px rgba(0,0,0,0.38),0 28px 56px -16px rgba(0,0,0,0.5);transform:rotate(-4deg);display:flex;flex-direction:column;align-items:center;gap:0">
+                <span style="display:inline-flex;align-items:center;padding:4px 11px;border-radius:999px;background:rgba(255,255,255,0.14);border:1px solid rgba(255,255,255,0.16);font:600 10.5px var(--font-ui);color:#fff">Your app</span>
+                <svg width="26" height="17" viewBox="0 0 26 17" fill="none" style="display:block"><path d="M13 0C13 6 4 5 4 8.5S13 11 13 17" stroke="rgba(97,72,249,0.85)" stroke-width="1.5" stroke-linecap="round"></path></svg>
+                <span style="position:relative;width:34px;height:34px;display:flex;align-items:center;justify-content:center">
+                  <span style="position:absolute;inset:-11px;border-radius:50%;background:radial-gradient(circle,rgba(97,72,249,0.62) 0%,rgba(97,72,249,0) 70%)"></span>
+                  <span style="position:relative;width:34px;height:34px;border-radius:50%;background:#6148F9;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px -4px rgba(97,72,249,0.7);color:#fff">{{ devFlowLinkIcon }}</span>
+                </span>
+                <svg width="26" height="17" viewBox="0 0 26 17" fill="none" style="display:block"><path d="M13 0C13 6 22 5 22 8.5S13 11 13 17" stroke="rgba(97,72,249,0.85)" stroke-width="1.5" stroke-linecap="round"></path></svg>
+                <span style="display:inline-flex;align-items:center;padding:6px 14px;border-radius:999px;background:rgba(255,255,255,0.14);border:1px solid rgba(255,255,255,0.16)"><img src="assets/logos/ollang-white.svg" alt="Ollang" style="height:13px;width:auto;display:block"></span>
+              </div>
+            </div>
           </div>
           <div style="background:#fff;border:1px solid rgba(0,0,29,0.08);border-radius:12px;overflow:hidden">
+            <sc-if value="{{ devKeysEmpty }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:56px 24px 60px;display:flex;flex-direction:column;align-items:center;text-align:center">
+                <img src="assets/empty-nothing.svg" alt="" style="width:210px;height:auto;display:block">
+                <div style="font:700 17px var(--font-display);color:#16161A;margin-top:18px;letter-spacing:-.01em">No API keys yet</div>
+                <p style="font:400 13.5px/1.55 var(--font-ui);color:#6B6B78;margin:8px 0 0;max-width:380px">Create a key to start authenticating your requests to the Ollang REST API.</p>
+                <button onClick="{{ devOnOpenNewKey }}" style="{{ btnPrimaryMd }};margin-top:20px" style-hover="background:#4F39D8">{{ devKeyIcon }} Create your first key</button>
+              </div>
+            </sc-if>
+            <sc-if value="{{ devKeysAny }}" hint-placeholder-val="{{ true }}">
             <div style="overflow-x:auto">
               <div style="{{ devKeysGridStyle }};background:#FAFAFB;border-bottom:1px solid rgba(0,0,29,0.07);padding:10px 16px">
                 <div style="font:600 11px var(--font-ui);letter-spacing:.04em;text-transform:uppercase;color:#9A9AA6">Name</div>
@@ -2991,6 +3013,7 @@ input:focus,textarea:focus{outline:none}
                 </div>
               </sc-for>
             </div>
+            </sc-if>
           </div>
 
           <sc-if value="{{ devNewKeyOpen }}" hint-placeholder-val="{{ false }}">
@@ -3085,9 +3108,9 @@ input:focus,textarea:focus{outline:none}
         </sc-if>
 
         <sc-if value="{{ devTabIsLlm }}" hint-placeholder-val="{{ false }}">
-          <div style="position:relative;border-radius:12px;overflow:hidden;background:#0F1729 url(assets/manage-plan-bg.svg) center/cover no-repeat;margin-bottom:16px;padding:28px 32px">
+          <div style="position:relative;border-radius:12px;overflow:hidden;background:#0F1729 url(assets/manage-plan-bg.svg) center/cover no-repeat;margin-bottom:16px;padding:28px 32px;display:flex;align-items:center;gap:28px">
             <img src="assets/manage-plan-mark.svg" style="position:absolute;top:0;right:0;height:100%;width:auto;opacity:0.5;pointer-events:none" alt="">
-            <div style="position:relative;z-index:1;max-width:460px">
+            <div style="position:relative;z-index:1;flex:1;min-width:0;max-width:460px">
               <div style="font:600 10.5px var(--font-ui);color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:.06em">developer access</div>
               <div style="font:700 22px var(--font-display);color:#fff;letter-spacing:-.01em;margin-top:8px">LLM &amp; model keys (BYOK)</div>
               <p style="font:400 13px var(--font-ui);color:#DFFBCA;margin:10px 0 0;line-height:1.55">Connect your own provider keys for translation and other LLM steps. Keys are stored securely; only masked values are shown.</p>
@@ -3095,15 +3118,9 @@ input:focus,textarea:focus{outline:none}
                 <button style="{{ devBannerOutlineBtn }}" style-hover="border-color:rgba(255,255,255,0.6);background:rgba(255,255,255,0.06)">LLM keys docs {{ devExternalIconWhite }}</button>
               </div>
             </div>
-            <!-- Decorative overlay, independent of the shared banner markup above. Reflects each
-                 provider's REAL configured state from devLlmRows — never hardcoded. -->
-            <div style="position:absolute;top:50%;right:32px;width:280px;background:rgba(255,255,255,0.08);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,0.18);border-radius:14px;padding:6px 16px;box-shadow:0 20px 40px -12px rgba(0,0,0,0.45);transform:translateY(-50%) rotate(-2deg);z-index:2">
-              <sc-for list="{{ devLlmRows }}" as="lp2" hint-placeholder-count="3">
-                <div style="{{ lp2.overlayRowStyle }}">
-                  <span style="{{ lp2.tileStyle }}"><sc-if value="{{ lp2.hasLogoImg }}" hint-placeholder-val="{{ false }}"><img src="{{ lp2.logoUrl }}" alt="{{ lp2.name }}" style="width:16px;height:16px;object-fit:contain"></sc-if><sc-if value="{{ lp2.hasLogoIcon }}" hint-placeholder-val="{{ true }}">{{ lp2.logoIcon }}</sc-if></span>
-                  <span style="font:600 13px var(--font-ui);color:#fff;flex:1">{{ lp2.name }}</span>
-                  <span style="font:500 12px var(--font-ui);color:rgba(255,255,255,0.6)">{{ lp2.statusLabel }}</span>
-                </div>
+            <div style="position:relative;flex:none;width:210px;height:150px;align-self:center;margin-left:auto;margin-right:12px;z-index:2;pointer-events:none">
+              <sc-for list="{{ devLlmChips }}" as="lc" hint-placeholder-count="3">
+                <span style="{{ lc.chipStyle }}"><sc-if value="{{ lc.hasLogoImg }}" hint-placeholder-val="{{ false }}"><img src="{{ lc.logoUrl }}" alt="" style="width:22px;height:22px;object-fit:contain"></sc-if><sc-if value="{{ lc.hasLogoIcon }}" hint-placeholder-val="{{ true }}">{{ lc.logoIcon }}</sc-if></span>
               </sc-for>
             </div>
           </div>
@@ -4900,7 +4917,7 @@ class Component extends DCLogic {
     peopleInviteModalOpen: false, peopleInviteEmail: '', peopleInviteRoles: ['Team member'], peopleInviteRoleSearch: '', peopleInviteRoleAddOpen: false, peopleInvitePermissionPreset: 'View and contribute', peopleInvitePresetOpen: false, peopleInviteWorkspaces: [],
     peopleTab: 'people', waAddOpen: '', waAddSearch: '', peopleWorkspaceFilter: '',
     developersTab: 'overview', devIntegrationPath: 'rest', devCodeCopied: false, devNewKeyOpen: false, devNewKeyName: '', devNewKeyExpiryDays: 30, devNewKeyStep: 'form', devNewKeyRevealCopied: false, devGateOpen: false,
-    devKeys: [{ id: 'k1', name: 'Landing Page', expires: '24/05/2027', createdBy: 'Dan McComas' }],
+    devKeys: [],
     devLlmModalOpen: false, devLlmModalProvider: '', devLlmKeyValue: '', devLlmShowKey: false, devLlmEnabled: true, devLlmDefault: false, devLlmConfigured: { OpenAI: true, Anthropic: true },
     rtNewTeamOpen: false, rtNewTeamName: '', rtNewTeamDesc: '', rtNewTeamMembers: [], rtNewTeamMemberSearch: '', rtNewTeamMemberAddOpen: false,
     spFullOpen: false, spFullMode: 'create', spFullOldName: '', spFullName: '', spFullDesc: '', spFullMembers: [], spFullMemberSearch: '', spFullMemberAddOpen: false, spFullRoleMenuFor: '',
@@ -10157,7 +10174,7 @@ class Component extends DCLogic {
           const name = (S.devNewKeyName || '').trim();
           const expDate = new Date('2026-08-19'); expDate.setDate(expDate.getDate() + S.devNewKeyExpiryDays);
           const label = String(expDate.getDate()).padStart(2, '0') + '/' + String(expDate.getMonth() + 1).padStart(2, '0') + '/' + expDate.getFullYear();
-          set({ devKeys: (S.devKeys || []).concat({ id: 'k' + Date.now(), name, expires: label, createdBy: 'Dan McComas' }), devNewKeyOpen: false, devNewKeyStep: 'form', devNewKeyRevealCopied: false });
+          set({ devKeys: (S.devKeys || []).concat({ id: 'k' + Date.now(), name, expires: label, createdBy: 'Alex Rivera' }), devNewKeyOpen: false, devNewKeyStep: 'form', devNewKeyRevealCopied: false });
         };
         const devOnCopyRevealKey = () => {
           if (navigator.clipboard) navigator.clipboard.writeText(devGeneratedKeyValue).catch(() => {});
@@ -10195,6 +10212,23 @@ class Component extends DCLogic {
         };
         return {
           devTabs, devTabIsOverview: activeDevTab === 'overview', devTabIsKeys: activeDevTab === 'keys', devTabIsLlm: activeDevTab === 'llm',
+          devFlowLinkIcon: this.icon('code', 'currentColor', 17),
+          devLlmChips: (() => {
+            const pos = [
+              { top: 2, left: 6, rot: -7 },
+              { top: 44, left: 96, rot: 5 },
+              { top: 84, left: 24, rot: -3 },
+            ];
+            return DEV_LLM_PROVIDER_DEFS.slice(0, 3).map((p, i) => ({
+              hasLogoImg: !!p.logoUrl, logoUrl: p.logoUrl || '',
+              hasLogoIcon: !p.logoUrl, logoIcon: p.iconId ? this.icon(p.iconId, p.color, 22) : null,
+              chipStyle: 'position:absolute;top:' + pos[i].top + 'px;left:' + pos[i].left + 'px;'
+                + 'width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;'
+                + 'background:rgba(255,255,255,0.94);border:1px solid rgba(255,255,255,0.5);'
+                + 'box-shadow:0 2px 6px -1px rgba(0,0,0,0.28),0 12px 24px -8px rgba(0,0,0,0.38),0 26px 52px -16px rgba(0,0,0,0.5);'
+                + 'transform:rotate(' + pos[i].rot + 'deg)',
+            }));
+          })(),
           devKeyIcon, devExternalIcon, devExternalIconWhite, devBannerOutlineBtn,
           devSegments, devCodeFilename: devSnip.filename, devCodeLines, devQuickstartLabel: devSnip.quickstartLabel.replace(' →', ''), devExternalIconPurple: this.icon('external_link', '#6148F9', 13),
           devCtaTitle: devSnip.ctaTitle, devCtaDesc: devSnip.ctaDesc,
@@ -10206,7 +10240,7 @@ class Component extends DCLogic {
           devCreditsCaption, devCreditsCaptionColor: devLotUrgent ? '#E0135B' : '#8A8A96',
           devOnJumpToRates: () => set({ page: 'credit-rates' }),
           devResourcesTileStyle: devResourcesTile.tileStyle, devResourcesTileIcon: devResourcesTile.icon, devResourceChevron,
-          devKeysGridStyle, devKeyRows,
+          devKeysGridStyle, devKeyRows, devKeysEmpty: (S.devKeys || []).length === 0, devKeysAny: (S.devKeys || []).length > 0,
           devOnOpenNewKey, devOnCloseNewKey, devOnCreateKey, devOnDoneNewKey, devOnCopyRevealKey, devOnNewKeyName: e => set({ devNewKeyName: e.target.value }),
           devGateOpen: S.devGateOpen, devOnCloseGate, devGateIconStyle: devGateIconTile.tileStyle, devGateIconContent: devGateIconTile.icon,
           devGatePrice, devGateFeatures, devGatePlanCards,

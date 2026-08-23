@@ -2959,28 +2959,39 @@ input:focus,textarea:focus{outline:none}
         </sc-if>
 
         <sc-if value="{{ devTabIsKeys }}" hint-placeholder-val="{{ false }}">
-          <div style="position:relative;border-radius:12px;overflow:hidden;background:#0F1729 url(assets/manage-plan-bg.svg) center/cover no-repeat;margin-bottom:16px;padding:28px 32px;display:flex;align-items:center;gap:28px">
+          <div style="position:relative;border-radius:12px;overflow:hidden;background:#0F1729 url(assets/manage-plan-bg.svg) center/cover no-repeat;margin-bottom:16px;padding:28px 32px;display:flex;flex-wrap:wrap;align-items:center;gap:28px">
             <img src="assets/manage-plan-mark.svg" style="position:absolute;top:0;right:0;height:100%;width:auto;opacity:0.5;pointer-events:none" alt="">
-            <div style="position:relative;z-index:1;flex:1;min-width:0;max-width:460px">
+            <div style="position:relative;z-index:1;flex:1 1 380px;min-width:336px;max-width:460px">
               <div style="font:600 10.5px var(--font-ui);color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:.06em">developer access</div>
               <div style="font:700 22px var(--font-display);color:#fff;letter-spacing:-.01em;margin-top:8px">Personal access tokens</div>
               <p style="font:400 13px var(--font-ui);color:#DFFBCA;margin:10px 0 0;line-height:1.55">Personal access tokens authenticate your requests to the Ollang REST API. Anyone with a key can act on your account — store them like passwords.</p>
-              <div style="display:flex;gap:10px;margin-top:22px">
+              <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:22px">
                 <button onClick="{{ devOnOpenNewKey }}" style="{{ btnPrimaryMd }}" style-hover="background:#4F39D8">{{ devKeyIcon }} New API key</button>
                 <button style="{{ devBannerOutlineBtn }}" style-hover="border-color:rgba(255,255,255,0.6);background:rgba(255,255,255,0.06)">API reference {{ devExternalIconWhite }}</button>
               </div>
             </div>
-            <div style="position:relative;flex:none;width:186px;align-self:center;margin-left:auto;margin-right:74px;z-index:2;pointer-events:none">
-              <div style="position:absolute;left:14px;top:16px;right:-10px;bottom:-14px;border-radius:16px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);box-shadow:0 12px 28px -10px rgba(0,0,0,0.45);transform:rotate(5deg);filter:blur(0.6px);opacity:0.85"></div>
-              <div style="position:relative;background:rgba(255,255,255,0.09);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,0.18);border-radius:16px;padding:18px 16px;box-shadow:0 2px 6px -1px rgba(0,0,0,0.28),0 12px 24px -8px rgba(0,0,0,0.38),0 28px 56px -16px rgba(0,0,0,0.5);transform:rotate(-4deg);display:flex;flex-direction:column;align-items:center;gap:0">
-                <span style="display:inline-flex;align-items:center;padding:4px 11px;border-radius:999px;background:rgba(255,255,255,0.14);border:1px solid rgba(255,255,255,0.16);font:600 10.5px var(--font-ui);color:#fff">Your app</span>
-                <svg width="26" height="17" viewBox="0 0 26 17" fill="none" style="display:block"><path d="M13 0C13 6 4 5 4 8.5S13 11 13 17" stroke="rgba(97,72,249,0.85)" stroke-width="1.5" stroke-linecap="round"></path></svg>
-                <span style="position:relative;width:34px;height:34px;display:flex;align-items:center;justify-content:center">
-                  <span style="position:absolute;inset:-11px;border-radius:50%;background:radial-gradient(circle,rgba(97,72,249,0.62) 0%,rgba(97,72,249,0) 70%)"></span>
-                  <span style="position:relative;width:34px;height:34px;border-radius:50%;background:#6148F9;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px -4px rgba(97,72,249,0.7);color:#fff">{{ devFlowLinkIcon }}</span>
-                </span>
-                <svg width="26" height="17" viewBox="0 0 26 17" fill="none" style="display:block"><path d="M13 0C13 6 22 5 22 8.5S13 11 13 17" stroke="rgba(97,72,249,0.85)" stroke-width="1.5" stroke-linecap="round"></path></svg>
-                <span style="display:inline-flex;align-items:center;padding:6px 14px;border-radius:999px;background:rgba(255,255,255,0.14);border:1px solid rgba(255,255,255,0.16)"><img src="assets/logos/ollang-white.svg" alt="Ollang" style="height:13px;width:auto;display:block"></span>
+            <div style="position:relative;flex:0 0 290px;width:290px;align-self:stretch;min-height:150px;margin-left:auto;margin-right:44px;z-index:2;pointer-events:none">
+              <div style="position:absolute;left:118px;top:18px;bottom:-96px;width:172px;border-radius:16px;background:#F3F3F6;box-shadow:0 14px 34px -12px rgba(0,0,0,0.5);transform:rotate(7deg);padding:16px 15px;overflow:hidden">
+                <div style="font:600 10.5px var(--font-ui);color:#8A8A96;letter-spacing:.03em">API credentials</div>
+                <div style="margin-top:9px;border:1px solid rgba(0,0,29,0.09);border-radius:10px;background:#fff;padding:9px 10px;font:400 10px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;color:#3B3B46;word-break:break-all">ollang_sk_live_7ce9a8fa-98b7-49d8-bdbc-3cf281a12dd6</div>
+                <div style="margin-top:12px;border:1px solid rgba(0,0,29,0.09);border-radius:10px;background:#fff;padding:9px 10px;font:400 10px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;color:#8A8A96;word-break:break-all">ollang_pk_4f2b-91ce-7ad0-3e58</div>
+                <div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(0,0,29,0.08);display:flex;flex-direction:column;gap:9px">
+                  <div style="font:600 9.5px var(--font-ui);color:#9A9AA6;letter-spacing:.05em;text-transform:uppercase">Permissions</div>
+                  <div style="font:400 10.5px var(--font-ui);color:#3B3B46">Read translations</div>
+                  <div style="font:400 10.5px var(--font-ui);color:#3B3B46">Write projects</div>
+                  <div style="font:400 10.5px var(--font-ui);color:#3B3B46">Manage webhooks</div>
+                </div>
+              </div>
+              <div style="position:absolute;left:22px;top:44px;bottom:-110px;width:188px;border-radius:18px;background:#fff;box-shadow:0 2px 6px -1px rgba(0,0,0,0.16),0 18px 34px -10px rgba(0,0,0,0.35),0 36px 64px -20px rgba(0,0,0,0.45);transform:rotate(-5deg);padding:20px 18px;overflow:hidden">
+                <img src="assets/logos/ollang-iso.svg" alt="Ollang" style="width:34px;height:auto;display:block">
+                <div style="font:700 15px var(--font-display);color:#16161A;letter-spacing:-.01em;margin-top:14px">Ollang API</div>
+                <div style="margin-top:14px;border:1px solid rgba(0,0,29,0.09);border-radius:10px;background:#FAFAFB;padding:9px 10px;font:400 10px var(--font-ui);color:#6B6B78">
+                  <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#3B3B46">sk_live_••••••8e1f</span>
+                </div>
+                <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px">
+                  <div style="display:flex;justify-content:space-between;font:400 10.5px var(--font-ui);color:#8A8A96"><span>Scope</span><span style="color:#3B3B46">Full access</span></div>
+                  <div style="display:flex;justify-content:space-between;font:400 10.5px var(--font-ui);color:#8A8A96"><span>Created</span><span style="color:#3B3B46">Today</span></div>
+                </div>
               </div>
             </div>
           </div>
@@ -3120,7 +3131,10 @@ input:focus,textarea:focus{outline:none}
             </div>
             <div style="position:relative;flex:none;width:210px;height:150px;align-self:center;margin-left:auto;margin-right:12px;z-index:2;pointer-events:none">
               <sc-for list="{{ devLlmChips }}" as="lc" hint-placeholder-count="3">
-                <span style="{{ lc.chipStyle }}"><sc-if value="{{ lc.hasLogoImg }}" hint-placeholder-val="{{ false }}"><img src="{{ lc.logoUrl }}" alt="" style="width:22px;height:22px;object-fit:contain"></sc-if><sc-if value="{{ lc.hasLogoIcon }}" hint-placeholder-val="{{ true }}">{{ lc.logoIcon }}</sc-if></span>
+                <span style="{{ lc.chipStyle }}">
+                  <span style="width:26px;height:26px;border-radius:8px;background:rgba(0,0,29,0.05);display:flex;align-items:center;justify-content:center;flex:none"><sc-if value="{{ lc.hasLogoImg }}" hint-placeholder-val="{{ false }}"><img src="{{ lc.logoUrl }}" alt="" style="width:18px;height:18px;object-fit:contain"></sc-if><sc-if value="{{ lc.hasLogoIcon }}" hint-placeholder-val="{{ true }}">{{ lc.logoIcon }}</sc-if></span>
+                  <span style="font:400 11px ui-monospace,SFMono-Regular,Menlo,monospace;color:#8A8A96;letter-spacing:.02em">sk-••••••••••</span>
+                </span>
               </sc-for>
             </div>
           </div>
@@ -5804,7 +5818,7 @@ class Component extends DCLogic {
     const ini = initials || (name || '?').split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
     const fp = fontPx || Math.round(size * 0.4);
     return {
-      hasPhoto: !!photoUrl, noPhoto: !photoUrl, photoUrl, initials: ini,
+      hasPhoto: !!photoUrl, noPhoto: !photoUrl, photoUrl: photoUrl || this.TRANSPARENT_PX, initials: ini,
       photoStyle: 'width:' + size + 'px;height:' + size + 'px;border-radius:50%;object-fit:cover;display:block;flex:none',
       fallbackStyle: 'width:' + size + 'px;height:' + size + 'px;border-radius:50%;background:rgba(97,72,249,0.14);color:#4F39D8;font:600 ' + fp + 'px var(--font-ui);display:flex;align-items:center;justify-content:center;flex:none',
     };
@@ -7040,7 +7054,7 @@ class Component extends DCLogic {
     const billRingPct = Math.max(0, Math.min(100, billConsumedPct));
     const billRingDasharray = (billRingPct / 100 * billRingC).toFixed(2) + ' ' + billRingC.toFixed(2);
     // Shared icon tile for the sidebar credit widget, through the same renderer every other icon tile uses.
-    const billWidgetTile = this.renderIconTile('tokens', 30, '#6148F91E', '#6148F9');
+    const billWidgetTile = this.renderIconTile('bill_credits', 30, '#6148F9', '#fff');
     const billInvStatusToLS = { notReady: 'Queued', resuming: 'Processing', readyToPay: 'At review gate', paid: 'Delivered', overdue: 'Failed' };
     const billInvLabels = { notReady: 'Not ready', resuming: 'Preparing Invoice', readyToPay: 'Ready to pay', paid: 'Paid', overdue: 'Overdue' };
     const billInvBadgeFor = inv => Object.assign({ label: billInvLabels[inv.status] || inv.status }, this.renderBadge('status', billInvStatusToLS[inv.status] || 'Queued', { size: 'sm' }));
@@ -10187,8 +10201,8 @@ class Component extends DCLogic {
         // rather than generic colored initials.
         const DEV_LLM_PROVIDER_DEFS = [
           { name: 'OpenAI', logoUrl: this.PROVIDER_LOGOS.OpenAI, tint: '#F1F1F4' },
-          { name: 'Gemini', iconId: 'gemini_mark', color: '#4285F4', tint: 'rgba(66,133,244,0.1)' },
-          { name: 'Anthropic', iconId: 'anthropic_mark', color: '#CC785C', tint: 'rgba(204,120,92,0.12)' },
+          { name: 'Gemini', logoUrl: 'assets/logos/gemini-color.svg', tint: 'rgba(66,133,244,0.1)' },
+          { name: 'Anthropic', logoUrl: 'assets/logos/claude-color.svg', tint: 'rgba(204,120,92,0.12)' },
         ];
         const devLlmRows = DEV_LLM_PROVIDER_DEFS.map((p, i) => {
           const configured = !!(S.devLlmConfigured || {})[p.name];
@@ -10215,16 +10229,16 @@ class Component extends DCLogic {
           devFlowLinkIcon: this.icon('code', 'currentColor', 17),
           devLlmChips: (() => {
             const pos = [
-              { top: 2, left: 6, rot: -7 },
-              { top: 44, left: 96, rot: 5 },
-              { top: 84, left: 24, rot: -3 },
+              { top: 2, left: 0, rot: -6, bg: '#F3F3F6' },
+              { top: 44, left: 28, rot: 5, bg: '#F8F8FA' },
+              { top: 86, left: 10, rot: -3, bg: '#fff' },
             ];
             return DEV_LLM_PROVIDER_DEFS.slice(0, 3).map((p, i) => ({
               hasLogoImg: !!p.logoUrl, logoUrl: p.logoUrl || '',
-              hasLogoIcon: !p.logoUrl, logoIcon: p.iconId ? this.icon(p.iconId, p.color, 22) : null,
-              chipStyle: 'position:absolute;top:' + pos[i].top + 'px;left:' + pos[i].left + 'px;'
-                + 'width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;'
-                + 'background:rgba(255,255,255,0.94);border:1px solid rgba(255,255,255,0.5);'
+              hasLogoIcon: !p.logoUrl, logoIcon: p.iconId ? this.icon(p.iconId, p.color, 18) : null,
+              chipStyle: 'position:absolute;top:' + pos[i].top + 'px;left:' + pos[i].left + 'px;z-index:' + (i + 1) + ';'
+                + 'width:158px;padding:11px 13px;border-radius:14px;display:flex;align-items:center;gap:10px;'
+                + 'background:' + pos[i].bg + ';border:1px solid rgba(255,255,255,0.5);'
                 + 'box-shadow:0 2px 6px -1px rgba(0,0,0,0.28),0 12px 24px -8px rgba(0,0,0,0.38),0 26px 52px -16px rgba(0,0,0,0.5);'
                 + 'transform:rotate(' + pos[i].rot + 'deg)',
             }));

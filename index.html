@@ -46,11 +46,16 @@ input:focus,textarea:focus{outline:none}
 .om-rt-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 .om-dev-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
 @media (max-width:900px){.om-dev-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.om-dev-credits-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.om-wf-gate-grid{display:grid;grid-template-columns:1.1fr 1fr}
 @media (max-width:720px){
   .om-crumb-root,.om-learn-label{display:none !important}
   .om-header{padding:0 12px !important;gap:8px !important}
   .om-detail-actions{width:100% !important;justify-content:flex-stretch !important}
   .om-rt-grid{grid-template-columns:repeat(1,minmax(0,1fr)) !important}
+  .om-dev-credits-grid{grid-template-columns:1fr !important}
+  .om-wf-gate-grid{grid-template-columns:1fr !important}
+  .om-bill-3col-grid{grid-template-columns:1fr !important}
 }
 </style>
 </helmet>
@@ -2206,7 +2211,7 @@ input:focus,textarea:focus{outline:none}
             <div>
               <div style="font:700 11px var(--font-ui);color:#6B6B78;text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px">Credits &amp; Plan</div>
 
-              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
+              <div class="om-bill-3col-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
 
                 <div style="{{ billCardShellStyle }};display:flex;flex-direction:column" style-hover="border-color:rgba(97,72,249,0.35);box-shadow:0 10px 26px -12px rgba(16,16,20,0.16)">
                   <div style="display:flex;align-items:center;gap:8px">
@@ -2656,7 +2661,7 @@ input:focus,textarea:focus{outline:none}
                 </sc-for>
               </div>
             </div>
-            <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:start">
+            <div class="om-bill-3col-grid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:start">
               <sc-for list="{{ billPlanCards }}" as="c" hint-placeholder-count="3">
                 <div style="{{ c.cardStyle }}">
                   <sc-if value="{{ c.isCurrent }}" hint-placeholder-val="{{ false }}">
@@ -2887,7 +2892,7 @@ input:focus,textarea:focus{outline:none}
 
         <sc-if value="{{ devTabIsOverview }}" hint-placeholder-val="{{ true }}">
           <div style="background:#fff;border:1px solid rgba(20,20,30,0.1);border-radius:16px;overflow:hidden;box-shadow:0 12px 32px -16px rgba(20,20,30,0.22);margin-bottom:24px">
-            <div style="display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid rgba(20,20,30,0.08)">
+            <div class="om-dev-grid" style="border-bottom:1px solid rgba(20,20,30,0.08)">
               <sc-for list="{{ devSegments }}" as="sg" hint-placeholder-count="4">
                 <div onClick="{{ sg.onClick }}" style="{{ sg.style }}">
                   <div style="display:flex;align-items:center;gap:8px">
@@ -2924,7 +2929,7 @@ input:focus,textarea:focus{outline:none}
             </div>
           </div>
 
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px">
+          <div class="om-dev-credits-grid" style="margin-top:16px">
             <div style="{{ devCreditsCardStyle }};display:flex;flex-direction:column">
               <div style="display:flex;align-items:center;gap:8px">
                 <span style="{{ devCreditsTileStyle }}">{{ devCreditsTileIcon }}</span>
@@ -2971,7 +2976,7 @@ input:focus,textarea:focus{outline:none}
                 <button style="{{ devBannerOutlineBtn }}" style-hover="border-color:rgba(255,255,255,0.6);background:rgba(255,255,255,0.06)">API reference {{ devExternalIconWhite }}</button>
               </div>
             </div>
-            <div style="position:relative;flex:0 0 290px;width:290px;align-self:stretch;min-height:150px;margin-left:auto;margin-right:44px;z-index:2;pointer-events:none">
+            <div style="{{ devApiIllustrationStyle }}">
               <div style="position:absolute;left:118px;top:18px;bottom:-96px;width:172px;border-radius:16px;background:#F3F3F6;box-shadow:0 14px 34px -12px rgba(0,0,0,0.5);transform:rotate(7deg);padding:16px 15px;overflow:hidden">
                 <div style="font:600 10.5px var(--font-ui);color:#8A8A96;letter-spacing:.03em">API credentials</div>
                 <div style="margin-top:9px;border:1px solid rgba(0,0,29,0.09);border-radius:10px;background:#fff;padding:9px 10px;font:400 10px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;color:#3B3B46;word-break:break-all">ollang_sk_live_7ce9a8fa-98b7-49d8-bdbc-3cf281a12dd6</div>
@@ -3120,9 +3125,9 @@ input:focus,textarea:focus{outline:none}
         </sc-if>
 
         <sc-if value="{{ devTabIsLlm }}" hint-placeholder-val="{{ false }}">
-          <div style="position:relative;border-radius:12px;overflow:hidden;background:#0F1729 url(assets/manage-plan-bg.svg) center/cover no-repeat;margin-bottom:16px;padding:28px 32px;display:flex;align-items:center;gap:28px">
+          <div style="position:relative;border-radius:12px;overflow:hidden;background:#0F1729 url(assets/manage-plan-bg.svg) center/cover no-repeat;margin-bottom:16px;padding:28px 32px;display:flex;flex-wrap:wrap;align-items:center;gap:28px">
             <img src="assets/manage-plan-mark.svg" style="position:absolute;top:0;right:0;height:100%;width:auto;opacity:0.5;pointer-events:none" alt="">
-            <div style="position:relative;z-index:1;flex:1;min-width:0;max-width:460px">
+            <div style="position:relative;z-index:1;flex:1 1 380px;min-width:336px;max-width:460px">
               <div style="font:600 10.5px var(--font-ui);color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:.06em">developer access</div>
               <div style="font:700 22px var(--font-display);color:#fff;letter-spacing:-.01em;margin-top:8px">LLM &amp; model keys (BYOK)</div>
               <p style="font:400 13px var(--font-ui);color:#DFFBCA;margin:10px 0 0;line-height:1.55">Connect your own provider keys for translation and other LLM steps. Keys are stored securely; only masked values are shown.</p>
@@ -3130,7 +3135,7 @@ input:focus,textarea:focus{outline:none}
                 <button style="{{ devBannerOutlineBtn }}" style-hover="border-color:rgba(255,255,255,0.6);background:rgba(255,255,255,0.06)">LLM keys docs {{ devExternalIconWhite }}</button>
               </div>
             </div>
-            <div style="position:relative;flex:none;width:210px;height:150px;align-self:center;margin-left:auto;margin-right:12px;z-index:2;pointer-events:none">
+            <div style="{{ devLlmIllustrationStyle }}">
               <sc-for list="{{ devLlmChips }}" as="lc" hint-placeholder-count="3">
                 <span style="{{ lc.chipStyle }}">
                   <span style="width:26px;height:26px;border-radius:8px;background:rgba(0,0,29,0.05);display:flex;align-items:center;justify-content:center;flex:none"><sc-if value="{{ lc.hasLogoImg }}" hint-placeholder-val="{{ false }}"><img src="{{ lc.logoUrl }}" alt="" style="width:18px;height:18px;object-fit:contain"></sc-if><sc-if value="{{ lc.hasLogoIcon }}" hint-placeholder-val="{{ true }}">{{ lc.logoIcon }}</sc-if></span>
@@ -3304,7 +3309,7 @@ input:focus,textarea:focus{outline:none}
     <div data-scrollpane="1" style="flex:1;min-height:0;overflow:hidden;position:relative;background:#F6F6F8">
       <div style="position:absolute;inset:-10px;background:url(assets/workflows-gate-backdrop.svg) center/cover no-repeat;filter:blur(3px);opacity:1;pointer-events:none;transform:scale(1.02)"></div>
       <div style="position:absolute;inset:0;background:rgba(16,16,20,0.06);display:flex;align-items:center;justify-content:center;padding:24px" onClick="{{ onWorkflowsGateClose }}">
-        <div style="position:relative;width:100%;max-width:860px;background:#FAFAFB;border-radius:18px;box-shadow:0 18px 44px -16px rgba(16,16,20,0.22);display:grid;grid-template-columns:1.1fr 1fr" onClick="{{ stopClick }}">
+        <div style="position:relative;width:100%;max-width:860px;background:#FAFAFB;border-radius:18px;box-shadow:0 18px 44px -16px rgba(16,16,20,0.22)" class="om-wf-gate-grid" onClick="{{ stopClick }}">
           <div style="padding:36px;display:flex;flex-direction:column">
             <h1 style="font:700 26px var(--font-display);color:#1A1A22;margin:0;letter-spacing:-.02em">Unlock the full power of <span style="color:#6148F9">Workflows</span></h1>
             <p style="font:400 13.5px/1.6 var(--font-ui);color:#6B6B78;margin:12px 0 0">Build reusable automation around your translations — route work to reviewers, run quality checks, and trigger actions when a job finishes.</p>
@@ -10083,13 +10088,26 @@ class Component extends DCLogic {
           { id: 'skills', icon: 'sparkles', label: 'Skills', sub: 'Cursor, Claude Code, Codex' },
         ];
         const activePath = DEV_SNIPPETS[S.devIntegrationPath] ? S.devIntegrationPath : 'rest';
+        // Below 900 the .om-dev-grid class (shared threshold with shellNarrow) drops to 2 columns —
+        // recompute divider borders for a 2x2 layout instead of a single row of 4.
+        // JS-driven (not CSS media) so it tracks the same S.vw source of truth as shellNarrow/lsNarrow —
+        // avoids relying on the iframe's own viewport matching the app's measured width for this flip.
+        const devIllustNarrow = S.vw < 720;
+        const devApiIllustrationStyle = 'position:relative;flex:0 0 290px;width:290px;align-self:stretch;min-height:150px;z-index:2;pointer-events:none;'
+          + (devIllustNarrow ? 'margin-left:0;margin-right:0' : 'margin-left:auto;margin-right:44px');
+        const devLlmIllustrationStyle = 'position:relative;flex:none;width:210px;height:150px;align-self:center;z-index:2;pointer-events:none;'
+          + (devIllustNarrow ? 'margin-left:0;margin-right:0' : 'margin-left:auto;margin-right:12px');
+        const devSegNarrow = S.vw < 900;
         const devSegments = devCardDefs.map((c, i) => {
           const active = c.id === activePath;
+          const rightBorder = devSegNarrow ? (i % 2 === 0) : (i < 3);
+          const topBorder = devSegNarrow && i >= 2;
           return {
             label: c.label, sub: c.sub, icon: this.icon(c.icon, active ? '#6148F9' : '#8A8A96', 17),
             iconWrapStyle: 'display:flex',
             labelStyle: 'font:' + (active ? '600' : '500') + ' 14px var(--font-ui);color:' + (active ? '#16161A' : '#5B5B66'),
-            style: 'padding:16px 20px;cursor:pointer;transition:.14s;margin-bottom:-1px;' + (i < 3 ? 'border-right:1px solid rgba(20,20,30,0.08);' : '')
+            style: 'padding:16px 20px;cursor:pointer;transition:.14s;margin-bottom:-1px;' + (rightBorder ? 'border-right:1px solid rgba(20,20,30,0.08);' : '')
+              + (topBorder ? 'border-top:1px solid rgba(20,20,30,0.08);' : '')
               + 'border-bottom:2px solid ' + (active ? '#6148F9' : 'transparent') + ';' + (active ? 'background:rgba(97,72,249,0.05)' : ''),
           };
         });
@@ -10227,6 +10245,7 @@ class Component extends DCLogic {
         };
         return {
           devTabs, devTabIsOverview: activeDevTab === 'overview', devTabIsKeys: activeDevTab === 'keys', devTabIsLlm: activeDevTab === 'llm',
+          devApiIllustrationStyle, devLlmIllustrationStyle,
           devFlowLinkIcon: this.icon('code', 'currentColor', 17),
           devLlmChips: (() => {
             const pos = [

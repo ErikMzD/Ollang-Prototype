@@ -38,12 +38,15 @@ input:focus,textarea:focus{outline:none}
 @keyframes omCheck{from{stroke-dashoffset:32}to{stroke-dashoffset:0}}
 @keyframes omBarPulse{0%,100%{opacity:.35}50%{opacity:1}}
 @keyframes omOrbPulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(97,72,249,0.28)}50%{transform:scale(1.045);box-shadow:0 0 0 8px rgba(97,72,249,0)}}
+@keyframes omSlideInRight{from{transform:translateX(100%)}to{transform:translateX(0)}}
+@keyframes omSpin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 .om-step{animation:omFade .28s ease both}
 /* Fixed-column grid — shared by the Review Teams AND Spaces card grids (incl. their New team/New
    space add-tiles). Do NOT change to auto-fit/auto-fill or add flex/width overrides on grid items —
    that reintroduces the bug where a lone last-row item (e.g. the add-tile alone in the final row)
    stretches to fill the row instead of matching card width. This has regressed silently before. */
 .om-rt-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.om-drill-card:hover .om-drill-chevron{color:#6148F9!important}
 .om-dev-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
 @media (max-width:900px){.om-dev-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .om-dev-credits-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
@@ -105,11 +108,27 @@ input:focus,textarea:focus{outline:none}
             </div>
           </sc-for>
         </sc-if>
-        <div style="font:600 11px var(--font-ui);color:#9A9AA6;padding:14px 10px 6px">Library</div>
+        <div style="font:600 11px var(--font-ui);color:#9A9AA6;padding:14px 10px 6px">Intelligence</div>
         <div onClick="{{ onNavWorkflows }}" style="{{ workflowsNavStyle }}">
           <span style="width:18px;height:18px;flex:none;display:flex;align-items:center;justify-content:center;color:#4D4D4D"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="2"></rect><rect x="13" y="13" width="8" height="8" rx="2"></rect><path d="M7 11v4a2 2 0 0 0 2 2h4"></path></svg></span>
           <span style="font:500 13.5px var(--font-ui);color:{{ workflowsNavTextColor }}">Workflows</span>
           <sc-if value="{{ workflowsShowBadge }}" hint-placeholder-val="{{ false }}"><span style="{{ workflowsBadgeStyle }}">Upgrade</span></sc-if>
+        </div>
+        <div onClick="{{ onNavMemory }}" style="{{ navMemoryStyle }}">
+          <span style="width:18px;height:18px;flex:none;display:flex;align-items:center;justify-content:center;color:{{ navMemoryIconColor }}">{{ navMemoryIcon }}</span>
+          <span style="font:{{ navMemoryFont }};color:{{ navMemoryTextColor }}">Memory</span>
+        </div>
+        <div onClick="{{ onNavGlossaries }}" style="{{ navGlossariesStyle }}">
+          <span style="width:18px;height:18px;flex:none;display:flex;align-items:center;justify-content:center;color:{{ navGlossariesIconColor }}">{{ navGlossariesIcon }}</span>
+          <span style="font:{{ navGlossariesFont }};color:{{ navGlossariesTextColor }}">Glossaries</span>
+        </div>
+        <div onClick="{{ onNavStyleGuides }}" style="{{ navStyleGuidesStyle }}">
+          <span style="width:18px;height:18px;flex:none;display:flex;align-items:center;justify-content:center;color:{{ navStyleGuidesIconColor }}">{{ navStyleGuidesIcon }}</span>
+          <span style="font:{{ navStyleGuidesFont }};color:{{ navStyleGuidesTextColor }}">Style Guides</span>
+        </div>
+        <div onClick="{{ onNavCustomInstructions }}" style="{{ navCustomInstructionsStyle }}">
+          <span style="width:18px;height:18px;flex:none;display:flex;align-items:center;justify-content:center;color:{{ navCustomInstructionsIconColor }}">{{ navCustomInstructionsIcon }}</span>
+          <span style="font:{{ navCustomInstructionsFont }};color:{{ navCustomInstructionsTextColor }}">Custom Instructions</span>
         </div>
         <div style="padding:6px 10px 0"><span style="font:600 12.5px var(--font-ui);color:#6148F9;cursor:pointer" style-hover="text-decoration:underline">All library items</span></div>
         <div onClick="{{ onNavCreditRates }}" style="{{ navCreditRatesStyle }}">
@@ -164,7 +183,7 @@ input:focus,textarea:focus{outline:none}
           </button>
         </div>
       </sc-if>
-      </sc-if>
+      
       <div onClick="{{ onToggleProfileSwitcher }}" style="display:flex;align-items:center;gap:11px;padding:9px 11px;border:1px solid rgba(20,20,30,0.1);border-radius:11px;background:#fff;cursor:pointer" style-hover="border-color:rgba(97,72,249,0.35)">
         <sc-if value="{{ profileAvatarHasPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ profileAvatarPhotoUrl }}" style="{{ profileAvatarPhotoStyle }}" alt="Alex Rivera"></sc-if>
         <sc-if value="{{ profileAvatarNoPhoto }}" hint-placeholder-val="{{ true }}"><span style="{{ profileAvatarStyle }}">{{ profileAvatarInitials }}</span></sc-if>
@@ -604,7 +623,7 @@ input:focus,textarea:focus{outline:none}
                       </div>
                     </div>
                     <span style="display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:9px;background:#F1F1F4;color:#5A5A66;flex:none">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"></path></svg>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg>
                     </span>
                   </div>
                   <div style="display:flex;align-items:baseline;gap:8px;margin-top:16px">
@@ -823,7 +842,7 @@ input:focus,textarea:focus{outline:none}
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </button>
               </div>
-              <div style="border-top:1px solid rgba(0,0,29,0.08)"></div>
+              <div style="border-top:1px solid rgba(0,0,29,0.08);margin:0 20px"></div>
               <div style="padding:20px">
                 <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Email</label>
                 <input value="{{ peopleInviteEmail }}" onChange="{{ peopleInviteOnEmail }}" placeholder="name@company.com" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui);color:#16161A;margin-bottom:14px">
@@ -874,7 +893,8 @@ input:focus,textarea:focus{outline:none}
                   </sc-if>
                 </div>
               </div>
-              <div style="display:flex;justify-content:flex-end;gap:9px;padding:16px 20px;border-top:1px solid rgba(0,0,29,0.08)">
+              <div style="border-top:1px solid rgba(0,0,29,0.08);margin:0 20px"></div>
+              <div style="display:flex;justify-content:flex-end;gap:9px;padding:16px 20px">
                 <button onClick="{{ peopleInviteOnClose }}" style="{{ btnSecondaryMd }}" style-hover="{{ btnSecondaryHover }}">Cancel</button>
                 <button onClick="{{ peopleInviteOnSend }}" disabled="{{ peopleInviteSendDisabled }}" style="{{ btnPrimaryMd }}" style-hover="background:#4F39D8">Send invitation</button>
               </div>
@@ -898,7 +918,7 @@ input:focus,textarea:focus{outline:none}
           <sc-if value="{{ spFullOpen }}" hint-placeholder-val="{{ false }}">
             <div style="position:fixed;inset:0;background:rgba(16,16,20,0.4);z-index:100" onClick="{{ spFullOnClose }}"></div>
             <div style="position:fixed;top:0;right:0;bottom:0;width:420px;max-width:92vw;background:#fff;z-index:101;box-shadow:-24px 0 60px -12px rgba(16,16,20,0.3);display:flex;flex-direction:column">
-              <div style="flex:none;padding:20px 22px;border-bottom:1px solid rgba(0,0,29,0.08);display:flex;align-items:center;justify-content:space-between;gap:12px">
+              <div style="flex:none;padding:20px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px;position:relative"><div style="position:absolute;left:22px;right:22px;bottom:0;border-bottom:1px solid rgba(0,0,29,0.08)"></div>
                 <div style="font:600 16px var(--font-ui);color:#16161A">{{ spFullTitle }}</div>
                 <button onClick="{{ spFullOnClose }}" title="Close" style="width:28px;height:28px;flex:none;border-radius:8px;border:none;background:transparent;color:#8A8A96;cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:#F1F1F4">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -948,7 +968,8 @@ input:focus,textarea:focus{outline:none}
                     </div>
                   </sc-if>
               </div>
-              <div style="flex:none;display:flex;justify-content:flex-end;gap:9px;padding:16px 22px;border-top:1px solid rgba(0,0,29,0.08)">
+              <div style="flex:none;border-top:1px solid rgba(0,0,29,0.08);margin:0 22px"></div>
+              <div style="flex:none;display:flex;justify-content:flex-end;gap:9px;padding:16px 22px">
                 <button onClick="{{ spFullOnClose }}" style="{{ btnSecondaryMd }}" style-hover="{{ btnSecondaryHover }}">Cancel</button>
                 <button onClick="{{ spFullOnSave }}" disabled="{{ spFullSaveDisabled }}" style="{{ btnPrimaryMd }}" style-hover="background:#4F39D8">{{ spFullSaveLabel }}</button>
               </div>
@@ -1013,7 +1034,7 @@ input:focus,textarea:focus{outline:none}
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                   </button>
                 </div>
-                <div style="border-top:1px solid rgba(0,0,29,0.08)"></div>
+                <div style="border-top:1px solid rgba(0,0,29,0.08);margin:0 20px"></div>
                 <div style="padding:20px">
                   <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Name</label>
                   <input value="{{ rtNewTeamName }}" onChange="{{ rtOnNewTeamName }}" placeholder="e.g. Medical review" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui);margin-bottom:14px">
@@ -1047,7 +1068,8 @@ input:focus,textarea:focus{outline:none}
                   </sc-if>
                   <div style="font:400 12px var(--font-ui);color:#8A8A96;line-height:1.5;margin-top:12px">This Review Team will be available across the entire account. Workspace access is managed separately.</div>
                 </div>
-                <div style="display:flex;justify-content:flex-end;gap:9px;padding:16px 20px;border-top:1px solid rgba(0,0,29,0.08)">
+                <div style="border-top:1px solid rgba(0,0,29,0.08);margin:0 20px"></div>
+              <div style="display:flex;justify-content:flex-end;gap:9px;padding:16px 20px">
                   <button onClick="{{ rtOnNewTeamToggle }}" style="{{ btnSecondaryMd }}" style-hover="{{ btnSecondaryHover }}">Cancel</button>
                   <button onClick="{{ rtOnCreate }}" disabled="{{ rtCreateDisabled }}" style="{{ btnPrimaryMd }}" style-hover="background:#4F39D8">Create review team</button>
                 </div>
@@ -1063,7 +1085,7 @@ input:focus,textarea:focus{outline:none}
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                   </button>
                 </div>
-                <div style="border-top:1px solid rgba(0,0,29,0.08)"></div>
+                <div style="border-top:1px solid rgba(0,0,29,0.08);margin:0 20px"></div>
                 <div style="padding:20px">
                   <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Name</label>
                   <input value="{{ rtEditName }}" onChange="{{ rtOnEditName }}" placeholder="e.g. Medical review" style="width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui);margin-bottom:14px">
@@ -1096,7 +1118,8 @@ input:focus,textarea:focus{outline:none}
                     </div>
                   </sc-if>
                 </div>
-                <div style="display:flex;justify-content:flex-end;gap:9px;padding:16px 20px;border-top:1px solid rgba(0,0,29,0.08)">
+                <div style="border-top:1px solid rgba(0,0,29,0.08);margin:0 20px"></div>
+              <div style="display:flex;justify-content:flex-end;gap:9px;padding:16px 20px">
                   <button onClick="{{ rtOnEditClose }}" style="{{ btnSecondaryMd }}" style-hover="{{ btnSecondaryHover }}">Cancel</button>
                   <button onClick="{{ rtOnSaveEdit }}" disabled="{{ rtSaveDisabled }}" style="{{ btnPrimaryMd }}" style-hover="background:#4F39D8">Save changes</button>
                 </div>
@@ -1233,7 +1256,7 @@ input:focus,textarea:focus{outline:none}
       <sc-if value="{{ peopleDetailModalOpen }}" hint-placeholder-val="{{ false }}">
         <div style="position:fixed;inset:0;background:rgba(16,16,20,0.4);z-index:100" onClick="{{ pdmOnClose }}"></div>
         <div style="position:fixed;top:0;right:0;bottom:0;width:420px;max-width:92vw;background:#fff;z-index:101;box-shadow:-24px 0 60px -12px rgba(16,16,20,0.3);display:flex;flex-direction:column">
-          <div style="flex:none;padding:20px 22px;border-bottom:1px solid rgba(0,0,29,0.08);display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+          <div style="flex:none;padding:20px 22px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;position:relative"><div style="position:absolute;left:22px;right:22px;bottom:0;border-bottom:1px solid rgba(0,0,29,0.08)"></div>
             <div style="display:flex;align-items:center;gap:12px;min-width:0">
               <sc-if value="{{ pdmAvatarHasPhoto }}" hint-placeholder-val="{{ false }}">
                 <img src="{{ pdmAvatarPhotoUrl }}" style="{{ pdmAvatarPhotoStyle }}" alt="{{ pdmName }}">
@@ -1308,7 +1331,8 @@ input:focus,textarea:focus{outline:none}
 
           </div>
 
-          <div style="flex:none;padding:16px 22px;border-top:1px solid rgba(0,0,29,0.08);display:flex;justify-content:flex-end;gap:9px">
+          <div style="flex:none;border-top:1px solid rgba(0,0,29,0.08);margin:0 22px"></div>
+          <div style="flex:none;padding:16px 22px;display:flex;justify-content:flex-end;gap:9px">
             <sc-if value="{{ pdmFooterEditable }}" hint-placeholder-val="{{ false }}">
               <button onClick="{{ pdmOnClose }}" style="{{ btnSecondaryMd }}" style-hover="{{ btnSecondaryHover }}">Cancel</button>
               <button onClick="{{ pdmOnClose }}" style="{{ btnPrimaryMd }}" style-hover="background:#4F39D8">Save changes</button>
@@ -3049,7 +3073,7 @@ input:focus,textarea:focus{outline:none}
                     </button>
                   </sc-if>
                 </div>
-                <div style="border-top:1px solid rgba(0,0,29,0.08)"></div>
+                <div style="border-top:1px solid rgba(0,0,29,0.08);margin:0 20px"></div>
                 <sc-if value="{{ devNewKeyStepIsForm }}" hint-placeholder-val="{{ true }}">
                   <div style="padding:20px">
                     <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">Name</label>
@@ -3061,7 +3085,8 @@ input:focus,textarea:focus{outline:none}
                       </sc-for>
                     </div>
                   </div>
-                  <div style="display:flex;justify-content:flex-end;gap:9px;padding:16px 20px;border-top:1px solid rgba(0,0,29,0.08)">
+                  <div style="border-top:1px solid rgba(0,0,29,0.08);margin:0 20px"></div>
+              <div style="display:flex;justify-content:flex-end;gap:9px;padding:16px 20px">
                     <button onClick="{{ devOnCloseNewKey }}" style="{{ btnSecondaryMd }}" style-hover="{{ btnSecondaryHover }}">Cancel</button>
                     <button onClick="{{ devOnCreateKey }}" disabled="{{ devNewKeyDisabled }}" style="{{ btnPrimaryMd }}" style-hover="background:#4F39D8">Create</button>
                   </div>
@@ -3164,7 +3189,7 @@ input:focus,textarea:focus{outline:none}
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                   </button>
                 </div>
-                <div style="border-top:1px solid rgba(0,0,29,0.08)"></div>
+                <div style="border-top:1px solid rgba(0,0,29,0.08);margin:0 20px"></div>
                 <div style="padding:20px">
                   <label style="font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px">API key</label>
                   <div style="position:relative;margin-bottom:16px">
@@ -3180,7 +3205,8 @@ input:focus,textarea:focus{outline:none}
                     <div onClick="{{ devOnToggleLlmDefault }}" style="{{ devLlmDefaultToggle.track }}"><div style="{{ devLlmDefaultToggle.knob }}"></div></div>
                   </div>
                 </div>
-                <div style="display:flex;justify-content:flex-end;gap:9px;padding:16px 20px;border-top:1px solid rgba(0,0,29,0.08)">
+                <div style="border-top:1px solid rgba(0,0,29,0.08);margin:0 20px"></div>
+              <div style="display:flex;justify-content:flex-end;gap:9px;padding:16px 20px">
                   <button style="{{ btnSecondaryMd }}" style-hover="{{ btnSecondaryHover }}">Test</button>
                   <button onClick="{{ devOnSaveLlmKey }}" disabled="{{ devLlmSaveDisabled }}" style="{{ btnPrimaryMd }}" style-hover="background:#4F39D8">Save</button>
                 </div>
@@ -3300,6 +3326,577 @@ input:focus,textarea:focus{outline:none}
             "Agentic Localization" (Credit Pricing List) is not a simple rename of "Ollang Agentic AI" (Consumption Table): two rates match directly (Subtitle Translation 739/min, Document Translation 10/word), but Ollang Agentic AI's Speech to Text rate (544/min) instead matches a different provider, "Agentic STT" — likely a bundle across two agents, not a rename. There is no Speech to Text column in the Translation Agents accordion.
           </div>
         </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div style="{{ intelPane }}">
+    <div data-scrollpane="1" style="flex:1;min-height:0;overflow-y:auto">
+      <div style="max-width:1180px;margin:0 auto;padding:26px 24px 44px">
+
+        <sc-if value="{{ intelIsMemoryList }}" hint-placeholder-val="{{ false }}">
+          <h1 style="font:700 24px var(--font-display);color:#1A1A22;margin:0;letter-spacing:-.02em">Memory</h1>
+          <p style="font:400 13px var(--font-ui);color:#6B6B78;margin:6px 0 0;max-width:640px">Manage your memory databases to improve consistency and speed up translations.</p>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin:20px 0 14px">
+            <div style="font:600 15px var(--font-ui);color:#16161A">Your memories ({{ memCount }})</div>
+            <button onClick="{{ onMemOpenCreate }}" style="{{ btnPrimaryMd }}" style-hover="background:#4F39D8">{{ plusIcon }} Create memory</button>
+          </div>
+          <sc-if value="{{ memListEmpty }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#fff;border:1px solid rgba(0,0,29,0.08);border-radius:12px;padding:52px 20px;text-align:center">
+              <div style="font:600 14px var(--font-ui);color:#16161A">No memories yet</div>
+              <p style="font:400 12.5px var(--font-ui);color:#6B6B78;margin:5px 0 0">Create a memory to reuse past translations automatically.</p>
+            </div>
+          </sc-if>
+          <sc-if value="{{ memListPopulated }}" hint-placeholder-val="{{ true }}">
+            <div class="om-rt-grid">
+              <sc-for list="{{ memCards }}" as="mc" hint-placeholder-count="3">
+                <div class="om-drill-card" style="{{ cardShell }};cursor:pointer" onClick="{{ mc.onOpen }}" style-hover="border-color:rgba(97,72,249,0.35);box-shadow:0 10px 26px -12px rgba(16,16,20,0.16)">
+                  <div style="display:flex;align-items:center;justify-content:space-between">
+                    <span style="{{ mc.tileStyle }}">{{ mc.tileIcon }}</span>
+                    <div style="position:relative" data-pop="1" onClick="{{ stopClick2 }}">
+                      <button onClick="{{ mc.onMenu }}" title="Memory actions" style="{{ kebabBtnStyle }}" style-hover="background:rgba(20,20,30,0.06);color:#16161A">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"></circle><circle cx="12" cy="12" r="2"></circle><circle cx="19" cy="12" r="2"></circle></svg>
+                      </button>
+                      <sc-if value="{{ mc.menuOpen }}" hint-placeholder-val="{{ false }}">
+                        <div style="position:absolute;top:calc(100% + 4px);right:0;z-index:40;min-width:130px;background:#fff;border:1px solid rgba(0,0,29,0.12);border-radius:11px;box-shadow:0 14px 32px -8px rgba(16,16,20,0.28);padding:6px">
+                          <sc-for list="{{ mc.menuItems }}" as="mi" hint-placeholder-count="2">
+                            <div onClick="{{ mi.onClick }}" style="{{ mi.rowStyle }}" style-hover="background:#F5F5F7">{{ mi.label }}</div>
+                          </sc-for>
+                        </div>
+                      </sc-if>
+                    </div>
+                  </div>
+                  <div style="font:600 15px var(--font-ui);color:#16161A;margin-top:10px">{{ mc.name }}</div>
+                  <div style="display:flex;align-items:center;gap:14px;margin-top:14px;padding-top:14px;border-top:1px solid rgba(0,0,29,0.08)">
+                    <span style="display: flex; align-items: center; gap: 5px; font: 400 12.5px var(--font-ui); color: #16161A; font-weight: 500">{{ mc.fileIcon }}{{ mc.linesLabel }}</span>
+                    <span style="display:flex;align-items:center;gap:5px;font:400 12.5px var(--font-ui);color:#6B6B78">{{ mc.clockIcon }}{{ mc.updated }}</span>
+                    <span class="om-drill-chevron" style="display:flex;align-items:center;margin-left:auto;color:#9A9AA6;transition:color .14s">{{ mc.chevronIcon }}</span>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+        </sc-if>
+
+        <sc-if value="{{ intelIsMemoryDetail }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div style="display:flex;align-items:center;gap:8px">
+              <h1 style="font:700 22px var(--font-display);color:#1A1A22;margin:0;letter-spacing:-.02em">{{ memDetailName }}</h1>
+              <button onClick="{{ helpMemTable }}" title="About memory entries" style="width:22px;height:22px;border-radius:7px;flex:none;display:flex;align-items:center;justify-content:center;border:none;cursor:pointer;transition:.14s;font:600 12px var(--font-ui);background:#F2F2F4;color:#8A8A96" style-hover="background:#6148F9;color:#fff">?</button>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <sc-if value="{{ memDetailHasSel }}" hint-placeholder-val="{{ false }}">
+                <button onClick="{{ onMemDeleteSel }}" style="{{ memDetailSelStyle }}">{{ memDetailSelLabel }}</button>
+              </sc-if>
+              <button onClick="{{ onMemOpenUpload }}" style="{{ btnPrimaryMd }}" style-hover="background:#4F39D8">{{ plusIcon }} Upload New File</button>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;margin-top:8px">
+            <span style="display:flex;align-items:center;gap:5px;font:400 12.5px var(--font-ui);color:#16161A;font-weight:500">{{ memDetailFileIcon }}{{ memDetailLinesLabel }}</span>
+            <span style="display:flex;align-items:center;gap:5px;font:400 12.5px var(--font-ui);color:#6B6B78">{{ memDetailClockIcon }}{{ memDetailUpdated }}</span>
+          </div>
+          <sc-if value="{{ memDetailEmpty }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#fff;border:1px solid rgba(0,0,29,0.08);border-radius:12px;overflow:hidden;margin-top:14px">
+              <div style="padding:56px 24px 60px;display:flex;flex-direction:column;align-items:center;text-align:center">
+                <img src="assets/empty-nothing.svg" alt="" style="width:210px;height:auto;display:block">
+                <div style="font:700 17px var(--font-display);color:#16161A;margin-top:18px;letter-spacing:-.01em">No lines yet</div>
+                <p style="font:400 13.5px/1.55 var(--font-ui);color:#6B6B78;margin:8px 0 0;max-width:380px">Upload a file to add source and target pairs to this memory.</p>
+                <button onClick="{{ onMemOpenUpload }}" style="{{ btnPrimaryMd }};margin-top:20px" style-hover="background:#4F39D8">{{ plusIcon }} Upload New File</button>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ memDetailPopulated }}" hint-placeholder-val="{{ true }}">
+          <div style="background:#fff;border:1px solid rgba(0,0,29,0.08);border-radius:12px;overflow:hidden;margin-top:14px">
+            <div style="overflow-x:auto">
+              <div style="display:grid;grid-template-columns:28px 1.5fr 1.5fr 1fr 1fr 40px;gap:14px;align-items:center;min-width:760px;background:#FAFAFB;border-bottom:1px solid rgba(0,0,29,0.07);padding:10px 16px">
+                <div title="Select all" onClick="{{ memAllSelectedOnToggle }}" style="{{ memAllSelectedStyle }}"><sc-if value="{{ memAllSelected }}" hint-placeholder-val="{{ false }}"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></sc-if></div>
+                <div style="font:600 11px var(--font-ui);letter-spacing:.04em;text-transform:uppercase;color:#9A9AA6">Source Text</div>
+                <div style="font:600 11px var(--font-ui);letter-spacing:.04em;text-transform:uppercase;color:#9A9AA6">Target Text</div>
+                <div style="font:600 11px var(--font-ui);letter-spacing:.04em;text-transform:uppercase;color:#9A9AA6">Language</div>
+                <div style="font:600 11px var(--font-ui);letter-spacing:.04em;text-transform:uppercase;color:#9A9AA6">Adding Method</div>
+                <div></div>
+              </div>
+              <sc-for list="{{ memDetailRows }}" as="mr" hint-placeholder-count="3">
+                <div style="display:grid;grid-template-columns:28px 1.5fr 1.5fr 1fr 1fr 40px;gap:14px;align-items:center;min-width:760px;padding:12px 16px;border-top:1px solid rgba(0,0,29,0.06)">
+                  <div onClick="{{ mr.onSelect }}" style="{{ mr.checkboxStyle }}"><sc-if value="{{ mr.selected }}" hint-placeholder-val="{{ false }}"><svg width="10" height="8" viewBox="0 0 10 8" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4l2.5 2.5L9 1"></path></svg></sc-if></div>
+                  <div style="font:500 13.5px var(--font-ui);color:#16161A">{{ mr.source }}</div>
+                  <div style="font:400 13px var(--font-ui);color:#5B5B66">{{ mr.target }}</div>
+                  <div style="display:flex;align-items:center;gap:6px">
+                    <span style="font-size:14px;line-height:1;flex:none">{{ mr.srcFlag }}</span>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#B0B0BA" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M5 12h13M13 7l5 5-5 5"></path></svg>
+                    <span style="font-size:14px;line-height:1;flex:none">{{ mr.tgtFlag }}</span>
+                  </div>
+                  <div style="font:400 13px var(--font-ui);color:#8A8A96">{{ mr.method }}</div>
+                  <span onClick="{{ mr.onDelete }}" style="cursor:pointer;display:flex;color:#8A8A96" title="Delete" style-hover="color:#C42B31">{{ mr.trashIcon }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          </sc-if>
+        </sc-if>
+
+        <sc-if value="{{ intelIsGlosList }}" hint-placeholder-val="{{ false }}">
+          <h1 style="font:700 24px var(--font-display);color:#1A1A22;margin:0;letter-spacing:-.02em">Glossaries</h1>
+          <p style="font:400 13px var(--font-ui);color:#6B6B78;margin:6px 0 0;max-width:640px">Manage preferred and forbidden terminology for translation context.</p>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin:20px 0 14px">
+            <div style="font:600 15px var(--font-ui);color:#16161A">Your glossaries ({{ glosCount }})</div>
+            <button onClick="{{ onGlosOpenCreate }}" style="{{ btnPrimaryMd }}" style-hover="background:#4F39D8">{{ plusIcon }} Create glossary</button>
+          </div>
+          <sc-if value="{{ glosListEmpty }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#fff;border:1px solid rgba(0,0,29,0.08);border-radius:12px;padding:52px 20px;text-align:center">
+              <div style="font:600 14px var(--font-ui);color:#16161A">No glossaries yet</div>
+              <p style="font:400 12.5px var(--font-ui);color:#6B6B78;margin:5px 0 0">Create a glossary to keep terminology consistent.</p>
+            </div>
+          </sc-if>
+          <sc-if value="{{ glosListPopulated }}" hint-placeholder-val="{{ true }}">
+            <div class="om-rt-grid">
+              <sc-for list="{{ glosCards }}" as="gc" hint-placeholder-count="2">
+                <div class="om-drill-card" style="{{ cardShell }};cursor:pointer" onClick="{{ gc.onOpen }}" style-hover="border-color:rgba(97,72,249,0.35);box-shadow:0 10px 26px -12px rgba(16,16,20,0.16)">
+                  <div style="display:flex;align-items:center;justify-content:space-between">
+                    <span style="{{ gc.tileStyle }}">{{ gc.tileIcon }}</span>
+                    <div style="position:relative" data-pop="1" onClick="{{ stopClick2 }}">
+                      <button onClick="{{ gc.onMenu }}" title="Glossary actions" style="{{ kebabBtnStyle }}" style-hover="background:rgba(20,20,30,0.06);color:#16161A">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"></circle><circle cx="12" cy="12" r="2"></circle><circle cx="19" cy="12" r="2"></circle></svg>
+                      </button>
+                      <sc-if value="{{ gc.menuOpen }}" hint-placeholder-val="{{ false }}">
+                        <div style="position:absolute;top:calc(100% + 4px);right:0;z-index:40;min-width:130px;background:#fff;border:1px solid rgba(0,0,29,0.12);border-radius:11px;box-shadow:0 14px 32px -8px rgba(16,16,20,0.28);padding:6px">
+                          <sc-for list="{{ gc.menuItems }}" as="mi" hint-placeholder-count="2">
+                            <div onClick="{{ mi.onClick }}" style="{{ mi.rowStyle }}" style-hover="background:#F5F5F7">{{ mi.label }}</div>
+                          </sc-for>
+                        </div>
+                      </sc-if>
+                    </div>
+                  </div>
+                  <div style="font:600 15px var(--font-ui);color:#16161A;margin-top:10px">{{ gc.name }}</div>
+                  <div style="font:400 12.5px var(--font-ui);color:#9A9AA6;margin-top:2px">Workspace</div>
+                  <div style="display:flex;align-items:center;gap:14px;margin-top:14px;padding-top:14px;border-top:1px solid rgba(0,0,29,0.08)">
+                    <span style="display: flex; align-items: center; gap: 5px; font: 400 12.5px var(--font-ui); color: #16161A; font-weight: 500">{{ gc.fileIcon }}{{ gc.termsLabel }}</span>
+                    <span style="display:flex;align-items:center;gap:5px;font:400 12.5px var(--font-ui);color:#6B6B78">{{ gc.clockIcon }}{{ gc.updated }}</span>
+                    <span class="om-drill-chevron" style="display:flex;align-items:center;margin-left:auto;color:#9A9AA6;transition:color .14s">{{ gc.chevronIcon }}</span>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+        </sc-if>
+
+        <sc-if value="{{ intelIsGlosDetail }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <h1 style="font:700 22px var(--font-display);color:#1A1A22;margin:0;letter-spacing:-.02em">{{ glosDetailName }}</h1>
+            <div style="display:flex;gap:8px">
+              <button onClick="{{ onGlosOpenImport }}" style="{{ btnSecondaryMd }}" style-hover="{{ btnSecondaryHover }}">{{ uploadIconMd }} Import CSV/XLSX</button>
+              <button onClick="{{ onGlosOpenAddTerm }}" style="{{ btnPrimaryMd }}" style-hover="background:#4F39D8">{{ plusIcon }} Add term</button>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;margin-top:8px">
+            <span style="display:flex;align-items:center;gap:5px;font:400 12.5px var(--font-ui);color:#16161A;font-weight:500">{{ glosDetailFileIcon }}{{ glosDetailTermsLabel }}</span>
+            <span style="display:flex;align-items:center;gap:5px;font:400 12.5px var(--font-ui);color:#6B6B78">{{ glosDetailClockIcon }}{{ glosDetailUpdated }}</span>
+          </div>
+          <sc-if value="{{ glosDetailEmpty }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#fff;border:1px solid rgba(0,0,29,0.08);border-radius:12px;overflow:hidden;margin-top:14px">
+              <div style="padding:56px 24px 60px;display:flex;flex-direction:column;align-items:center;text-align:center">
+                <img src="assets/empty-nothing.svg" alt="" style="width:210px;height:auto;display:block">
+                <div style="font:700 17px var(--font-display);color:#16161A;margin-top:18px;letter-spacing:-.01em">No terms yet</div>
+                <p style="font:400 13.5px/1.55 var(--font-ui);color:#6B6B78;margin:8px 0 0;max-width:380px">Add a term or import a CSV/XLSX file.</p>
+                <button onClick="{{ onGlosOpenAddTerm }}" style="{{ btnPrimaryMd }};margin-top:20px" style-hover="background:#4F39D8">{{ plusIcon }} Add your first term</button>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ glosDetailEmpty }}" hint-placeholder-val="{{ true }}">
+          </sc-if>
+          <sc-if value="{{ glosDetailPopulated }}" hint-placeholder-val="{{ true }}">
+          <div style="background:#fff;border:1px solid rgba(0,0,29,0.08);border-radius:12px;overflow:hidden;margin-top:14px">
+            <div style="overflow-x:auto">
+              <div style="display:grid;grid-template-columns:1.4fr 1.4fr 100px 110px 40px;gap:14px;align-items:center;min-width:600px;background:#FAFAFB;border-bottom:1px solid rgba(0,0,29,0.07);padding:10px 16px">
+                <div style="font:600 11px var(--font-ui);letter-spacing:.04em;text-transform:uppercase;color:#9A9AA6">Source</div>
+                <div style="font:600 11px var(--font-ui);letter-spacing:.04em;text-transform:uppercase;color:#9A9AA6">Target</div>
+                <div style="font:600 11px var(--font-ui);letter-spacing:.04em;text-transform:uppercase;color:#9A9AA6">Language</div>
+                <div style="font:600 11px var(--font-ui);letter-spacing:.04em;text-transform:uppercase;color:#9A9AA6">Flags</div>
+                <div></div>
+              </div>
+              <sc-for list="{{ glosDetailRows }}" as="gr" hint-placeholder-count="1">
+                <div style="display:grid;grid-template-columns:1.4fr 1.4fr 100px 110px 40px;gap:14px;align-items:center;min-width:600px;padding:12px 16px;border-top:1px solid rgba(0,0,29,0.06)">
+                  <div style="font:500 13.5px var(--font-ui);color:#16161A">{{ gr.source }}</div>
+                  <div style="font:400 13px var(--font-ui);color:#5B5B66">{{ gr.target }}</div>
+                  <div style="font:400 13px var(--font-ui);color:#5B5B66">{{ gr.lang }}</div>
+                  <div style="{{ gr.flagsStyle }}">{{ gr.flagsLabel }}</div>
+                  <span onClick="{{ gr.onDelete }}" style="cursor:pointer;display:flex;color:#8A8A96" title="Delete">{{ gr.trashIcon }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          </sc-if>
+        </sc-if>
+
+        <sc-if value="{{ intelIsSgList }}" hint-placeholder-val="{{ false }}">
+          <h1 style="font:700 24px var(--font-display);color:#1A1A22;margin:0;letter-spacing:-.02em">Style Guides</h1>
+          <p style="font:400 13px var(--font-ui);color:#6B6B78;margin:6px 0 0;max-width:640px">Define tone, formatting, and brand rules used during translation.</p>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin:20px 0 14px">
+            <div style="font:600 15px var(--font-ui);color:#16161A">Your style guides ({{ sgCount }})</div>
+            <button onClick="{{ onSgOpenCreate }}" style="{{ btnPrimaryMd }}" style-hover="background:#4F39D8">{{ plusIcon }} Create style guide</button>
+          </div>
+          <sc-if value="{{ sgListEmpty }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#fff;border:1px solid rgba(0,0,29,0.08);border-radius:12px;padding:52px 20px;text-align:center">
+              <div style="font:600 14px var(--font-ui);color:#16161A">No style guides yet</div>
+              <p style="font:400 12.5px var(--font-ui);color:#6B6B78;margin:5px 0 0">Create a style guide to define tone and formatting rules.</p>
+            </div>
+          </sc-if>
+          <sc-if value="{{ sgListPopulated }}" hint-placeholder-val="{{ true }}">
+            <div class="om-rt-grid">
+              <sc-for list="{{ sgCards }}" as="sc" hint-placeholder-count="2">
+                <div class="om-drill-card" style="{{ cardShell }};cursor:pointer" onClick="{{ sc.onOpen }}" style-hover="border-color:rgba(97,72,249,0.35);box-shadow:0 10px 26px -12px rgba(16,16,20,0.16)">
+                  <div style="display:flex;align-items:center;justify-content:space-between">
+                    <span style="{{ sc.tileStyle }}">{{ sc.tileIcon }}</span>
+                    <div style="position:relative" data-pop="1" onClick="{{ stopClick2 }}">
+                      <button onClick="{{ sc.onMenu }}" title="Style guide actions" style="{{ kebabBtnStyle }}" style-hover="background:rgba(20,20,30,0.06);color:#16161A">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"></circle><circle cx="12" cy="12" r="2"></circle><circle cx="19" cy="12" r="2"></circle></svg>
+                      </button>
+                      <sc-if value="{{ sc.menuOpen }}" hint-placeholder-val="{{ false }}">
+                        <div style="position:absolute;top:calc(100% + 4px);right:0;z-index:40;min-width:130px;background:#fff;border:1px solid rgba(0,0,29,0.12);border-radius:11px;box-shadow:0 14px 32px -8px rgba(16,16,20,0.28);padding:6px">
+                          <sc-for list="{{ sc.menuItems }}" as="mi" hint-placeholder-count="2">
+                            <div onClick="{{ mi.onClick }}" style="{{ mi.rowStyle }}" style-hover="background:#F5F5F7">{{ mi.label }}</div>
+                          </sc-for>
+                        </div>
+                      </sc-if>
+                    </div>
+                  </div>
+                  <div style="font:600 15px var(--font-ui);color:#16161A;margin-top:10px">{{ sc.name }}</div>
+                  <div style="font:400 12.5px var(--font-ui);color:#9A9AA6;margin-top:2px">Workspace</div>
+                  <div style="display:flex;align-items:center;gap:14px;margin-top:14px;padding-top:14px;border-top:1px solid rgba(0,0,29,0.08)">
+                    <span style="display: flex; align-items: center; gap: 5px; font: 400 12.5px var(--font-ui); color: #16161A; font-weight: 500">{{ sc.fileIcon }}{{ sc.rulesLabel }}</span>
+                    <span style="display:flex;align-items:center;gap:5px;font:400 12.5px var(--font-ui);color:#6B6B78">{{ sc.clockIcon }}{{ sc.updated }}</span>
+                    <span class="om-drill-chevron" style="display:flex;align-items:center;margin-left:auto;color:#9A9AA6;transition:color .14s">{{ sc.chevronIcon }}</span>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+        </sc-if>
+
+        <sc-if value="{{ intelIsSgDetail }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <h1 style="font:700 22px var(--font-display);color:#1A1A22;margin:0;letter-spacing:-.02em">{{ sgDetailName }}</h1>
+            <button onClick="{{ onSgOpenAddRule }}" style="{{ btnPrimaryMd }}" style-hover="background:#4F39D8">{{ plusIcon }} Add rule</button>
+          </div>
+          <p style="font:400 13px var(--font-ui);color:#8A8A96;margin:4px 0 0">{{ sgDetailDesc }}</p>
+          <div style="display:flex;align-items:center;gap:14px;margin-top:8px">
+            <span style="display:flex;align-items:center;gap:5px;font:400 12.5px var(--font-ui);color:#16161A;font-weight:500">{{ sgDetailFileIcon }}{{ sgDetailRulesLabel }}</span>
+            <span style="display:flex;align-items:center;gap:5px;font:400 12.5px var(--font-ui);color:#6B6B78">{{ sgDetailClockIcon }}{{ sgDetailUpdated }}</span>
+          </div>
+          <sc-if value="{{ sgDetailEmpty }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#fff;border:1px solid rgba(0,0,29,0.08);border-radius:12px;overflow:hidden;margin-top:14px">
+              <div style="padding:56px 24px 60px;display:flex;flex-direction:column;align-items:center;text-align:center">
+                <img src="assets/empty-nothing.svg" alt="" style="width:210px;height:auto;display:block">
+                <div style="font:700 17px var(--font-display);color:#16161A;margin-top:18px;letter-spacing:-.01em">No rules yet</div>
+                <p style="font:400 13.5px/1.55 var(--font-ui);color:#6B6B78;margin:8px 0 0;max-width:380px">Add tone, formatting, or brand guidance.</p>
+                <button onClick="{{ onSgOpenAddRule }}" style="{{ btnPrimaryMd }};margin-top:20px" style-hover="background:#4F39D8">{{ plusIcon }} Add your first rule</button>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ sgDetailEmpty }}" hint-placeholder-val="{{ true }}"></sc-if>
+          <div style="background:#fff;border:1px solid rgba(0,0,29,0.08);border-radius:12px;overflow:hidden;margin-top:14px">
+            <sc-for list="{{ sgDetailRuleCards }}" as="rc" hint-placeholder-count="1">
+              <sc-if value="{{ rc.showDivider }}" hint-placeholder-val="{{ false }}">
+                <div style="border-top:1px solid rgba(0,0,29,0.08);margin:0 20px"></div>
+              </sc-if>
+              <div style="padding:18px 20px" style-hover="background:#FAFAFA">
+                <div style="display:flex;align-items:center;justify-content:space-between">
+                  <div style="display:flex;align-items:center;gap:9px">
+                    <span style="display:flex;flex:none;color:{{ rc.catTextColor }}">{{ rc.categoryIcon }}</span>
+                    <span style="font:600 14.5px var(--font-ui);color:#16161A">{{ rc.name }}</span>
+                    <span style="font:600 11px var(--font-ui);color:{{ rc.catTextColor }};background:{{ rc.catBgColor }};padding:3px 9px;border-radius:999px">{{ rc.category }}</span>
+                  </div>
+                  <span onClick="{{ rc.onDelete }}" style="cursor:pointer;display:flex;color:#8A8A96" title="Delete">{{ rc.trashIcon }}</span>
+                </div>
+                <p style="font:400 13px var(--font-ui);color:#3A3A44;margin:9px 0 0 12px">{{ rc.content }}</p>
+                <sc-if value="{{ rc.hasExamples }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex-direction:column;gap:5px;margin:9px 0 0 12px">
+                    <sc-for list="{{ rc.examples }}" as="ex" hint-placeholder-count="2">
+                      <div style="display:flex;align-items:flex-start;gap:8px">
+                        <span style="width:4px;height:4px;border-radius:50%;background:{{ rc.catTextColor }};margin-top:7px;flex:none;opacity:0.55"></span>
+                        <span style="font:400 12.5px var(--font-ui);color:#6B6B78">{{ ex }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ intelIsCiList }}" hint-placeholder-val="{{ false }}">
+          <h1 style="font:700 24px var(--font-display);color:#1A1A22;margin:0;letter-spacing:-.02em">Custom Instructions</h1>
+          <p style="font:400 13px var(--font-ui);color:#6B6B78;margin:6px 0 0;max-width:640px">Add custom instructions to guide how Ollang AI handles your translations. These instructions are applied globally across all your orders and workflows.</p>
+          <div class="om-rt-grid" style="margin-top:20px">
+            <div onClick="{{ onCiOpenCreate }}" style="background:#FAFAFB;border:1.5px dashed rgba(20,20,30,0.16);border-radius:16px;padding:18px;min-height:140px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;color:#6B6B78" style-hover="border-color:#6148F9;color:#4F39D8;background:#FAFAFF">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
+              <span style="font:600 13px var(--font-ui)">Add Instruction</span>
+            </div>
+            <sc-for list="{{ ciCards }}" as="cc" hint-placeholder-count="2">
+              <div style="{{ cardShell }}">
+                <span style="display:inline-flex;align-items:center;font:600 11px var(--font-ui);color:#1C8A5A;background:rgba(28,138,90,0.1);padding:3px 9px;border-radius:999px">Active</span>
+                <div style="font:600 14.5px var(--font-ui);color:#16161A;margin-top:12px">{{ cc.name }}</div>
+                <p style="font:400 12.5px var(--font-ui);color:#6B6B78;margin:6px 0 0">{{ cc.instruction }}</p>
+              </div>
+            </sc-for>
+          </div>
+          <div style="font:700 18px var(--font-display);color:#1A1A22;margin-top:30px">Suggestions</div>
+          <div class="om-rt-grid" style="margin-top:14px">
+            <sc-for list="{{ ciSuggestions }}" as="sg" hint-placeholder-count="4">
+              <div style="{{ cardShell }};cursor:pointer" onClick="{{ sg.onUse }}" style-hover="border-color:rgba(97,72,249,0.35)">
+                <span style="display:inline-flex;align-items:center;font:600 11px var(--font-ui);color:#4F39D8;background:rgba(97,72,249,0.1);padding:3px 9px;border-radius:999px">Suggestion</span>
+                <div style="font:600 14.5px var(--font-ui);color:#16161A;margin-top:12px">{{ sg.name }}</div>
+                <p style="font:400 12.5px var(--font-ui);color:#6B6B78;margin:6px 0 0">{{ sg.description }}</p>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ memModalIsPanel }}" hint-placeholder-val="{{ false }}">
+          <div style="{{ spOverlay }}" onClick="{{ onIntelCloseModal }}">
+            <div style="{{ spBox }}" onClick="{{ stopClick2 }}">
+              <div style="{{ spHead }}">
+                <span style="font:600 16px var(--font-ui);color:#16161A">{{ memPanelTitle }}</span>
+                <button onClick="{{ onIntelCloseModal }}" style="{{ mdClose }}" style-hover="background:#F1F1F4"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+              </div>
+              <div style="{{ spBody }}">
+                <sc-if value="{{ memPanelShowName }}" hint-placeholder-val="{{ true }}">
+                  <div>
+                    <label style="{{ label }}">Memory Title *</label>
+                    <input value="{{ memDraftName }}" onChange="{{ onMemDraftName }}" placeholder="Enter memory title" style="{{ inputSt }};margin-bottom:0">
+                  </div>
+                </sc-if>
+                <div>
+                  <label style="{{ label }}">Add your file</label>
+                  <div onClick="{{ onMemPanelBrowse }}" onDragOver="{{ onMemPanelDragOver }}" onDragLeave="{{ onMemPanelDragLeave }}" onDrop="{{ onMemPanelDrop }}" style="{{ memPanelDropzoneStyle }}">
+                    <span style="{{ memDropIconWrap }}">{{ uploadIconLg }}</span>
+                    <div style="font:700 14px var(--font-ui);color:#16161A;margin-top:14px">Drop your file here or click to browse</div>
+                    <div style="font:400 12px var(--font-ui);color:#8A8A96;margin-top:6px">{{ memUploadSubtitle }}</div>
+                    <div style="display:flex;gap:5px;justify-content:center;flex-wrap:wrap;margin-top:8px">
+                      <span style="font:600 10px var(--font-ui);color:#6148F9;background:rgba(97,72,249,0.08);padding:2px 7px;border-radius:5px">TMX</span>
+                      <span style="font:600 10px var(--font-ui);color:#6148F9;background:rgba(97,72,249,0.08);padding:2px 7px;border-radius:5px">JSON</span>
+                      <span style="font:600 10px var(--font-ui);color:#6148F9;background:rgba(97,72,249,0.08);padding:2px 7px;border-radius:5px">CSV</span>
+                      <span style="font:600 10px var(--font-ui);color:#6148F9;background:rgba(97,72,249,0.08);padding:2px 7px;border-radius:5px">XLSX</span>
+                    </div>
+                    <input type="file" multiple="{{ true }}" ref="{{ onMemPanelFileInputRef }}" accept=".tmx,.json,.csv,.xlsx" onChange="{{ onMemPanelFileChosen }}" style="display:none">
+                  </div>
+                </div>
+                <sc-if value="{{ memPanelHasFiles }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex-direction:column;gap:10px">
+                    <sc-for list="{{ memPanelFileRows }}" as="f" hint-placeholder-count="2">
+                      <div style="background:#F8F8FA;border:1px solid rgba(20,20,30,0.06);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:12px">
+                        <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+                          <div style="display:flex;align-items:center;gap:10px;min-width:0">
+                            <span style="width:30px;height:30px;border-radius:8px;background:rgba(97,72,249,0.1);color:#6148F9;display:flex;align-items:center;justify-content:center;flex:none">{{ fileGlyphIcon }}</span>
+                            <div style="min-width:0">
+                              <div style="font:600 13.5px var(--font-ui);color:#16161A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ f.name }}</div>
+                              <div style="font:400 11.5px var(--font-ui);color:#9A9AA6;margin-top:1px">{{ f.meta }}</div>
+                            </div>
+                          </div>
+                          <button onClick="{{ f.onRemove }}" title="Remove file" style="width:24px;height:24px;border-radius:7px;border:none;background:transparent;color:#8A8A96;cursor:pointer;display:flex;align-items:center;justify-content:center;flex:none" style-hover="color:#E5484D;background:rgba(229,72,77,0.08)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+                        </div>
+                        <sc-for list="{{ f.stages }}" as="st" hint-placeholder-count="3">
+                          <div style="{{ st.wrapStyle }}">
+                            <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+                              <div style="display:flex;align-items:center;gap:8px;min-width:0">
+                                <span style="display:flex;flex:none">{{ st.icon }}</span>
+                                <span style="font:{{ st.labelFont }};color:{{ st.labelColor }}">{{ st.label }}</span>
+                              </div>
+                              <span style="font:600 12px var(--font-ui);color:{{ st.pctColor }};flex:none">{{ st.pctLabel }}</span>
+                            </div>
+                            <div style="height:5px;border-radius:999px;background:rgba(20,20,30,0.08);margin-top:8px;overflow:hidden">
+                              <div style="height:100%;background:{{ st.barColor }};width:{{ st.pct }}%;transition:width .3s"></div>
+                            </div>
+                          </div>
+                        </sc-for>
+                      </div>
+                    </sc-for>
+                  </div>
+                </sc-if>
+              </div>
+              <div style="{{ spFoot }}">
+                <button onClick="{{ onIntelCloseModal }}" style="{{ btnSecondaryMd }}" style-hover="{{ btnSecondaryHover }}">Cancel</button>
+                <button onClick="{{ onMemPanelSubmit }}" disabled="{{ memPanelSubmitDisabled }}" style="{{ btnPrimaryMd }}" style-hover="background:#4F39D8">{{ memPanelSubmitLabel }}</button>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ glosModalIsCreate }}" hint-placeholder-val="{{ false }}">
+          <div style="{{ mdOverlay }}" onClick="{{ onIntelCloseModal }}">
+            <div style="{{ mdBoxGlos }}" onClick="{{ stopClick2 }}">
+              <div style="{{ mdHead }}"><span style="font:600 16px var(--font-ui);color:#16161A">Create glossary</span><button onClick="{{ onIntelCloseModal }}" style="{{ mdClose }}" style-hover="background:#F1F1F4"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div>
+              <div style="{{ mdDivider }}"></div>
+              <div style="{{ mdBody }}">
+                <label style="{{ label }}">Name</label>
+                <input value="{{ glosDraftName }}" onChange="{{ onGlosDraftName }}" style="{{ inputSt }}">
+                <label style="{{ label }}">Description</label>
+                <textarea value="{{ glosDraftDesc }}" onChange="{{ onGlosDraftDesc }}" style="{{ taSt }};margin-bottom:0"></textarea>
+              </div>
+              <div style="{{ mdDivider }}"></div>
+              <div style="{{ mdFoot }}">
+                <button onClick="{{ onIntelCloseModal }}" style="{{ btnSecondaryMd }}" style-hover="{{ btnSecondaryHover }}">Cancel</button>
+                <button onClick="{{ onGlosCreateSubmit }}" disabled="{{ glosCreateDisabled }}" style="{{ btnPrimaryMd }}" style-hover="background:#4F39D8">Create</button>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ glosModalIsAddTerm }}" hint-placeholder-val="{{ false }}">
+          <div style="{{ mdOverlay }}" onClick="{{ onIntelCloseModal }}">
+            <div style="{{ mdBoxGlos }}" onClick="{{ stopClick2 }}">
+              <div style="{{ mdHead }}"><span style="font:600 16px var(--font-ui);color:#16161A">Add term</span><button onClick="{{ onIntelCloseModal }}" style="{{ mdClose }}" style-hover="background:#F1F1F4"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div>
+              <div style="{{ mdDivider }}"></div>
+              <div style="{{ mdBody }}">
+                <label style="{{ label }}">Source term</label>
+                <input value="{{ glosTermSource }}" onChange="{{ onGlosTermSource }}" style="{{ inputSt }}">
+                <label style="{{ label }}">Target term</label>
+                <input value="{{ glosTermTarget }}" onChange="{{ onGlosTermTarget }}" style="{{ inputSt }}">
+                <label style="{{ label }}">Target language</label>
+                <input value="{{ glosTermLang }}" onChange="{{ onGlosTermLang }}" placeholder="e.g. de" style="{{ inputSt }}">
+                <label style="{{ label }}">Notes</label>
+                <input value="{{ glosTermNotes }}" onChange="{{ onGlosTermNotes }}" style="{{ inputSt }}">
+                <div onClick="{{ onGlosTermForbiddenToggle }}" style="display:flex;align-items:center;gap:8px;cursor:pointer">
+                  <div style="{{ glosTermForbiddenStyle }}"><sc-if value="{{ glosTermForbidden }}" hint-placeholder-val="{{ false }}"><svg width="10" height="8" viewBox="0 0 10 8" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4l2.5 2.5L9 1"></path></svg></sc-if></div>
+                  <span style="font:500 13px var(--font-ui);color:#16161A">Forbidden term (never use)</span>
+                </div>
+              </div>
+              <div style="{{ mdDivider }}"></div>
+              <div style="{{ mdFoot }}">
+                <button onClick="{{ onIntelCloseModal }}" style="{{ btnSecondaryMd }}" style-hover="{{ btnSecondaryHover }}">Cancel</button>
+                <button onClick="{{ onGlosAddTermSubmit }}" disabled="{{ glosAddTermDisabled }}" style="{{ btnPrimaryMd }}" style-hover="background:#4F39D8">Add term</button>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ glosModalIsImport }}" hint-placeholder-val="{{ false }}">
+          <div style="{{ spOverlay }}" onClick="{{ onIntelCloseModal }}">
+            <div style="{{ spBox }}" onClick="{{ stopClick2 }}">
+              <div style="{{ spHead }}"><span style="font:600 16px var(--font-ui);color:#16161A">Import glossary terms</span><button onClick="{{ onIntelCloseModal }}" style="{{ mdClose }}" style-hover="background:#F1F1F4"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div>
+              <div style="{{ spBody }}">
+                <p style="font:400 12.5px/1.5 var(--font-ui);color:#6B6B78;margin:0">Upload a CSV or XLSX file with columns: sourceTerm, targetTerm, targetLanguage (optional: notes, forbidden, caseSensitive).</p>
+                <div onClick="{{ onGlosDropzoneClick }}" onDragOver="{{ onGlosDragOver }}" onDragLeave="{{ onGlosDragLeave }}" onDrop="{{ onGlosDrop }}" style="{{ glosDropzoneStyle }}">
+                  <span style="{{ memDropIconWrap }}">{{ uploadIconSm }}</span>
+                  <div style="font:700 14px var(--font-ui);color:#16161A;margin-top:14px">Drop your file here or click to browse</div>
+                  <input type="file" ref="{{ onGlosFileInputRef }}" accept=".csv,.xlsx" onChange="{{ onGlosFileChosen }}" style="display:none">
+                </div>
+                <sc-if value="{{ glosImportHasFile }}" hint-placeholder-val="{{ false }}">
+                  <div style="background:#F8F8FA;border:1px solid rgba(20,20,30,0.06);border-radius:12px;padding:14px;display:flex;align-items:center;gap:12px">
+                    <span style="{{ glosImportIconWrapStyle }}">{{ glosImportIcon }}</span>
+                    <div style="flex:1;min-width:0">
+                      <div style="font:600 13.5px var(--font-ui);color:#16161A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ glosImportFileName }}</div>
+                      <div style="font:500 12px var(--font-ui);color:{{ glosImportStatusColor }};margin-top:2px">{{ glosImportStatusLabel }}</div>
+                    </div>
+                  </div>
+                </sc-if>
+              </div>
+              <div style="{{ spFoot }}">
+                <button onClick="{{ onIntelCloseModal }}" style="{{ btnSecondaryMd }}" style-hover="{{ btnSecondaryHover }}">Cancel</button>
+                <button onClick="{{ onGlosImportSubmit }}" disabled="{{ glosImportDisabled }}" style="{{ btnPrimaryMd }}" style-hover="background:#4F39D8">Start import</button>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ sgModalIsCreate }}" hint-placeholder-val="{{ false }}">
+          <div style="{{ mdOverlay }}" onClick="{{ onIntelCloseModal }}">
+            <div style="{{ mdBoxSg }}" onClick="{{ stopClick2 }}">
+              <div style="{{ mdHead }}"><span style="font:600 16px var(--font-ui);color:#16161A">Create style guide</span><button onClick="{{ onIntelCloseModal }}" style="{{ mdClose }}" style-hover="background:#F1F1F4"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div>
+              <div style="{{ mdDivider }}"></div>
+              <div style="{{ mdBody }}">
+                <label style="{{ label }}">Name</label>
+                <input value="{{ sgDraftName }}" onChange="{{ onSgDraftName }}" style="{{ inputSt }}">
+                <label style="{{ label }}">Description</label>
+                <textarea value="{{ sgDraftDesc }}" onChange="{{ onSgDraftDesc }}" style="{{ taSt }};margin-bottom:0"></textarea>
+              </div>
+              <div style="{{ mdDivider }}"></div>
+              <div style="{{ mdFoot }}">
+                <button onClick="{{ onIntelCloseModal }}" style="{{ btnSecondaryMd }}" style-hover="{{ btnSecondaryHover }}">Cancel</button>
+                <button onClick="{{ onSgCreateSubmit }}" disabled="{{ sgCreateDisabled }}" style="{{ btnPrimaryMd }}" style-hover="background:#4F39D8">Create</button>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ sgModalIsAddRule }}" hint-placeholder-val="{{ false }}">
+          <div style="{{ mdOverlay }}" onClick="{{ onIntelCloseModal }}">
+            <div style="{{ mdBoxSg }}" onClick="{{ stopClick2 }}">
+              <div style="{{ mdHead }}"><span style="font:600 16px var(--font-ui);color:#16161A">Add rule</span><button onClick="{{ onIntelCloseModal }}" style="{{ mdClose }}" style-hover="background:#F1F1F4"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div>
+              <div style="{{ mdDivider }}"></div>
+              <div style="{{ mdBody }}">
+                <label style="{{ label }}">Category</label>
+                <div style="position:relative;margin-bottom:14px" data-pop="1">
+                  <div onClick="{{ onToggleSgRuleCategory }}" style="display:flex;align-items:center;gap:10px;width:100%;height:38px;padding:0 12px;border-radius:9px;cursor:pointer;background:#fff;border:1px solid rgba(0,0,29,0.15)">
+                    <span style="font:500 13.5px var(--font-ui);color:#16161A">{{ sgRuleCategory }}</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A8A96" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:auto;flex:none;transition:transform .16s;transform:rotate({{ sgRuleCategoryChevronDeg }})"><path d="M6 9l6 6 6-6"></path></svg>
+                  </div>
+                  <sc-if value="{{ sgRuleCategoryOpen }}" hint-placeholder-val="{{ false }}">
+                    <div style="position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:30;background:#fff;border:1px solid rgba(0,0,29,0.12);border-radius:11px;box-shadow:0 14px 32px -8px rgba(16,16,20,0.28);padding:6px">
+                      <sc-for list="{{ sgCategoryOptions }}" as="op" hint-placeholder-count="6">
+                        <div onClick="{{ op.onClick }}" style="display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:8px;cursor:pointer;font:500 13px var(--font-ui);color:#16161A" style-hover="background:#F5F5F7">
+                          <span style="width:14px;flex:none;color:#6148F9">{{ op.checkMark }}</span>{{ op.name }}
+                        </div>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                </div>
+                <label style="{{ label }}">Name</label>
+                <input value="{{ sgRuleName }}" onChange="{{ onSgRuleName }}" style="{{ inputSt }}">
+                <label style="{{ label }}">Content</label>
+                <textarea value="{{ sgRuleContent }}" onChange="{{ onSgRuleContent }}" style="{{ taSt }}"></textarea>
+                <label style="{{ label }}">Examples (one per line)</label>
+                <textarea value="{{ sgRuleExamples }}" onChange="{{ onSgRuleExamples }}" style="{{ taSt }};margin-bottom:0"></textarea>
+              </div>
+              <div style="{{ mdDivider }}"></div>
+              <div style="{{ mdFoot }}">
+                <button onClick="{{ onIntelCloseModal }}" style="{{ btnSecondaryMd }}" style-hover="{{ btnSecondaryHover }}">Cancel</button>
+                <button onClick="{{ onSgAddRuleSubmit }}" disabled="{{ sgAddRuleDisabled }}" style="{{ btnPrimaryMd }}" style-hover="background:#4F39D8">Add rule</button>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ ciModalOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="{{ mdOverlay }}" onClick="{{ onIntelCloseModal }}">
+            <div style="{{ mdBoxCi }}" onClick="{{ stopClick2 }}">
+              <div style="{{ mdHead }}"><span style="font:600 16px var(--font-ui);color:#16161A">Add Custom Instruction</span><button onClick="{{ onIntelCloseModal }}" style="{{ mdClose }}" style-hover="background:#F1F1F4"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div>
+              <div style="{{ mdDivider }}"></div>
+              <div style="{{ mdBody }}">
+                <label style="{{ label }}">Name *</label>
+                <input value="{{ ciDraftName }}" onChange="{{ onCiDraftName }}" style="{{ inputSt }}">
+                <label style="{{ label }}">Instruction *</label>
+                <textarea value="{{ ciDraftInstruction }}" onChange="{{ onCiDraftInstruction }}" style="{{ taSt }}"></textarea>
+                <label style="{{ label }}">Description (Optional)</label>
+                <input value="{{ ciDraftDesc }}" onChange="{{ onCiDraftDesc }}" style="{{ inputSt }};margin-bottom:0">
+              </div>
+              <div style="{{ mdDivider }}"></div>
+              <div style="{{ mdFoot }}">
+                <button onClick="{{ onIntelCloseModal }}" style="{{ btnSecondaryMd }}" style-hover="{{ btnSecondaryHover }}">Cancel</button>
+                <button onClick="{{ onCiCreateSubmit }}" disabled="{{ ciCreateDisabled }}" style="{{ btnPrimaryMd }}" style-hover="background:#4F39D8">Add</button>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ editTitleModalOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="{{ mdOverlay }}" onClick="{{ onEditTitleClose }}">
+            <div style="{{ mdBoxEdit }}" onClick="{{ stopClick2 }}">
+              <div style="{{ mdHead }}"><span style="font:600 16px var(--font-ui);color:#16161A">{{ editTitleLabel }}</span><button onClick="{{ onEditTitleClose }}" style="{{ mdClose }}" style-hover="background:#F1F1F4"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div>
+              <div style="{{ mdDivider }}"></div>
+              <div style="{{ mdBody }}">
+                <label style="{{ label }}">Name</label>
+                <input value="{{ editTitleValue }}" onChange="{{ onEditTitleValue }}" style="{{ inputSt }};margin-bottom:0">
+              </div>
+              <div style="{{ mdDivider }}"></div>
+              <div style="{{ mdFoot }}">
+                <button onClick="{{ onEditTitleClose }}" style="{{ btnSecondaryMd }}" style-hover="{{ btnSecondaryHover }}">Cancel</button>
+                <button onClick="{{ onEditTitleSave }}" disabled="{{ editTitleDisabled }}" style="{{ btnPrimaryMd }}" style-hover="background:#4F39D8">Save</button>
+              </div>
+            </div>
+          </div>
+        </sc-if>
 
       </div>
     </div>
@@ -4912,6 +5509,14 @@ class Component extends DCLogic {
     wcFollowers: [], wcFollowersOpen: false, wcFollowersSearch: '',
     wcDefaultLangs: [], wcSubmitting: false, wcSubmitted: false, wcError: false, wcCancelConfirmOpen: false, wcNewId: '',
     helpPos: null,
+    memDetailId: null, memModal: null, memActiveId: null, memDraftName: '', memPanelMode: null, memPanelFiles: [], memPanelDragOver: false, memSel: {},
+    glosDetailId: null, glosModal: null, glosDraftName: '', glosDraftDesc: '',
+    glosTermSource: '', glosTermTarget: '', glosTermLang: '', glosTermNotes: '', glosTermForbidden: false,
+    glosImportDragOver: false, glosImportFileName: '', glosImportStatus: 'idle',
+    sgDetailId: null, sgModal: null, sgDraftName: '', sgDraftDesc: '',
+    sgRuleCategory: 'Tone', sgRuleCategoryOpen: false, sgRuleName: '', sgRuleContent: '', sgRuleExamples: '',
+    ciModal: null, ciDraftName: '', ciDraftInstruction: '', ciDraftDesc: '',
+    editTitleModal: null, intelMenuFor: '',
     pairSaveOpen: false, pairName: '', pairMenuFor: 0, pairRenamingId: 0, pairRenameValue: '', pairSkipSig: '',
     step: 1, kind: null, file: null, fileSource: null,
     sourceLang: 'auto', targetLangs: [],
@@ -4956,6 +5561,534 @@ class Component extends DCLogic {
     { id: 'broadcast', name: 'Broadcast delivery', desc: 'Formats to broadcast caption standards and runs a timing quality check.' },
   ];
   LOCKED_WORKFLOW = { name: 'Acme brand workflow', desc: 'Applies the Acme glossary and tone, then routes captions to your review team.' };
+
+  // MOCK DATA — Intelligence section (Memory / Glossaries / Style Guides / Custom Instructions).
+  // Simulated exactly like everything else here — no real file parsing or storage.
+  MEMORIES = [
+    { id: 'mem1', name: 'Product Terminology', lines: 24, updated: 'Aug 12, 2026' },
+    { id: 'mem2', name: 'Support Macros', lines: 8, updated: 'Jul 30, 2026' },
+    { id: 'mem3', name: 'Marketing Site Copy', lines: 0, updated: 'Jul 2, 2026' },
+  ];
+  MEM_ENTRIES = {
+    mem1: [
+      { source: 'Sign in', target: 'Sign in', lang: 'EN \u2192 EN', method: 'TM Import' },
+      { source: 'Forgot password?', target: 'Forgot password?', lang: 'EN \u2192 EN', method: 'TM Import' },
+      { source: 'Checkout', target: 'Checkout', lang: 'EN \u2192 EN', method: 'TM Import' },
+    ],
+    mem2: [
+      { source: 'Reset your password', target: 'Reset your password', lang: 'EN \u2192 EN', method: 'Manual' },
+      { source: 'Your ticket has been closed', target: 'Your ticket has been closed', lang: 'EN \u2192 EN', method: 'Manual' },
+    ],
+  };
+  MEM_SEED_ROWS = [
+    { source: 'Welcome back', target: 'Welcome back', lang: 'EN \u2192 EN', method: 'TM Import' },
+    { source: 'Upgrade your plan', target: 'Upgrade your plan', lang: 'EN \u2192 EN', method: 'TM Import' },
+    { source: 'Contact support', target: 'Contact support', lang: 'EN \u2192 EN', method: 'TM Import' },
+  ];
+  GLOSSARIES = [
+    { id: 'glos1', name: 'Brand Terms', desc: 'Preferred and forbidden names for the Ollang brand.', updated: 'Aug 10, 2026',
+      terms: [
+        { source: 'Ollang', target: 'Ollang', lang: '\u2014', forbidden: false },
+        { source: 'OllangAI', target: '', lang: '\u2014', forbidden: true },
+      ] },
+    { id: 'glos2', name: 'Support Glossary', desc: 'Terminology for support replies.', updated: 'Jul 28, 2026', terms: [] },
+  ];
+  STYLEGUIDES = [
+    { id: 'sg1', name: 'Marketing Voice', desc: 'Tone and terminology for public-facing copy.', updated: 'Aug 9, 2026',
+      rules: [
+        { id: 'r1', category: 'Tone', name: 'Friendly and direct', content: 'Write like a helpful colleague, not a legal document.',
+          examples: ['Use \u201Cyou\u201D instead of \u201Cthe user\u201D', 'Avoid jargon where a plain word works'] },
+        { id: 'r2', category: 'Terminology', name: 'Product name capitalization', content: 'Always capitalize \u201COllang\u201D exactly as spelled, never localize or translate it.',
+          examples: ['Correct: Ollang', 'Incorrect: ollang, OLLANG, or a translated equivalent'] },
+        { id: 'r3', category: 'Punctuation', name: 'Oxford comma', content: 'Use the Oxford comma in lists of three or more items across all languages that support it.', examples: [] },
+      ] },
+    { id: 'sg2', name: 'Support Replies', desc: 'Formatting rules for support responses.', updated: 'Jul 20, 2026', rules: [] },
+  ];
+  CUSTOM_INSTRUCTIONS = [
+    { id: 'ci1', name: 'Preserve placeholders', instruction: 'Never translate text inside {{double curly braces}}.', description: 'Keeps template variables intact across languages.', active: true },
+    { id: 'ci2', name: 'Formal register for legal docs', instruction: 'Use a formal register when the source is a legal or compliance document.', description: '', active: true },
+  ];
+  CI_SUGGESTIONS = [
+    { name: 'technical_terminology', instruction: 'Maintain consistency with established technical glossaries.', description: 'Rules for translating technical and specialized terminology.' },
+    { name: 'cultural_adaptation', instruction: 'Adapt cultural references and idioms to the target audience.', description: 'Guidelines for handling cultural references.' },
+    { name: 'brand_voice_consistency', instruction: 'Preserve the brand\u2019s personality across languages.', description: 'Guidelines for maintaining brand voice.' },
+    { name: 'tone_and_register', instruction: 'Match the formality level of the source text.', description: 'Instructions for maintaining appropriate tone.' },
+  ];
+  SG_CATEGORIES = ['Tone', 'Formatting', 'Punctuation', 'Terminology', 'Brand', 'Other'];
+  // Style Guide category badge colors — fixed 1:1 mapping, one hue per category, never randomized.
+  // Reuses 6 of the 8 hues already defined in IDENTITY_PALETTE (see identityColor()) rather than inventing
+  // a new palette; each pair is a ~12% tint (bg) and a ~72%-darkened shade (text) of that same hue, skipping
+  // 7048E8 (too close to the brand violet #6148F9) and E64980 (too close to the Punctuation magenta below).
+  SG_CATEGORY_STYLE = {
+    Tone: { bg: '#EAEDFE', c: '#374FB0' },        // IDENTITY_PALETTE #4C6EF5 (blue)
+    Formatting: { bg: '#E2F3F5', c: '#0C6D7D' },  // IDENTITY_PALETTE #1098AD (teal)
+    Punctuation: { bg: '#F7E9FA', c: '#89369E' }, // IDENTITY_PALETTE #BE4BDB (magenta)
+    Terminology: { bg: '#FCEBE1', c: '#A7400A' }, // IDENTITY_PALETTE #E8590C (orange)
+    Brand: { bg: '#E1F4EF', c: '#097856' },       // IDENTITY_PALETTE #0CA678 (green)
+    Other: { bg: '#F9E8E8', c: '#AD2D2D' },       // IDENTITY_PALETTE #F03E3E (red)
+  };
+
+  plural(n, word) { return n + ' ' + word + (n === 1 ? '' : 's'); }
+
+  openMemCreate() { this.setState({ memModal: 'panel', memPanelMode: 'create', memDraftName: '', memPanelFiles: [] }); }
+  closeIntelModal() { this.setState({ memModal: null, memPanelFiles: [], memPanelMode: null, glosModal: null, sgModal: null, ciModal: null, glosImportFileName: '', glosImportDragOver: false, glosImportStatus: 'idle' }); }
+  setMemFileInputRef(el) { this.memFileInputEl = el; }
+  onMemPanelBrowse() { if (this.memFileInputEl) this.memFileInputEl.click(); }
+  onMemPanelFileChosen(e) { this.addMemFiles(e.target.files); e.target.value = ''; }
+  onMemPanelDrop(e) { e.preventDefault(); this.setState({ memPanelDragOver: false }); this.addMemFiles(e.dataTransfer.files); }
+  addMemFiles(list) {
+    const files = Array.from(list || []).map(f => ({
+      id: 'f' + Date.now() + Math.random().toString(36).slice(2, 7),
+      name: f.name, meta: f.size ? (Math.max(1, Math.round(f.size / 1024)) + ' KB') : 'File attached', stage: 1, done: false,
+    }));
+    if (!files.length) return;
+    this.setState(s => ({ memPanelFiles: s.memPanelFiles.concat(files) }));
+    files.forEach(f => this.scheduleMemStage(f.id, 2));
+  }
+  scheduleMemStage(id, step) {
+    setTimeout(() => {
+      this.setState(s => ({
+        memPanelFiles: (s.memPanelFiles || []).map(f => f.id === id ? Object.assign({}, f, step === 'done' ? { done: true } : { stage: step }) : f),
+      }));
+      if (step !== 'done') this.scheduleMemStage(id, step === 3 ? 'done' : step + 1);
+    }, 650);
+  }
+  removeMemFile(id) { this.setState(s => ({ memPanelFiles: (s.memPanelFiles || []).filter(f => f.id !== id) })); }
+  onMemPanelSubmit() {
+    const S = this.state;
+    const files = S.memPanelFiles || [];
+    if (files.some(f => !f.done)) return;
+    if (S.memPanelMode === 'create') {
+      const name = (S.memDraftName || '').trim();
+      if (!name) return;
+      const id = 'mem' + Date.now();
+      this.MEMORIES.push({ id, name, lines: files.length ? this.MEM_SEED_ROWS.length : 0, updated: 'Today' });
+      if (files.length) this.MEM_ENTRIES[id] = this.MEM_SEED_ROWS.slice();
+      this.setState({ memModal: null, memPanelFiles: [], memDetailId: id });
+      return;
+    }
+    const id = S.memActiveId;
+    if (files.length) {
+      this.MEM_ENTRIES[id] = (this.MEM_ENTRIES[id] || []).concat(this.MEM_SEED_ROWS);
+      const mem = this.MEMORIES.find(m => m.id === id);
+      if (mem) { mem.lines = this.MEM_ENTRIES[id].length; mem.updated = 'Today'; }
+    }
+    this.setState({ memModal: null, memPanelFiles: [] });
+  }
+  toggleMemRowSel(i) { this.setState(s => ({ memSel: Object.assign({}, s.memSel, { [i]: !s.memSel[i] }) })); }
+  deleteSelMemRows() {
+    const id = this.state.memDetailId;
+    const rows = this.MEM_ENTRIES[id] || [];
+    const sel = this.state.memSel || {};
+    this.MEM_ENTRIES[id] = rows.filter((r, i) => !sel[i]);
+    const mem = this.MEMORIES.find(m => m.id === id);
+    if (mem) mem.lines = this.MEM_ENTRIES[id].length;
+    this.setState({ memSel: {} });
+  }
+  deleteMemRow(i) {
+    const id = this.state.memDetailId;
+    const rows = this.MEM_ENTRIES[id] || [];
+    this.MEM_ENTRIES[id] = rows.filter((r, idx) => idx !== i);
+    const mem = this.MEMORIES.find(m => m.id === id);
+    if (mem) mem.lines = this.MEM_ENTRIES[id].length;
+    const sel = Object.assign({}, this.state.memSel);
+    delete sel[i];
+    this.setState({ memSel: sel });
+  }
+  deleteMem(id) {
+    this.MEMORIES = this.MEMORIES.filter(x => x.id !== id);
+    delete this.MEM_ENTRIES[id];
+    this.setState({ intelMenuFor: '', memDetailId: this.state.memDetailId === id ? null : this.state.memDetailId });
+  }
+
+  openGlosCreate() { this.setState({ glosModal: 'create', glosDraftName: '', glosDraftDesc: '' }); }
+  onGlosCreateSubmit() {
+    const name = (this.state.glosDraftName || '').trim();
+    if (!name) return;
+    const id = 'glos' + Date.now();
+    this.GLOSSARIES.push({ id, name, desc: this.state.glosDraftDesc || '', terms: [], updated: 'Today' });
+    this.setState({ glosModal: null, glosDetailId: id });
+  }
+  openGlosAddTerm() { this.setState({ glosModal: 'addterm', glosTermSource: '', glosTermTarget: '', glosTermLang: '', glosTermNotes: '', glosTermForbidden: false }); }
+  onGlosAddTermSubmit() {
+    const g = this.GLOSSARIES.find(x => x.id === this.state.glosDetailId);
+    const source = (this.state.glosTermSource || '').trim();
+    if (!g || !source) return;
+    g.terms.push({ source, target: this.state.glosTermTarget || '', lang: this.state.glosTermLang || '\u2014', forbidden: !!this.state.glosTermForbidden });
+    g.updated = 'Today';
+    this.setState({ glosModal: null });
+  }
+  openGlosImport() { this.setState({ glosModal: 'import', glosImportFileName: '', glosImportDragOver: false, glosImportStatus: 'idle' }); }
+  setGlosFileInputRef(el) { this.glosFileInputEl = el; }
+  setGlosFile(f) {
+    if (!f) return;
+    this.setState({ glosImportFileName: f.name, glosImportDragOver: false, glosImportStatus: 'uploading' });
+    setTimeout(() => this.setState({ glosImportStatus: 'ready' }), 700);
+  }
+  onGlosFileChosen(e) { this.setGlosFile(e.target.files && e.target.files[0]); }
+  onGlosDrop(e) {
+    e.preventDefault();
+    this.setGlosFile(e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]);
+  }
+  onGlosImportSubmit() {
+    const g = this.GLOSSARIES.find(x => x.id === this.state.glosDetailId);
+    if (!g || !this.state.glosImportFileName) return;
+    g.terms.push({ source: '#imported-term', target: '(sample)', lang: 'de', forbidden: false });
+    g.updated = 'Today';
+    this.setState({ glosModal: null, glosImportFileName: '', glosImportDragOver: false, glosImportStatus: 'idle' });
+  }
+  deleteGlosTerm(idx) {
+    const g = this.GLOSSARIES.find(x => x.id === this.state.glosDetailId);
+    if (!g) return;
+    g.terms = g.terms.filter((t, i) => i !== idx);
+    this.forceUpdate();
+  }
+  deleteGlos(id) {
+    this.GLOSSARIES = this.GLOSSARIES.filter(x => x.id !== id);
+    this.setState({ intelMenuFor: '', glosDetailId: this.state.glosDetailId === id ? null : this.state.glosDetailId });
+  }
+
+  openSgCreate() { this.setState({ sgModal: 'create', sgDraftName: '', sgDraftDesc: '' }); }
+  onSgCreateSubmit() {
+    const name = (this.state.sgDraftName || '').trim();
+    if (!name) return;
+    const id = 'sg' + Date.now();
+    this.STYLEGUIDES.push({ id, name, desc: this.state.sgDraftDesc || '', rules: [], updated: 'Today' });
+    this.setState({ sgModal: null, sgDetailId: id });
+  }
+  openSgAddRule() { this.setState({ sgModal: 'addrule', sgRuleCategory: 'Tone', sgRuleCategoryOpen: false, sgRuleName: '', sgRuleContent: '', sgRuleExamples: '' }); }
+  onSgAddRuleSubmit() {
+    const sg = this.STYLEGUIDES.find(x => x.id === this.state.sgDetailId);
+    const name = (this.state.sgRuleName || '').trim();
+    if (!sg || !name) return;
+    sg.rules.push({
+      id: 'r' + Date.now(), category: this.state.sgRuleCategory || 'Other', name, content: this.state.sgRuleContent || '',
+      examples: (this.state.sgRuleExamples || '').split('\n').map(x => x.trim()).filter(Boolean),
+    });
+    sg.updated = 'Today';
+    this.setState({ sgModal: null });
+  }
+  deleteSgRule(id) {
+    const sg = this.STYLEGUIDES.find(x => x.id === this.state.sgDetailId);
+    if (!sg) return;
+    sg.rules = sg.rules.filter(r => r.id !== id);
+    this.forceUpdate();
+  }
+  deleteSg(id) {
+    this.STYLEGUIDES = this.STYLEGUIDES.filter(x => x.id !== id);
+    this.setState({ intelMenuFor: '', sgDetailId: this.state.sgDetailId === id ? null : this.state.sgDetailId });
+  }
+
+  openCiCreate(prefill) {
+    this.setState({ ciModal: 'create', ciDraftName: (prefill && prefill.name) || '', ciDraftInstruction: (prefill && prefill.instruction) || '', ciDraftDesc: (prefill && prefill.description) || '' });
+  }
+  onCiCreateSubmit() {
+    const name = (this.state.ciDraftName || '').trim();
+    const instr = (this.state.ciDraftInstruction || '').trim();
+    if (!name || !instr) return;
+    this.CUSTOM_INSTRUCTIONS.push({ id: 'ci' + Date.now(), name, instruction: instr, description: this.state.ciDraftDesc || '', active: true });
+    this.setState({ ciModal: null });
+  }
+
+  toggleIntelMenu(key) { this.setState(s => ({ intelMenuFor: s.intelMenuFor === key ? '' : key })); }
+  openEditTitle(section, id, value) { this.setState({ editTitleModal: { section, id, value }, intelMenuFor: '' }); }
+  onEditTitleSave() {
+    const et = this.state.editTitleModal;
+    if (!et) return;
+    const v = (et.value || '').trim();
+    if (v) {
+      const map = { memory: this.MEMORIES, glossaries: this.GLOSSARIES, styleguides: this.STYLEGUIDES };
+      const item = (map[et.section] || []).find(x => x.id === et.id);
+      if (item) item.name = v;
+    }
+    this.setState({ editTitleModal: null });
+  }
+
+  // Builds every computed value the Intelligence section's template needs (Memory, Glossaries, Style
+  // Guides, Custom Instructions) — list cards, detail pages, and every modal. Kept in one method so the
+  // shared shapes (card chrome, modal chrome, edit-title, pluralization) are each computed once and
+  // reused across all three container sections, per the consistency pass.
+  buildIntelVals(S, set) {
+    const helpBtn = (topic) => e => this.openHelp(topic, e);
+    const infoBtnStyle = 'width:22px;height:22px;border-radius:7px;flex:none;display:flex;align-items:center;justify-content:center;border:none;cursor:pointer;background:transparent;color:#9A9AA6';
+    const mdOverlay = 'position:fixed;inset:0;background:rgba(16,16,20,0.4);z-index:100;display:flex;align-items:center;justify-content:center;padding:24px';
+    const mdBox = w => 'width:100%;max-width:' + w + 'px;background:#fff;border-radius:14px;box-shadow:0 24px 60px -12px rgba(16,16,20,0.4)';
+    const mdHead = 'display:flex;align-items:center;justify-content:space-between;padding:18px 20px';
+    const mdClose = 'width:28px;height:28px;border-radius:8px;border:none;background:transparent;color:#8A8A96;cursor:pointer;display:flex;align-items:center;justify-content:center';
+    const mdDivider = 'border-top:1px solid rgba(0,0,29,0.08);margin:0 20px';
+    const mdBody = 'padding:20px';
+    const mdFoot = 'display:flex;justify-content:flex-end;gap:9px;padding:16px 20px';
+    // Shared side-panel shell (Memory upload / Glossary import).
+    const checkIcon = React.createElement('svg', { width: 16, height: 16, viewBox: '0 0 24 24', fill: 'none', stroke: '#22A06B', strokeWidth: 2.6, strokeLinecap: 'round', strokeLinejoin: 'round' },
+      React.createElement('path', { d: 'M5 12.5l4.5 4.5L19 7' }));
+    const spinnerIcon = React.createElement('svg', { width: 16, height: 16, viewBox: '0 0 24 24', style: { animation: 'omSpin .8s linear infinite' } },
+      React.createElement('circle', { cx: 12, cy: 12, r: 9, fill: 'none', stroke: 'rgba(97,72,249,0.25)', strokeWidth: 3 }),
+      React.createElement('path', { d: 'M21 12a9 9 0 0 0-9-9', fill: 'none', stroke: '#6148F9', strokeWidth: 3, strokeLinecap: 'round' }));
+    const pendingIcon = React.createElement('svg', { width: 16, height: 16, viewBox: '0 0 24 24' },
+      React.createElement('circle', { cx: 12, cy: 12, r: 9, fill: 'none', stroke: 'rgba(20,20,30,0.15)', strokeWidth: 3 }));
+    const fileGlyphIcon = this.icon('document', 'currentColor', 15);
+    const spOverlay = 'position:fixed;inset:0;background:rgba(16,16,20,0.4);z-index:100;display:flex;justify-content:flex-end';
+    const spBox = 'width:460px;max-width:92vw;height:100%;background:#fff;display:flex;flex-direction:column;box-shadow:-10px 0 40px -14px rgba(16,16,20,0.35);animation:omSlideInRight .22s ease both';
+    const spHead = 'display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid rgba(0,0,29,0.08);flex:none';
+    const spBody = 'flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:20px';
+    const spFoot = 'display:flex;justify-content:flex-end;gap:9px;padding:16px 20px;border-top:1px solid rgba(0,0,29,0.08);flex:none';
+    const label = 'font:600 12.5px var(--font-ui);color:#16161A;display:block;margin-bottom:6px';
+    const inputSt = 'width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui);margin-bottom:14px';
+    const taSt = 'width:100%;min-height:76px;padding:9px 11px;border-radius:9px;border:1px solid rgba(0,0,29,0.15);font:500 13.5px var(--font-ui);margin-bottom:14px;resize:vertical;font-family:var(--font-ui)';
+    const cardShell = 'background:#fff;border:1px solid rgba(20,20,30,0.06);border-radius:16px;padding:18px';
+    const kebabBtnStyle = this.rowMenuTriggerStyle || 'width:30px;height:30px;border-radius:8px;border:none;background:transparent;color:#8A8A96;cursor:pointer;display:flex;align-items:center;justify-content:center';
+
+    const metaRow = (icon, text) => ({ icon: this.icon(icon, '#9A9AA6', 14), text });
+
+    const kebabMenu = (key, onEdit, onDelete) => ({
+      menuOpen: S.intelMenuFor === key,
+      onMenu: e => { e.stopPropagation(); this.toggleIntelMenu(key); },
+      menuItems: [
+        { label: 'Edit', onClick: onEdit, rowStyle: 'padding:8px 10px;border-radius:7px;cursor:pointer;color:#16161A;font:500 13px var(--font-ui);display:flex;align-items:center;gap:8px' },
+        { label: 'Delete', onClick: onDelete, rowStyle: 'padding:8px 10px;border-radius:7px;cursor:pointer;color:#C42B31;font:500 13px var(--font-ui);display:flex;align-items:center;gap:8px' },
+      ],
+    });
+
+    // ---- Memory ----
+    const memCards = this.MEMORIES.map(m => {
+      const tile = this.renderIconTile('brain', 40, 'rgba(97,72,249,0.1)', '#6148F9');
+      return Object.assign({
+        id: m.id, name: m.name, tileStyle: tile.tileStyle, tileIcon: tile.icon,
+        fileIcon: this.filledIcon('term_rule', '#6148F9', 14), clockIcon: this.icon('clock', '#9A9AA6', 14),
+        chevronIcon: this.icon('chevron_right', 'currentColor', 17),
+        linesLabel: this.plural(m.lines, 'line'), updated: m.updated,
+        onOpen: () => set({ memDetailId: m.id }),
+      }, kebabMenu('memory:' + m.id, () => this.openEditTitle('memory', m.id, m.name), () => this.deleteMem(m.id)));
+    });
+    const memDetail = this.MEMORIES.find(m => m.id === S.memDetailId);
+    const memRows = memDetail ? (this.MEM_ENTRIES[memDetail.id] || []) : [];
+    const memDetailRows = memRows.map((r, i) => {
+      const parts = (r.lang || '').split(' \u2192 ');
+      const codeOf = abbr => (this.LANGS.find(l => l.code.toUpperCase() === (abbr || '').trim()) || {}).flag || 'auto';
+      return {
+        source: r.source, target: r.target, method: r.method,
+        srcFlag: this.flagImg(codeOf(parts[0]), 14), tgtFlag: this.flagImg(codeOf(parts[1]), 14),
+        langLabel: r.lang,
+        selected: !!S.memSel[i], checkboxStyle: this.chkBoxStyle(!!S.memSel[i]),
+        onSelect: () => this.toggleMemRowSel(i),
+        trashIcon: this.icon('trash', 'currentColor', 14),
+        onDelete: () => this.deleteMemRow(i),
+      };
+    });
+    const memSelCount = Object.values(S.memSel || {}).filter(Boolean).length;
+    const memAllSelected = memRows.length > 0 && memRows.every((r, i) => S.memSel[i]);
+    const memAllSelectedOnToggle = () => {
+      const next = {};
+      if (!memAllSelected) memRows.forEach((r, i) => { next[i] = true; });
+      set({ memSel: next });
+    };
+
+    // ---- Glossaries ----
+    const glosCards = this.GLOSSARIES.map(g => {
+      const tile = this.renderIconTile('book', 40, 'rgba(97,72,249,0.1)', '#6148F9');
+      return Object.assign({
+        id: g.id, name: g.name, tileStyle: tile.tileStyle, tileIcon: tile.icon,
+        fileIcon: this.filledIcon('term_rule', '#6148F9', 14), clockIcon: this.icon('clock', '#9A9AA6', 14),
+        chevronIcon: this.icon('chevron_right', 'currentColor', 17),
+        termsLabel: this.plural(g.terms.length, 'term'), updated: g.updated,
+        onOpen: () => set({ glosDetailId: g.id }),
+      }, kebabMenu('glossaries:' + g.id, () => this.openEditTitle('glossaries', g.id, g.name), () => this.deleteGlos(g.id)));
+    });
+    const glosDetail = this.GLOSSARIES.find(g => g.id === S.glosDetailId);
+    const glosDetailRows = glosDetail ? glosDetail.terms.map((t, i) => ({
+      source: t.source, target: t.target || '\u2014', lang: t.lang,
+      flagsLabel: t.forbidden ? 'Forbidden' : '\u2014',
+      flagsStyle: t.forbidden ? 'color:#C42B31;font:600 12px var(--font-ui)' : 'color:#9A9AA6;font:400 13px var(--font-ui)',
+      trashIcon: this.icon('trash', 'currentColor', 15),
+      onDelete: () => this.deleteGlosTerm(i),
+    })) : [];
+
+    // ---- Style Guides ----
+    const sgCards = this.STYLEGUIDES.map(sg => {
+      const tile = this.renderIconTile('pencil', 40, 'rgba(97,72,249,0.1)', '#6148F9');
+      return Object.assign({
+        id: sg.id, name: sg.name, tileStyle: tile.tileStyle, tileIcon: tile.icon,
+        fileIcon: this.filledIcon('term_rule', '#6148F9', 14), clockIcon: this.icon('clock', '#9A9AA6', 14),
+        chevronIcon: this.icon('chevron_right', 'currentColor', 17),
+        rulesLabel: this.plural(sg.rules.length, 'rule'), updated: sg.updated,
+        onOpen: () => set({ sgDetailId: sg.id }),
+      }, kebabMenu('styleguides:' + sg.id, () => this.openEditTitle('styleguides', sg.id, sg.name), () => this.deleteSg(sg.id)));
+    });
+    const sgDetail = this.STYLEGUIDES.find(sg => sg.id === S.sgDetailId);
+    const sgDetailRuleCards = sgDetail ? sgDetail.rules.map((r, i) => ({
+      id: r.id, name: r.name, category: r.category, content: r.content,
+      catBgColor: (this.SG_CATEGORY_STYLE[r.category] || this.SG_CATEGORY_STYLE.Other).bg,
+      catTextColor: (this.SG_CATEGORY_STYLE[r.category] || this.SG_CATEGORY_STYLE.Other).c,
+      categoryIcon: this.icon('pencil', 'currentColor', 15),
+      showDivider: i > 0,
+      hasExamples: r.examples && r.examples.length > 0, examples: r.examples || [],
+      trashIcon: this.icon('trash', '#8A8A96', 15),
+      onDelete: () => this.deleteSgRule(r.id),
+    })) : [];
+
+    // ---- Custom Instructions ----
+    const ciCards = this.CUSTOM_INSTRUCTIONS.map(ci => ({
+      id: ci.id, name: ci.name, instruction: ci.instruction, description: ci.description,
+    }));
+    const ciSuggestions = this.CI_SUGGESTIONS.map(sug => ({
+      name: sug.name, description: sug.description,
+      onUse: () => this.openCiCreate(sug),
+    }));
+
+    const plusIcon = this.icon('plus', 'currentColor', 14);
+    return {
+      intelIsMemoryList: S.page === 'memory' && !S.memDetailId,
+      intelIsMemoryDetail: S.page === 'memory' && !!S.memDetailId,
+      intelIsGlosList: S.page === 'glossaries' && !S.glosDetailId,
+      intelIsGlosDetail: S.page === 'glossaries' && !!S.glosDetailId,
+      intelIsSgList: S.page === 'styleguides' && !S.sgDetailId,
+      intelIsSgDetail: S.page === 'styleguides' && !!S.sgDetailId,
+      intelIsCiList: S.page === 'custom-instructions',
+      plusIcon,
+
+      memCount: this.MEMORIES.length, memListEmpty: this.MEMORIES.length === 0, memListPopulated: this.MEMORIES.length > 0,
+      memCards, onMemOpenCreate: () => this.openMemCreate(),
+      memDetailName: memDetail ? memDetail.name : '', memDetailRows, memDetailHasSel: memSelCount > 0,
+      memDetailFileIcon: this.filledIcon('term_rule', '#6148F9', 14), memDetailClockIcon: this.icon('clock', '#9A9AA6', 14),
+      memDetailLinesLabel: memDetail ? this.plural(memDetail.lines, 'line') : '', memDetailUpdated: memDetail ? memDetail.updated : '',
+      memDetailEmpty: memDetailRows.length === 0, memDetailPopulated: memDetailRows.length > 0,
+      memAllSelected, memAllSelectedStyle: this.chkBoxStyle(memAllSelected), memAllSelectedOnToggle,
+      memDetailSelLabel: 'Delete ' + memSelCount + ' selected',
+      memDetailSelStyle: this.renderButton('secondary', 'md', {}) + ';border-color:rgba(196,43,49,0.35);color:#C42B31',
+      onMemDeleteSel: () => this.deleteSelMemRows(),
+      onMemBack: () => set({ memDetailId: null, memSel: {} }),
+      onMemOpenUpload: () => this.setState({ memModal: 'panel', memPanelMode: 'add', memActiveId: S.memDetailId, memPanelFiles: [] }),
+      helpMemTable: helpBtn('mem_step_table'),
+
+      glosCount: this.GLOSSARIES.length, glosListEmpty: this.GLOSSARIES.length === 0, glosListPopulated: this.GLOSSARIES.length > 0,
+      glosCards, onGlosOpenCreate: () => this.openGlosCreate(),
+      glosDetailName: glosDetail ? glosDetail.name : '', glosDetailRows, glosDetailEmpty: glosDetailRows.length === 0,
+      glosDetailPopulated: glosDetailRows.length > 0,
+      glosDetailFileIcon: this.filledIcon('term_rule', '#6148F9', 14), glosDetailClockIcon: this.icon('clock', '#9A9AA6', 14),
+      glosDetailUpdated: glosDetail ? glosDetail.updated : '',
+      glosDetailTermsLabel: glosDetail ? this.plural(glosDetail.terms.length, 'term') : '',
+      onGlosBack: () => set({ glosDetailId: null }),
+      onGlosOpenAddTerm: () => this.openGlosAddTerm(), onGlosOpenImport: () => this.openGlosImport(),
+
+      sgCount: this.STYLEGUIDES.length, sgListEmpty: this.STYLEGUIDES.length === 0, sgListPopulated: this.STYLEGUIDES.length > 0,
+      sgCards, onSgOpenCreate: () => this.openSgCreate(),
+      sgDetailName: sgDetail ? sgDetail.name : '', sgDetailDesc: sgDetail ? sgDetail.desc : '',
+      sgDetailRulesLabel: sgDetail ? this.plural(sgDetail.rules.length, 'rule') : '',
+      sgDetailFileIcon: this.filledIcon('term_rule', '#6148F9', 14), sgDetailClockIcon: this.icon('clock', '#9A9AA6', 14),
+      sgDetailUpdated: sgDetail ? sgDetail.updated : '',
+      sgDetailRuleCards, sgDetailEmpty: sgDetailRuleCards.length === 0,
+      onSgBack: () => set({ sgDetailId: null }), onSgOpenAddRule: () => this.openSgAddRule(),
+
+      ciCards, ciSuggestions, onCiOpenCreate: () => this.openCiCreate(),
+
+      cardShell, kebabBtnStyle, spOverlay, spBox, spHead, spBody, spFoot,
+      uploadIconLg: this.icon('upload', '#8A8A96', 26), uploadIconSm: this.icon('upload', '#8A8A96', 22),
+      uploadIconMd: this.icon('upload', 'currentColor', 15),
+
+      // ---- Modals ----
+      mdOverlay, mdHead, mdClose, mdDivider, mdBody, mdFoot, label, inputSt, taSt, infoBtnStyle,
+      onIntelCloseModal: () => this.closeIntelModal(), stopClick2: e => e.stopPropagation(),
+
+      memModalIsPanel: S.memModal === 'panel',
+      memPanelShowName: S.memPanelMode === 'create',
+      memPanelTitle: S.memPanelMode === 'create' ? 'Create New Memory' : 'Upload File',
+      memDraftName: S.memDraftName, onMemDraftName: e => set({ memDraftName: e.target.value }),
+      onMemPanelBrowse: () => this.onMemPanelBrowse(),
+      onMemPanelFileInputRef: el => this.setMemFileInputRef(el),
+      onMemPanelFileChosen: e => this.onMemPanelFileChosen(e),
+      onMemPanelDragOver: e => { e.preventDefault(); set({ memPanelDragOver: true }); },
+      onMemPanelDragLeave: () => set({ memPanelDragOver: false }),
+      onMemPanelDrop: e => this.onMemPanelDrop(e),
+      memPanelDropzoneStyle: 'border:1.5px dashed rgba(97,72,249,0.4);background:rgba(97,72,249,0.03);border-radius:14px;padding:34px 20px;display:flex;flex-direction:column;align-items:center;text-align:center;cursor:pointer;transition:.14s;'
+        + (S.memPanelDragOver ? 'border-color:#6148F9;background:rgba(97,72,249,0.07)' : ''),
+      memDropIconWrap: 'width:44px;height:44px;border-radius:12px;background:rgba(97,72,249,0.12);color:#6148F9;display:flex;align-items:center;justify-content:center',
+      memUploadSubtitle: (S.memPanelMode === 'add' && (this.MEM_ENTRIES[S.memActiveId] || []).length > 0) ? 'Add more content to this memory' : 'Upload your first memory file',
+      memPanelHasFiles: (S.memPanelFiles || []).length > 0,
+      fileGlyphIcon,
+      memPanelFileRows: (S.memPanelFiles || []).map(f => {
+        const labels = { 1: 'Uploading file to storage', 2: 'Processing and importing translations', 3: 'Vectorizing translations for AI search' };
+        return {
+          id: f.id, name: f.name, meta: f.meta,
+          stages: [1, 2, 3].map(n => {
+            const isDone = f.done || n < f.stage;
+            const isActive = !isDone && n === f.stage;
+            const pct = isDone ? 100 : 0;
+            return {
+              n, label: n + '. ' + labels[n], pct, pctLabel: pct.toFixed(2) + '%',
+              labelColor: isDone ? '#16161A' : (isActive ? '#16161A' : '#9A9AA6'),
+              labelFont: isActive ? '700 12.5px var(--font-ui)' : (isDone ? '600 12.5px var(--font-ui)' : '500 12.5px var(--font-ui)'),
+              pctColor: isDone ? '#1C8A5A' : (isActive ? '#6148F9' : '#9A9AA6'),
+              barColor: isDone ? '#1C8A5A' : '#6148F9',
+              icon: isDone ? checkIcon : (isActive ? spinnerIcon : pendingIcon),
+              wrapStyle: isActive ? 'background:rgba(97,72,249,0.06);border:1px solid rgba(97,72,249,0.18);border-radius:9px;padding:10px 12px' : 'padding:2px 0',
+            };
+          }),
+          onRemove: () => this.removeMemFile(f.id),
+        };
+      }),
+      onMemPanelSubmit: () => this.onMemPanelSubmit(),
+      memPanelSubmitLabel: (S.memPanelFiles || []).some(f => !f.done) ? 'Uploading...' : (S.memPanelMode === 'create' ? 'Create Memory' : 'Add Files'),
+      memPanelSubmitDisabled: (S.memPanelFiles || []).some(f => !f.done) || (S.memPanelMode === 'create' ? !((S.memDraftName || '').trim()) : (S.memPanelFiles || []).length === 0),
+
+      glosModalIsCreate: S.glosModal === 'create', glosModalIsAddTerm: S.glosModal === 'addterm', glosModalIsImport: S.glosModal === 'import',
+      mdBoxGlos: mdBox(440),
+      glosDraftName: S.glosDraftName, onGlosDraftName: e => set({ glosDraftName: e.target.value }),
+      glosDraftDesc: S.glosDraftDesc, onGlosDraftDesc: e => set({ glosDraftDesc: e.target.value }),
+      onGlosCreateSubmit: () => this.onGlosCreateSubmit(), glosCreateDisabled: !((S.glosDraftName || '').trim()),
+      glosTermSource: S.glosTermSource, onGlosTermSource: e => set({ glosTermSource: e.target.value }),
+      glosTermTarget: S.glosTermTarget, onGlosTermTarget: e => set({ glosTermTarget: e.target.value }),
+      glosTermLang: S.glosTermLang, onGlosTermLang: e => set({ glosTermLang: e.target.value }),
+      glosTermNotes: S.glosTermNotes, onGlosTermNotes: e => set({ glosTermNotes: e.target.value }),
+      glosTermForbidden: !!S.glosTermForbidden, glosTermForbiddenStyle: this.chkBoxStyle(!!S.glosTermForbidden),
+      onGlosTermForbiddenToggle: () => set({ glosTermForbidden: !S.glosTermForbidden }),
+      onGlosAddTermSubmit: () => this.onGlosAddTermSubmit(), glosAddTermDisabled: !((S.glosTermSource || '').trim()),
+      onGlosImportSubmit: () => this.onGlosImportSubmit(),
+      onGlosFileInputRef: el => this.setGlosFileInputRef(el),
+      onGlosDropzoneClick: () => { if (this.glosFileInputEl) this.glosFileInputEl.click(); },
+      onGlosFileChosen: e => this.onGlosFileChosen(e),
+      onGlosDragOver: e => { e.preventDefault(); set({ glosImportDragOver: true }); },
+      onGlosDragLeave: () => set({ glosImportDragOver: false }),
+      onGlosDrop: e => this.onGlosDrop(e),
+      glosDropzoneStyle: 'border:1.5px dashed rgba(97,72,249,0.4);background:rgba(97,72,249,0.03);border-radius:14px;padding:34px 20px;display:flex;flex-direction:column;align-items:center;text-align:center;cursor:pointer;transition:.14s;'
+        + (S.glosImportDragOver ? 'border-color:#6148F9;background:rgba(97,72,249,0.07)' : ''),
+      glosImportHasFile: !!S.glosImportFileName,
+      glosImportIcon: S.glosImportStatus === 'ready' ? checkIcon : spinnerIcon,
+      glosImportIconWrapStyle: 'width:32px;height:32px;border-radius:9px;flex:none;display:flex;align-items:center;justify-content:center;background:' + (S.glosImportStatus === 'ready' ? 'rgba(34,160,107,0.12)' : 'rgba(97,72,249,0.12)'),
+      glosImportStatusLabel: S.glosImportStatus === 'ready' ? 'Ready' : (S.glosImportStatus === 'uploading' ? 'Uploading…' : ''),
+      glosImportStatusColor: S.glosImportStatus === 'ready' ? '#1E7A54' : '#5B5B66',
+      glosImportDisabled: S.glosImportStatus !== 'ready',
+
+      sgModalIsCreate: S.sgModal === 'create', sgModalIsAddRule: S.sgModal === 'addrule',
+      mdBoxSg: mdBox(460),
+      sgDraftName: S.sgDraftName, onSgDraftName: e => set({ sgDraftName: e.target.value }),
+      sgDraftDesc: S.sgDraftDesc, onSgDraftDesc: e => set({ sgDraftDesc: e.target.value }),
+      onSgCreateSubmit: () => this.onSgCreateSubmit(), sgCreateDisabled: !((S.sgDraftName || '').trim()),
+      sgCategoryOptions: this.SG_CATEGORIES.map(c => ({
+        name: c, selected: c === S.sgRuleCategory, checkMark: c === S.sgRuleCategory ? '✓' : '',
+        onClick: () => set({ sgRuleCategory: c, sgRuleCategoryOpen: false }),
+      })),
+      sgRuleCategory: S.sgRuleCategory, sgRuleCategoryOpen: S.sgRuleCategoryOpen,
+      sgRuleCategoryChevronDeg: S.sgRuleCategoryOpen ? '180deg' : '0deg',
+      onToggleSgRuleCategory: () => set({ sgRuleCategoryOpen: !S.sgRuleCategoryOpen }),
+      sgRuleName: S.sgRuleName, onSgRuleName: e => set({ sgRuleName: e.target.value }),
+      sgRuleContent: S.sgRuleContent, onSgRuleContent: e => set({ sgRuleContent: e.target.value }),
+      sgRuleExamples: S.sgRuleExamples, onSgRuleExamples: e => set({ sgRuleExamples: e.target.value }),
+      onSgAddRuleSubmit: () => this.onSgAddRuleSubmit(), sgAddRuleDisabled: !((S.sgRuleName || '').trim()),
+
+      ciModalOpen: S.ciModal === 'create', mdBoxCi: mdBox(440),
+      ciDraftName: S.ciDraftName, onCiDraftName: e => set({ ciDraftName: e.target.value }),
+      ciDraftInstruction: S.ciDraftInstruction, onCiDraftInstruction: e => set({ ciDraftInstruction: e.target.value }),
+      ciDraftDesc: S.ciDraftDesc, onCiDraftDesc: e => set({ ciDraftDesc: e.target.value }),
+      onCiCreateSubmit: () => this.onCiCreateSubmit(), ciCreateDisabled: !((S.ciDraftName || '').trim() && (S.ciDraftInstruction || '').trim()),
+
+      editTitleModalOpen: !!S.editTitleModal, mdBoxEdit: mdBox(420),
+      editTitleLabel: S.editTitleModal ? ({ memory: 'Edit memory name', glossaries: 'Edit glossary name', styleguides: 'Edit style guide name' })[S.editTitleModal.section] : '',
+      editTitleValue: S.editTitleModal ? S.editTitleModal.value : '',
+      onEditTitleValue: e => set({ editTitleModal: Object.assign({}, S.editTitleModal, { value: e.target.value }) }),
+      onEditTitleSave: () => this.onEditTitleSave(), onEditTitleClose: () => set({ editTitleModal: null }),
+      editTitleDisabled: !(S.editTitleModal && (S.editTitleModal.value || '').trim()),
+    };
+  }
 
   // MOCK DATA — hardcoded example workspaces for the demo below, not real backend data.
   WS_ROWS = [
@@ -6373,18 +7506,28 @@ class Component extends DCLogic {
     const r = root.getBoundingClientRect();
     const W = this.HELP_W;
     const H = 500; // nominal card height that comfortably fits any help entry without scrolling
+    // Triggered from inside a modal: the modal box (the flex child of the fixed, inset:0 overlay)
+    // is the right clamp region, not the page's own scrollpane, which sits hidden underneath.
+    let modalBoxEl = null;
+    for (let el = btn; el && el !== root; el = el.parentElement) {
+      const parent = el.parentElement;
+      if (parent && getComputedStyle(parent).position === 'fixed') { modalBoxEl = el; break; }
+    }
+    const mbr = modalBoxEl ? modalBoxEl.getBoundingClientRect() : null;
     const cx = b.left - r.left + b.width / 2;
     let left = cx - W / 2;
-    const maxLeft = r.width - W - 14;
+    const leftBound = mbr ? (mbr.left - r.left - 8) : 14;
+    const rightBound = mbr ? (mbr.right - r.left + 8 - W) : (r.width - W - 14);
+    const maxLeft = Math.max(leftBound, rightBound);
     if (left > maxLeft) left = maxLeft;
-    if (left < 14) left = 14;
-    // never overlap the app chrome: clamp to the scrollable content region
+    if (left < leftBound) left = leftBound;
+    // never overlap the app chrome: clamp to the scrollable content region (or the modal box, if open)
     const panes = [].slice.call(root.querySelectorAll('[data-scrollpane]'));
     let main = null;
     for (let i = 0; i < panes.length; i++) {
       if (panes[i].getBoundingClientRect().height > 0) { main = panes[i]; break; }
     }
-    const mr = main ? main.getBoundingClientRect() : r;
+    const mr = mbr || (main ? main.getBoundingClientRect() : r);
     const GAP = 10;
     let topLimit = (mr.top - r.top) + 8;
     let bottomLimit = (mr.bottom - r.top) - 8;
@@ -6477,6 +7620,10 @@ class Component extends DCLogic {
     subtype: { title: 'Sub-type', body: 'This sets how much detail your captions include. Closed Captioning writes out the full transcript, including spoken dialogue and descriptive cues like [birds chirping], so viewers who cannot hear the audio get the whole picture. Timecoded Transcription keeps only spoken dialogue and essential audio cues.', tip: 'Choose Closed Captioning for accessibility; choose Timecoded Transcription for a cleaner, dialogue-only read.' },
     invideotext: { title: 'In-video Text Translation', body: 'Translates text that appears on screen, such as titles, lower thirds, and labels, so it reads in the target language alongside the captions.' },
     lipsync: { title: 'LipSync', body: 'Adjusts the speaker\u2019s lip movements to match the translated dialogue, for a natural, dubbed look rather than an obvious voiceover.' },
+    mem_step_name: { title: 'Naming your memory', body: 'Give this memory database a name you\u2019ll recognize later \u2014 you\u2019ll add the file with matching translations next.' },
+    mem_step_upload: { title: 'Supported file types', body: 'Upload a translation memory or bilingual file to populate this memory. Supported formats: TMX, JSON, CSV, and XLSX.' },
+    mem_step_progress: { title: 'What happens during import', body: 'We upload your file, parse the translation pairs, and index them for AI-assisted search. Large files may take a few minutes.' },
+    mem_step_table: { title: 'Memory entries', body: 'Each row is a source/target pair pulled from your file. Select rows to remove any you don\u2019t want reused in future translations.' },
     memory: { title: 'Context & memories', body: 'Give the translator a head start: product names, acronyms, names of people, or a short glossary. We keep these consistent and correctly spelled across every language, run after run.', tip: 'This is the single biggest lever for accuracy on branded or technical content.' },
     reviewer: { title: 'Human reviewer', body: 'A professional linguist reviews and polishes the captions before they\u2019re delivered. You choose which Review Team handles it \u2014 a global group of people responsible for a kind of review, like Brand review or Final QA. Who\u2019s on that team and their instructions are managed in People.' },
     workspace: { title: 'Workspace', body: 'A workspace is a shared space for a team or client, with its own projects, billing, and settings. In an organization account, people are given workspace access to the workspaces they work in. A standalone account has no separate organization or workspace layer \u2014 everything lives under one account.' },
@@ -6682,6 +7829,7 @@ class Component extends DCLogic {
       changelog: ['M3 22V18.0996C3.00021 17.4924 3.4924 17.0002 4.09961 17H8C8.55228 17 9 17.4477 9 18C9 18.5523 8.55228 19 8 19H6.34375C9.87829 21.8632 15.0765 21.652 18.3643 18.3643C20.1218 16.6067 21 14.3048 21 12C21 11.4477 21.4477 11 22 11C22.5523 11 23 11.4477 23 12C23 14.8136 21.926 17.6306 19.7783 19.7783C15.7328 23.8239 9.32131 24.0577 5 20.4834V22C5 22.5523 4.55228 23 4 23C3.44772 23 3 22.5523 3 22ZM15.3271 9.25977C15.7358 8.88831 16.3687 8.91851 16.7402 9.32715C17.1117 9.73581 17.0815 10.3687 16.6729 10.7402L11.5088 15.4346C10.9368 15.9543 10.0632 15.9543 9.49121 15.4346L7.32715 13.4668C6.91885 13.0953 6.88854 12.4632 7.25977 12.0547C7.63127 11.646 8.26419 11.6158 8.67285 11.9873L10.5 13.6484L15.3271 9.25977ZM21 5.90039C20.9998 6.5076 20.5076 6.99979 19.9004 7H16C15.4477 7 15 6.55228 15 6C15 5.44772 15.4477 5 16 5H17.6562C14.1217 2.13684 8.9235 2.34798 5.63574 5.63574C3.87819 7.3933 3 9.69515 3 12C3 12.5523 2.55228 13 2 13C1.44772 13 1 12.5523 1 12C1 9.1864 2.07399 6.36937 4.22168 4.22168C8.26708 0.17628 14.6787 -0.058224 19 3.51562V2C19 1.44772 19.4477 1 20 1C20.5523 1 21 1.44772 21 2V5.90039Z'],
       docs: ['M11 5.31342C11 5.23576 10.9625 5.15246 10.8818 5.09369C8.87978 3.63553 6.12022 3.63553 4.11816 5.09369C4.0375 5.15246 4.00002 5.23576 4 5.31342V16.9999C4 17.5522 4.44772 17.9999 5 17.9999H9.76367C10.198 17.9999 10.6183 18.0939 11 18.2665V5.31342ZM13 18.2665C13.3817 18.0939 13.802 17.9999 14.2363 17.9999H19C19.5523 17.9999 20 17.5522 20 16.9999V5.31342C20 5.23576 19.9625 5.15246 19.8818 5.09369C17.8798 3.63553 15.1202 3.63553 13.1182 5.09369C13.0375 5.15246 13 5.23576 13 5.31342V18.2665ZM22 16.9999C22 18.6568 20.6569 19.9999 19 19.9999H14.2363C13.8576 19.9999 13.5112 20.214 13.3418 20.5527L12.9834 21.2685C12.5779 22.0788 11.4221 22.0788 11.0166 21.2685L10.6582 20.5527C10.4888 20.214 10.1424 19.9999 9.76367 19.9999H5C3.34315 19.9999 2 18.6568 2 16.9999V5.31342C2.00002 4.58201 2.35461 3.90317 2.94043 3.4765C5.62459 1.52156 9.30141 1.50798 12 3.43451C14.6986 1.50798 18.3754 1.52156 21.0596 3.4765C21.6454 3.90317 22 4.58201 22 5.31342V16.9999Z'],
       resources: ['M19 4C19 3.44772 18.5523 3 18 3H9V15H18C18.5523 15 19 14.5523 19 14V4ZM5 19C5 20.1046 5.89543 21 7 21H17V17H7C5.89543 17 5 17.8954 5 19ZM5 15.5361C5.58845 15.1956 6.27125 15 7 15V3C5.89543 3 5 3.89543 5 5V15.5361ZM21 14C21 15.3057 20.1645 16.413 19 16.8252V21H20C20.5523 21 21 21.4477 21 22C21 22.5523 20.5523 23 20 23H7C4.79086 23 3 21.2091 3 19V5C3 2.79086 4.79086 1 7 1H18C19.6569 1 21 2.34315 21 4V14Z'],
+      term_rule: ['M5.09202 21.782L5.43251 21.1138L5.09202 21.782ZM4.21799 20.908L4.88624 20.5675L4.21799 20.908ZM19.782 20.908L19.1138 20.5675L19.782 20.908ZM18.908 21.782L18.5675 21.1138L18.908 21.782ZM18.908 2.21799L18.5675 2.88624L18.908 2.21799ZM19.782 3.09202L19.1138 3.43251L19.782 3.09202ZM5.09202 2.21799L5.43251 2.88624L5.09202 2.21799ZM4.21799 3.09202L4.88624 3.43251L4.21799 3.09202ZM8 5.25C7.58579 5.25 7.25 5.58579 7.25 6C7.25 6.41421 7.58579 6.75 8 6.75V6V5.25ZM16 6.75C16.4142 6.75 16.75 6.41421 16.75 6C16.75 5.58579 16.4142 5.25 16 5.25V6V6.75ZM8 9.25C7.58579 9.25 7.25 9.58579 7.25 10C7.25 10.4142 7.58579 10.75 8 10.75V10V9.25ZM16 10.75C16.4142 10.75 16.75 10.4142 16.75 10C16.75 9.58579 16.4142 9.25 16 9.25V10V10.75ZM15.9692 14.499L16.7134 14.5916L16.7134 14.5916L15.9692 14.499ZM8.03082 14.499L8.77508 14.4064V14.4064L8.03082 14.499ZM7.2 2V2.75H16.8V2V1.25H7.2V2ZM20 5.2H19.25V18.8H20H20.75V5.2H20ZM16.8 22V21.25H7.2V22V22.75H16.8V22ZM4 18.8H4.75V5.2H4H3.25V18.8H4ZM7.2 22V21.25C6.62757 21.25 6.24336 21.2494 5.94748 21.2252C5.66035 21.2018 5.52307 21.1599 5.43251 21.1138L5.09202 21.782L4.75153 22.4503C5.08879 22.6221 5.44544 22.6892 5.82533 22.7203C6.19646 22.7506 6.65232 22.75 7.2 22.75V22ZM4 18.8H3.25C3.25 19.3477 3.24942 19.8035 3.27974 20.1747C3.31078 20.5546 3.37789 20.9112 3.54973 21.2485L4.21799 20.908L4.88624 20.5675C4.8401 20.4769 4.79822 20.3396 4.77476 20.0525C4.75058 19.7566 4.75 19.3724 4.75 18.8H4ZM5.09202 21.782L5.43251 21.1138C5.19731 20.9939 5.00608 20.8027 4.88624 20.5675L4.21799 20.908L3.54973 21.2485C3.81338 21.7659 4.23408 22.1866 4.75153 22.4503L5.09202 21.782ZM20 18.8H19.25C19.25 19.3724 19.2494 19.7566 19.2252 20.0525C19.2018 20.3396 19.1599 20.4769 19.1138 20.5675L19.782 20.908L20.4503 21.2485C20.6221 20.9112 20.6892 20.5546 20.7203 20.1747C20.7506 19.8035 20.75 19.3477 20.75 18.8H20ZM16.8 22V22.75C17.3477 22.75 17.8035 22.7506 18.1747 22.7203C18.5546 22.6892 18.9112 22.6221 19.2485 22.4503L18.908 21.782L18.5675 21.1138C18.4769 21.1599 18.3396 21.2018 18.0525 21.2252C17.7566 21.2494 17.3724 21.25 16.8 21.25V22ZM19.782 20.908L19.1138 20.5675C18.9939 20.8027 18.8027 20.9939 18.5675 21.1138L18.908 21.782L19.2485 22.4503C19.7659 22.1866 20.1866 21.7659 20.4503 21.2485L19.782 20.908ZM16.8 2V2.75C17.3724 2.75 17.7566 2.75058 18.0525 2.77476C18.3396 2.79822 18.4769 2.8401 18.5675 2.88624L18.908 2.21799L19.2485 1.54973C18.9112 1.37789 18.5546 1.31078 18.1747 1.27974C17.8035 1.24942 17.3477 1.25 16.8 1.25V2ZM20 5.2H20.75C20.75 4.65232 20.7506 4.19646 20.7203 3.82533C20.6892 3.44544 20.6221 3.08879 20.4503 2.75153L19.782 3.09202L19.1138 3.43251C19.1599 3.52307 19.2018 3.66035 19.2252 3.94748C19.2494 4.24336 19.25 4.62757 19.25 5.2H20ZM18.908 2.21799L18.5675 2.88624C18.8027 3.00608 18.9939 3.19731 19.1138 3.43251L19.782 3.09202L20.4503 2.75153C20.1866 2.23408 19.7659 1.81338 19.2485 1.54973L18.908 2.21799ZM7.2 2V1.25C6.65232 1.25 6.19646 1.24942 5.82533 1.27974C5.44545 1.31078 5.08879 1.37789 4.75153 1.54973L5.09202 2.21799L5.43251 2.88624C5.52307 2.8401 5.66035 2.79822 5.94748 2.77476C6.24336 2.75058 6.62757 2.75 7.2 2.75V2ZM4 5.2H4.75C4.75 4.62757 4.75058 4.24336 4.77476 3.94748C4.79822 3.66035 4.8401 3.52307 4.88624 3.43251L4.21799 3.09202L3.54973 2.75153C3.37789 3.08879 3.31078 3.44545 3.27974 3.82533C3.24942 4.19646 3.25 4.65232 3.25 5.2H4ZM5.09202 2.21799L4.75153 1.54973C4.23408 1.81338 3.81338 2.23408 3.54973 2.75153L4.21799 3.09202L4.88624 3.43251C5.00608 3.19731 5.19731 3.00608 5.43251 2.88624L5.09202 2.21799ZM8 6V6.75H16V6V5.25H8V6ZM8 10V10.75H16V10V9.25H8V10ZM15.9692 14.499L15.2249 14.4064C15.0255 16.0092 13.6571 17.25 12 17.25V18V18.75C14.4232 18.75 16.4217 16.9361 16.7134 14.5916L15.9692 14.499ZM12 18V17.25C10.3429 17.25 8.97454 16.0092 8.77508 14.4064L8.03082 14.499L7.28656 14.5916C7.57832 16.9361 9.57676 18.75 12 18.75V18ZM16.5 14V14.75H20V14V13.25H16.5V14ZM7.5 14V13.25H4V14V14.75H7.5V14ZM8.03082 14.499L8.77508 14.4064C8.70156 13.8156 8.21091 13.25 7.5 13.25V14V14.75C7.42665 14.75 7.36863 14.7185 7.33579 14.6868C7.30564 14.6578 7.29064 14.6244 7.28656 14.5916L8.03082 14.499ZM15.9692 14.499L16.7134 14.5916C16.7094 14.6244 16.6944 14.6578 16.6642 14.6868C16.6314 14.7185 16.5733 14.75 16.5 14.75V14V13.25C15.7891 13.25 15.2984 13.8156 15.2249 14.4064L15.9692 14.499Z'],
       key2: ['M14 14.5001C14 12.981 13.3851 11.6078 12.3887 10.6114C11.3923 9.61503 10.0191 9.0001 8.5 9.0001C5.46243 9.0001 3 11.4625 3 14.5001C3 17.5377 5.46243 20.0001 8.5 20.0001C11.5376 20.0001 14 17.5377 14 14.5001ZM16 14.5001C16 18.6422 12.6421 22.0001 8.5 22.0001C4.35786 22.0001 1 18.6422 1 14.5001C1 10.358 4.35786 7.0001 8.5 7.0001C10.2096 7.0001 11.7856 7.57429 13.0469 8.53721L17.9395 3.64659L18.0537 3.54405C18.6429 3.06357 19.5114 3.09746 20.0605 3.64659L22.707 6.29307C23.0976 6.6836 23.0976 7.31661 22.707 7.70713C22.3165 8.09766 21.6835 8.09766 21.293 7.70713L19 5.41417L17.4141 7.0001L18.707 8.29307C19.0976 8.6836 19.0976 9.31661 18.707 9.70713C18.3165 10.0977 17.6835 10.0977 17.293 9.70713L16 8.41417L14.4619 9.95225C15.4253 11.2137 16 12.79 16 14.5001Z'],
     };
     return E('svg', { width: sz, height: sz, viewBox: '0 0 24 24', fill: color || 'currentColor' },
@@ -6701,6 +7849,14 @@ class Component extends DCLogic {
       case 'visual': return s(r({ x: 3.5, y: 4.5, width: 17, height: 15, rx: 2.5 }), c({ cx: 9, cy: 10, r: 1.5 }), pa('M4 17l4.5-4.5 3.5 3.5L15 13l5 4.5'));
       case 'website': return s(c({ cx: 12, cy: 12, r: 9 }), pa('M3.5 9.5h17M3.5 14.5h17'), pa('M12 3c2.5 2.6 2.5 15.4 0 18M12 3c-2.5 2.6-2.5 15.4 0 18'));
       case 'folder': return s(pa('M2 10H22M2 18V6C2 4.89543 2.89543 4 4 4H7.17157C7.70201 4 8.21071 4.21071 8.58579 4.58579L9.41421 5.41421C9.78929 5.78929 10.298 6 10.8284 6H20C21.1046 6 22 6.89543 22 8V18C22 19.1046 21.1046 20 20 20H4C2.89543 20 2 19.1046 2 18Z'));
+      // Brain \u2014 Memory's type icon (replaces the old database glyph so it reads as translation
+      // memory, not generic structured storage). Used by the list card, sidebar nav item, and anywhere
+      // else Memory's type icon appears.
+      case 'brain': return s(pa('M9.5 3.5C7.6 3.5 6.2 5 6.3 6.8C5 7.1 4 8.3 4 9.8C4 10.7 4.4 11.5 5 12C4.4 12.5 4 13.3 4 14.2C4 15.7 5 16.9 6.3 17.2C6.2 19 7.6 20.5 9.5 20.5C10.3 20.5 11 20.2 11.5 19.7V4.3C11 3.8 10.3 3.5 9.5 3.5Z'), pa('M14.5 3.5C16.4 3.5 17.8 5 17.7 6.8C19 7.1 20 8.3 20 9.8C20 10.7 19.6 11.5 19 12C19.6 12.5 20 13.3 20 14.2C20 15.7 19 16.9 17.7 17.2C17.8 19 16.4 20.5 14.5 20.5C13.7 20.5 13 20.2 12.5 19.7V4.3C13 3.8 13.7 3.5 14.5 3.5Z'), pa('M6.8 10.2c.9.7 2.1.7 3 0'), pa('M14.2 10.2c.9.7 2.1.7 3 0'));
+      // Generic file glyph \u2014 neutral, used only for meta-row rhythm (count pairing with the clock+date),
+      // never as a type icon.
+      case 'file': return s(pa('M6.5 2.5h7.5l4 4V20a1 1 0 0 1-1 1h-10.5a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1z'), pa('M14 2.5V6a1 1 0 0 0 1 1h3.5'));
+      case 'chevron_right': return s(pa('M9 6l6 6-6 6'));
       case 'upload': return s(pa('M12 16V4M8 8l4-4 4 4'), pa('M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3'));
       case 'check': return s(pa('M5 13l4 4L19 7'));
       case 'eye': return s(pa('M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z'), c({ cx: 12, cy: 12, r: 3 }));
@@ -6744,6 +7900,7 @@ class Component extends DCLogic {
       case 'sdk_hex': return s(pa('M12 2l8.66 5v10L12 22l-8.66-5V7z'), pa('M9.5 13l1.5 1.5-1.5 1.5'), pa('M14.5 13l-1.5 1.5 1.5 1.5'));
       case 'sparkles': return s(pa('M12 3l1.6 4.9 4.9 1.6-4.9 1.6L12 16l-1.6-4.9-4.9-1.6 4.9-1.6z'), pa('M19 3l.6 1.9 1.9.6-1.9.6-.6 1.9-.6-1.9-1.9-.6 1.9-.6z'));
       case 'book': return s(pa('M4 5.5A2.5 2.5 0 0 1 6.5 3H12v18H6.5A2.5 2.5 0 0 1 4 18.5z'), pa('M20 5.5A2.5 2.5 0 0 0 17.5 3H12v18h5.5a2.5 2.5 0 0 0 2.5-2.5z'));
+      case 'database': return s(pa('M4 6c0-1.66 3.58-3 8-3s8 1.34 8 3-3.58 3-8 3-8-1.34-8-3z'), pa('M4 6v6c0 1.66 3.58 3 8 3s8-1.34 8-3V6'), pa('M4 12v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6'));
       case 'copy': return s(r({ x: 8, y: 8, width: 13, height: 13, rx: 2.5 }), pa('M5 15.5V5.5A2.5 2.5 0 0 1 7.5 3H16'));
       case 'key': return s(c({ cx: 7.5, cy: 15.5, r: 4 }), l({ x1: 10.5, y1: 12.5, x2: 20.5, y2: 2.5 }), l({ x1: 16.5, y1: 6.5, x2: 19, y2: 4 }), l({ x1: 13.5, y1: 9.5, x2: 15.5, y2: 7.5 }));
       case 'external_link': return s(pa('M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'), pa('M15 3h6v6'), l({ x1: 10, y1: 14, x2: 21, y2: 3 }));
@@ -7004,6 +8161,17 @@ class Component extends DCLogic {
     const onCR = S.page === 'credit-rates';
     const onDev = S.page === 'developers';
     const onWorkflowsLocked = S.page === 'workflows-locked';
+    const onIntel = S.page === 'memory' || S.page === 'glossaries' || S.page === 'styleguides' || S.page === 'custom-instructions';
+    const intelTitle = { memory: 'Memory', glossaries: 'Glossaries', styleguides: 'Style Guides', 'custom-instructions': 'Custom Instructions' }[S.page] || '';
+    const onIntelDetail = (S.page === 'memory' && !!S.memDetailId) || (S.page === 'glossaries' && !!S.glosDetailId) || (S.page === 'styleguides' && !!S.sgDetailId);
+    const intelDetailName = S.page === 'memory' ? ((this.MEMORIES.find(m => m.id === S.memDetailId) || {}).name || '')
+      : S.page === 'glossaries' ? ((this.GLOSSARIES.find(g => g.id === S.glosDetailId) || {}).name || '')
+      : S.page === 'styleguides' ? ((this.STYLEGUIDES.find(sg => sg.id === S.sgDetailId) || {}).name || '') : '';
+    const onIntelBackToList = () => {
+      if (S.page === 'memory') set({ memDetailId: null, memSel: {} });
+      else if (S.page === 'glossaries') set({ glosDetailId: null });
+      else if (S.page === 'styleguides') set({ sgDetailId: null });
+    };
     // A12: Billing — the sidebar nav item, the sidebar credit widget's click-through, and the page itself —
     // is role-gated: Owner and Admin only. Manager/Contributor/Viewer keep the balance in the sidebar
     // widget (operationally necessary to know what's left) but the destination doesn't exist for them.
@@ -8753,13 +9921,13 @@ class Component extends DCLogic {
           pdOnConfirmCancel: () => this.closePdConfirm(),
         };
       })() : {}),
-      crumbStep: onCR ? '' : onPeople ? '' : onDev ? '' : onBilling ? (billView === 'invoice-detail' ? billCurrentInvoice.id : billView === 'manage-plan' ? 'Manage Plan' : billView === 'change-plan' ? 'Change Plan' : billView === 'buy-credits' ? 'Buy Credits' : billView === 'credit-monitoring' ? 'Credit Monitoring' : '') : onWc ? 'New workspace' : onProj ? (S.pdNameOverride || (pdProj || {}).name || 'Project') : onWsd ? wsdRow.name : onWs ? 'All workspaces' : onList ? 'All translations' : onDetails ? row.name : ['File', 'Languages', 'Destination', 'Cost', 'Done'][S.step - 1],
-      crumbStatus: (onList || onWs || onWc || onWsd || onProj || onPeople || onBilling || onCR || onDev) ? '' : onDetails ? dtStatus.label : (S.step === 5 ? 'Submitted' : 'Draft'),
-      crumbRoot: onWorkflowsLocked ? 'Workflows' : onCR ? 'Credit Rates' : onDev ? 'Developers' : onPeople ? 'People' : onBilling ? 'Billing' : onWc ? 'Workspaces' : onProj ? 'Workspaces' : onWsd ? 'Workspaces' : onWs ? 'Workspaces' : onList ? 'Translations' : onDetails ? 'Translations' : 'New Translation',
+      crumbStep: onIntel ? (onIntelDetail ? intelDetailName : '') : onCR ? '' : onPeople ? '' : onDev ? '' : onBilling ? (billView === 'invoice-detail' ? billCurrentInvoice.id : billView === 'manage-plan' ? 'Manage Plan' : billView === 'change-plan' ? 'Change Plan' : billView === 'buy-credits' ? 'Buy Credits' : billView === 'credit-monitoring' ? 'Credit Monitoring' : '') : onWc ? 'New workspace' : onProj ? (S.pdNameOverride || (pdProj || {}).name || 'Project') : onWsd ? wsdRow.name : onWs ? 'All workspaces' : onList ? 'All translations' : onDetails ? row.name : ['File', 'Languages', 'Destination', 'Cost', 'Done'][S.step - 1],
+      crumbStatus: (onIntel || onList || onWs || onWc || onWsd || onProj || onPeople || onBilling || onCR || onDev) ? '' : onDetails ? dtStatus.label : (S.step === 5 ? 'Submitted' : 'Draft'),
+      crumbRoot: onIntel ? intelTitle : onWorkflowsLocked ? 'Workflows' : onCR ? 'Credit Rates' : onDev ? 'Developers' : onPeople ? 'People' : onBilling ? 'Billing' : onWc ? 'Workspaces' : onProj ? 'Workspaces' : onWsd ? 'Workspaces' : onWs ? 'Workspaces' : onList ? 'Translations' : onDetails ? 'Translations' : 'New Translation',
       crumbMid: onProj ? pdWs.name : ((billView === 'change-plan' || billView === 'buy-credits' || billView === 'credit-monitoring') ? 'Manage Plan' : ''),
       showCrumbMid: onProj || (onBilling && (billView === 'change-plan' || billView === 'buy-credits' || billView === 'credit-monitoring')),
-      showCrumbStep: !onPeople && !onDev && !onCR && !(onBilling && billView === 'home'),
-      onCrumbRoot: (onBilling && billView !== 'home') ? (() => set({ billingView: 'home' })) : (() => {}),
+      showCrumbStep: (!onIntel && !onPeople && !onDev && !onCR && !(onBilling && billView === 'home')) || onIntelDetail,
+      onCrumbRoot: onIntelDetail ? onIntelBackToList : (onBilling && billView !== 'home') ? (() => set({ billingView: 'home' })) : (() => {}),
       onCrumbMid: onProj ? (() => set({ page: 'wsdetail', wsDetailWid: S.pdWid, wsDetailTab: 'projects' })) : (() => set({ billingView: 'manage-plan' })),
       // A collection has no single status, so no status badge here. The project hero already carries this
       // exact count — showing it again in the breadcrumb would be the same state stated twice on one page.
@@ -8774,15 +9942,17 @@ class Component extends DCLogic {
       // \u00a71 correction: the existing global header breadcrumb (crumbRoot/crumbMid/crumbStep above) is
       // the established "Billing / Invoices" pattern \u2014 Billing's sub-pages just need showBack turned on
       // here, not an invented in-content back button. Home has nothing to go back to within Billing.
-      showBack: !onList && !onWs && !onWc && !onWsd && !onPeople && !onDev && !onCR && !onWorkflowsLocked && !(onBilling && billView === 'home'),
-      backTitle: onBilling ? ((billView === 'change-plan' || billView === 'buy-credits' || billView === 'credit-monitoring') ? 'Back to Manage Plan' : 'Back to Billing') : onProj ? 'Back to ' + pdWs.name : onDetails ? 'Back to translations' : onWc ? 'Back to workspaces' : 'Exit to translations',
-      onBack2: () => onBilling
+      showBack: (!onIntel && !onList && !onWs && !onWc && !onWsd && !onPeople && !onDev && !onCR && !onWorkflowsLocked && !(onBilling && billView === 'home')) || onIntelDetail,
+      backTitle: onIntelDetail ? 'Back to ' + intelTitle : onBilling ? ((billView === 'change-plan' || billView === 'buy-credits' || billView === 'credit-monitoring') ? 'Back to Manage Plan' : 'Back to Billing') : onProj ? 'Back to ' + pdWs.name : onDetails ? 'Back to translations' : onWc ? 'Back to workspaces' : 'Exit to translations',
+      onBack2: () => onIntelDetail
+        ? onIntelBackToList()
+        : onBilling
         ? set({ billingView: (billView === 'change-plan' || billView === 'buy-credits' || billView === 'credit-monitoring') ? 'manage-plan' : 'home' })
         : onProj
         ? set({ page: 'wsdetail', wsDetailWid: S.pdWid, wsDetailTab: 'projects', navOpen: false })
         : set({ page: onWc ? 'workspaces' : 'list', navOpen: false }),
-      showCrumbStatus: !onList && !onWs && !onWc && !onWsd && !onProj && !onPeople && !onBilling && !onCR && !onDev && !onWorkflowsLocked,
-      learnPageLabel: onWorkflowsLocked ? 'Learn about Workflows' : onCR ? 'Learn about Credit Rates' : onDev ? 'Learn about Developers' : onPeople ? 'Learn about People' : onBilling ? 'Learn about Billing' : onProj ? 'Learn about Projects' : (onWs || onWc || onWsd) ? 'Learn about Workspaces' : 'Learn about Translation',
+      showCrumbStatus: !onIntel && !onList && !onWs && !onWc && !onWsd && !onProj && !onPeople && !onBilling && !onCR && !onDev && !onWorkflowsLocked,
+      learnPageLabel: onIntel ? ('Learn about ' + intelTitle) : onWorkflowsLocked ? 'Learn about Workflows' : onCR ? 'Learn about Credit Rates' : onDev ? 'Learn about Developers' : onPeople ? 'Learn about People' : onBilling ? 'Learn about Billing' : onProj ? 'Learn about Projects' : (onWs || onWc || onWsd) ? 'Learn about Workspaces' : 'Learn about Translation',
       onOpenDetails: () => set({ page: 'details', detailTab: 'overview' }),
       onNavTranslations: () => set({ page: S.hasSeenEmptyState.translations ? 'list' : 'list-empty', hasSeenEmptyState: Object.assign({}, S.hasSeenEmptyState, { translations: true }) }),
       onNavWorkspaces: () => set({ page: S.hasSeenEmptyState.workspaces ? 'workspaces' : 'workspaces-empty', hasSeenEmptyState: Object.assign({}, S.hasSeenEmptyState, { workspaces: true }) }),
@@ -8813,8 +9983,34 @@ class Component extends DCLogic {
       navBillingIconColor: onBilling ? '#6148F9' : '#4D4D4D',
       navBillingFont: onBilling ? '600 13.5px var(--font-ui)' : '500 13.5px var(--font-ui)',
       navBillingTextColor: onBilling ? '#4F39D8' : '#3A3A44',
-      wizardPane: (onDetails || onList || onWs || onWc || onWsd || onProj || onPeople || onBilling || onCR || onDev || onWorkflowsLocked) ? 'display:none' : 'flex:1;min-height:0;display:flex;flex-direction:column',
+      wizardPane: (onDetails || onList || onWs || onWc || onWsd || onProj || onPeople || onBilling || onCR || onDev || onWorkflowsLocked || onIntel) ? 'display:none' : 'flex:1;min-height:0;display:flex;flex-direction:column',
       creditRatesPane: onCR ? 'flex:1;min-height:0;display:flex;flex-direction:column' : 'display:none',
+      intelPane: onIntel ? 'flex:1;min-height:0;display:flex;flex-direction:column' : 'display:none',
+      onNavMemory: () => set({ page: 'memory', navOpen: false }),
+      onNavGlossaries: () => set({ page: 'glossaries', navOpen: false }),
+      onNavStyleGuides: () => set({ page: 'styleguides', navOpen: false }),
+      onNavCustomInstructions: () => set({ page: 'custom-instructions', navOpen: false }),
+      navMemoryStyle: 'display:flex;align-items:center;gap:11px;padding:8px 10px;border-radius:9px;cursor:pointer;transition:.14s;' + (S.page === 'memory' ? 'background:rgba(97,72,249,0.1)' : ''),
+      navMemoryIconColor: S.page === 'memory' ? '#6148F9' : '#4D4D4D',
+      navMemoryFont: S.page === 'memory' ? '600 13.5px var(--font-ui)' : '500 13.5px var(--font-ui)',
+      navMemoryTextColor: S.page === 'memory' ? '#4F39D8' : '#3A3A44',
+      navGlossariesStyle: 'display:flex;align-items:center;gap:11px;padding:8px 10px;border-radius:9px;cursor:pointer;transition:.14s;' + (S.page === 'glossaries' ? 'background:rgba(97,72,249,0.1)' : ''),
+      navGlossariesIconColor: S.page === 'glossaries' ? '#6148F9' : '#4D4D4D',
+      navGlossariesFont: S.page === 'glossaries' ? '600 13.5px var(--font-ui)' : '500 13.5px var(--font-ui)',
+      navGlossariesTextColor: S.page === 'glossaries' ? '#4F39D8' : '#3A3A44',
+      navStyleGuidesStyle: 'display:flex;align-items:center;gap:11px;padding:8px 10px;border-radius:9px;cursor:pointer;transition:.14s;' + (S.page === 'styleguides' ? 'background:rgba(97,72,249,0.1)' : ''),
+      navStyleGuidesIconColor: S.page === 'styleguides' ? '#6148F9' : '#4D4D4D',
+      navStyleGuidesFont: S.page === 'styleguides' ? '600 13.5px var(--font-ui)' : '500 13.5px var(--font-ui)',
+      navStyleGuidesTextColor: S.page === 'styleguides' ? '#4F39D8' : '#3A3A44',
+      navCustomInstructionsStyle: 'display:flex;align-items:center;gap:11px;padding:8px 10px;border-radius:9px;cursor:pointer;transition:.14s;' + (S.page === 'custom-instructions' ? 'background:rgba(97,72,249,0.1)' : ''),
+      navCustomInstructionsIconColor: S.page === 'custom-instructions' ? '#6148F9' : '#4D4D4D',
+      navCustomInstructionsFont: S.page === 'custom-instructions' ? '600 13.5px var(--font-ui)' : '500 13.5px var(--font-ui)',
+      navCustomInstructionsTextColor: S.page === 'custom-instructions' ? '#4F39D8' : '#3A3A44',
+      navMemoryIcon: this.icon('brain', 'currentColor', 18),
+      navGlossariesIcon: this.icon('book', 'currentColor', 18),
+      navStyleGuidesIcon: this.icon('pencil', 'currentColor', 18),
+      navCustomInstructionsIcon: this.icon('document', 'currentColor', 18),
+      ...this.buildIntelVals(S, set),
       onNavCreditRates: () => set({ page: 'credit-rates', navOpen: false }),
       navCreditRatesStyle: 'display:flex;align-items:center;gap:11px;padding:8px 10px;border-radius:9px;cursor:pointer;transition:.14s;' + (onCR ? 'background:rgba(97,72,249,0.1)' : ''),
       navCreditRatesIconColor: onCR ? '#6148F9' : '#4D4D4D',
@@ -9632,7 +10828,7 @@ class Component extends DCLogic {
       helpHasLink: !!(helpObj && helpObj.learnMore),
       helpPopStyle: (() => {
         const p = S.helpPos;
-        const base = 'position:absolute;z-index:60;width:' + this.HELP_W + 'px;animation:omPop .16s ease both;';
+        const base = 'position:absolute;z-index:110;width:' + this.HELP_W + 'px;animation:omPop .16s ease both;';
         if (!p) return base + 'left:50%;top:50%;margin:-160px 0 0 -160px';
         return base + 'left:' + Math.round(p.left) + 'px;top:' + Math.round(p.top) + 'px;transform-origin:top center';
       })(),

@@ -3353,8 +3353,11 @@ input:focus,textarea:focus{outline:none}
               <sc-for list="{{ memCards }}" as="mc" hint-placeholder-count="3">
                 <div class="om-drill-card" style="{{ cardShell }};cursor:pointer" onClick="{{ mc.onOpen }}" style-hover="border-color:rgba(97,72,249,0.35);box-shadow:0 10px 26px -12px rgba(16,16,20,0.16)">
                   <div style="display:flex;align-items:center;justify-content:space-between">
-                    <span style="{{ mc.tileStyle }}">{{ mc.tileIcon }}</span>
-                    <div style="position:relative" data-pop="1" onClick="{{ stopClick2 }}">
+                    <div style="display:flex;align-items:center;gap:10px;min-width:0">
+                      <span style="{{ mc.tileStyle }}">{{ mc.tileIcon }}</span>
+                      <span style="font:600 15px var(--font-ui);color:#16161A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ mc.name }}</span>
+                    </div>
+                    <div style="position:relative;flex:none" data-pop="1" onClick="{{ stopClick2 }}">
                       <button onClick="{{ mc.onMenu }}" title="Memory actions" style="{{ kebabBtnStyle }}" style-hover="background:rgba(20,20,30,0.06);color:#16161A">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"></circle><circle cx="12" cy="12" r="2"></circle><circle cx="19" cy="12" r="2"></circle></svg>
                       </button>
@@ -3367,7 +3370,6 @@ input:focus,textarea:focus{outline:none}
                       </sc-if>
                     </div>
                   </div>
-                  <div style="font:600 15px var(--font-ui);color:#16161A;margin-top:10px">{{ mc.name }}</div>
                   <div style="display:flex;align-items:center;gap:14px;margin-top:14px;padding-top:14px;border-top:1px solid rgba(0,0,29,0.08)">
                     <span style="display: flex; align-items: center; gap: 5px; font: 400 12.5px var(--font-ui); color: #16161A; font-weight: 500">{{ mc.fileIcon }}{{ mc.linesLabel }}</span>
                     <span style="display:flex;align-items:center;gap:5px;font:400 12.5px var(--font-ui);color:#6B6B78">{{ mc.clockIcon }}{{ mc.updated }}</span>
@@ -3454,8 +3456,14 @@ input:focus,textarea:focus{outline:none}
               <sc-for list="{{ glosCards }}" as="gc" hint-placeholder-count="2">
                 <div class="om-drill-card" style="{{ cardShell }};cursor:pointer" onClick="{{ gc.onOpen }}" style-hover="border-color:rgba(97,72,249,0.35);box-shadow:0 10px 26px -12px rgba(16,16,20,0.16)">
                   <div style="display:flex;align-items:center;justify-content:space-between">
-                    <span style="{{ gc.tileStyle }}">{{ gc.tileIcon }}</span>
-                    <div style="position:relative" data-pop="1" onClick="{{ stopClick2 }}">
+                    <div style="display:flex;align-items:center;gap:10px;min-width:0">
+                      <span style="{{ gc.tileStyle }}">{{ gc.tileIcon }}</span>
+                      <div style="min-width:0">
+                        <div style="font:600 15px var(--font-ui);color:#16161A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ gc.name }}</div>
+                        <div style="font:400 12.5px var(--font-ui);color:#9A9AA6;margin-top:2px">Workspace</div>
+                      </div>
+                    </div>
+                    <div style="position:relative;flex:none" data-pop="1" onClick="{{ stopClick2 }}">
                       <button onClick="{{ gc.onMenu }}" title="Glossary actions" style="{{ kebabBtnStyle }}" style-hover="background:rgba(20,20,30,0.06);color:#16161A">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"></circle><circle cx="12" cy="12" r="2"></circle><circle cx="19" cy="12" r="2"></circle></svg>
                       </button>
@@ -3468,8 +3476,6 @@ input:focus,textarea:focus{outline:none}
                       </sc-if>
                     </div>
                   </div>
-                  <div style="font:600 15px var(--font-ui);color:#16161A;margin-top:10px">{{ gc.name }}</div>
-                  <div style="font:400 12.5px var(--font-ui);color:#9A9AA6;margin-top:2px">Workspace</div>
                   <div style="display:flex;align-items:center;gap:14px;margin-top:14px;padding-top:14px;border-top:1px solid rgba(0,0,29,0.08)">
                     <span style="display: flex; align-items: center; gap: 5px; font: 400 12.5px var(--font-ui); color: #16161A; font-weight: 500">{{ gc.fileIcon }}{{ gc.termsLabel }}</span>
                     <span style="display:flex;align-items:center;gap:5px;font:400 12.5px var(--font-ui);color:#6B6B78">{{ gc.clockIcon }}{{ gc.updated }}</span>
@@ -3547,8 +3553,14 @@ input:focus,textarea:focus{outline:none}
               <sc-for list="{{ sgCards }}" as="sc" hint-placeholder-count="2">
                 <div class="om-drill-card" style="{{ cardShell }};cursor:pointer" onClick="{{ sc.onOpen }}" style-hover="border-color:rgba(97,72,249,0.35);box-shadow:0 10px 26px -12px rgba(16,16,20,0.16)">
                   <div style="display:flex;align-items:center;justify-content:space-between">
-                    <span style="{{ sc.tileStyle }}">{{ sc.tileIcon }}</span>
-                    <div style="position:relative" data-pop="1" onClick="{{ stopClick2 }}">
+                    <div style="display:flex;align-items:center;gap:10px;min-width:0">
+                      <span style="{{ sc.tileStyle }}">{{ sc.tileIcon }}</span>
+                      <div style="min-width:0">
+                        <div style="font:600 15px var(--font-ui);color:#16161A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ sc.name }}</div>
+                        <div style="font:400 12.5px var(--font-ui);color:#9A9AA6;margin-top:2px">Workspace</div>
+                      </div>
+                    </div>
+                    <div style="position:relative;flex:none" data-pop="1" onClick="{{ stopClick2 }}">
                       <button onClick="{{ sc.onMenu }}" title="Style guide actions" style="{{ kebabBtnStyle }}" style-hover="background:rgba(20,20,30,0.06);color:#16161A">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"></circle><circle cx="12" cy="12" r="2"></circle><circle cx="19" cy="12" r="2"></circle></svg>
                       </button>
@@ -3561,8 +3573,6 @@ input:focus,textarea:focus{outline:none}
                       </sc-if>
                     </div>
                   </div>
-                  <div style="font:600 15px var(--font-ui);color:#16161A;margin-top:10px">{{ sc.name }}</div>
-                  <div style="font:400 12.5px var(--font-ui);color:#9A9AA6;margin-top:2px">Workspace</div>
                   <div style="display:flex;align-items:center;gap:14px;margin-top:14px;padding-top:14px;border-top:1px solid rgba(0,0,29,0.08)">
                     <span style="display: flex; align-items: center; gap: 5px; font: 400 12.5px var(--font-ui); color: #16161A; font-weight: 500">{{ sc.fileIcon }}{{ sc.rulesLabel }}</span>
                     <span style="display:flex;align-items:center;gap:5px;font:400 12.5px var(--font-ui);color:#6B6B78">{{ sc.clockIcon }}{{ sc.updated }}</span>
@@ -3628,29 +3638,76 @@ input:focus,textarea:focus{outline:none}
         <sc-if value="{{ intelIsCiList }}" hint-placeholder-val="{{ false }}">
           <h1 style="font:700 24px var(--font-display);color:#1A1A22;margin:0;letter-spacing:-.02em">Custom Instructions</h1>
           <p style="font:400 13px var(--font-ui);color:#6B6B78;margin:6px 0 0;max-width:640px">Add custom instructions to guide how Ollang AI handles your translations. These instructions are applied globally across all your orders and workflows.</p>
-          <div class="om-rt-grid" style="margin-top:20px">
-            <div onClick="{{ onCiOpenCreate }}" style="background:#FAFAFB;border:1.5px dashed rgba(20,20,30,0.16);border-radius:16px;padding:18px;min-height:140px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;color:#6B6B78" style-hover="border-color:#6148F9;color:#4F39D8;background:#FAFAFF">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
-              <span style="font:600 13px var(--font-ui)">Add Instruction</span>
+
+          <div style="display:inline-flex;align-items:center;gap:2px;background:#fff;border:1px solid rgba(0,0,29,0.1);border-radius:999px;padding:3px;margin:20px 0 0">
+            <sc-for list="{{ ciTabs }}" as="ct" hint-placeholder-count="2">
+              <button onClick="{{ ct.onClick }}" style="{{ ct.style }}">{{ ct.label }}</button>
+            </sc-for>
+          </div>
+
+          <sc-if value="{{ ciTabIsInstructions }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin:18px 0 14px">
+              <div style="font:600 15px var(--font-ui);color:#16161A">Your instructions ({{ ciCount }})</div>
+              <button onClick="{{ onCiOpenCreate }}" style="{{ btnPrimaryMd }}" style-hover="background:#4F39D8">{{ plusIcon }} Create instruction</button>
             </div>
-            <sc-for list="{{ ciCards }}" as="cc" hint-placeholder-count="2">
-              <div style="{{ cardShell }}">
-                <span style="display:inline-flex;align-items:center;font:600 11px var(--font-ui);color:#1C8A5A;background:rgba(28,138,90,0.1);padding:3px 9px;border-radius:999px">Active</span>
-                <div style="font:600 14.5px var(--font-ui);color:#16161A;margin-top:12px">{{ cc.name }}</div>
-                <p style="font:400 12.5px var(--font-ui);color:#6B6B78;margin:6px 0 0">{{ cc.instruction }}</p>
+            <sc-if value="{{ ciListEmpty }}" hint-placeholder-val="{{ false }}">
+              <div style="background:#fff;border:1px solid rgba(0,0,29,0.08);border-radius:12px;padding:52px 20px;text-align:center">
+                <div style="font:600 14px var(--font-ui);color:#16161A">No instructions yet</div>
+                <p style="font:400 12.5px var(--font-ui);color:#6B6B78;margin:5px 0 0">Add an instruction to guide how Ollang AI handles your translations.</p>
               </div>
-            </sc-for>
-          </div>
-          <div style="font:700 18px var(--font-display);color:#1A1A22;margin-top:30px">Suggestions</div>
-          <div class="om-rt-grid" style="margin-top:14px">
-            <sc-for list="{{ ciSuggestions }}" as="sg" hint-placeholder-count="4">
-              <div style="{{ cardShell }};cursor:pointer" onClick="{{ sg.onUse }}" style-hover="border-color:rgba(97,72,249,0.35)">
-                <span style="display:inline-flex;align-items:center;font:600 11px var(--font-ui);color:#4F39D8;background:rgba(97,72,249,0.1);padding:3px 9px;border-radius:999px">Suggestion</span>
-                <div style="font:600 14.5px var(--font-ui);color:#16161A;margin-top:12px">{{ sg.name }}</div>
-                <p style="font:400 12.5px var(--font-ui);color:#6B6B78;margin:6px 0 0">{{ sg.description }}</p>
+            </sc-if>
+            <sc-if value="{{ ciListPopulated }}" hint-placeholder-val="{{ true }}">
+              <div class="om-rt-grid">
+                <sc-for list="{{ ciCards }}" as="cc" hint-placeholder-count="2">
+                  <div style="{{ cardShell }}">
+                    <div style="display:flex;align-items:center;justify-content:space-between">
+                      <div style="display:flex;align-items:center;gap:10px;min-width:0">
+                        <div style="position:relative;flex:none">
+                          <span style="{{ cc.tileStyle }}">{{ cc.tileIcon }}</span>
+                          <span title="{{ cc.statusTitle }}" style="{{ cc.statusBadgeStyle }}"></span>
+                        </div>
+                        <span style="font:600 15px var(--font-ui);color:#16161A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ cc.name }}</span>
+                      </div>
+                      <div style="position:relative;flex:none" data-pop="1" onClick="{{ stopClick2 }}">
+                        <button onClick="{{ cc.onMenu }}" title="Instruction actions" style="{{ kebabBtnStyle }}" style-hover="background:rgba(20,20,30,0.06);color:#16161A">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"></circle><circle cx="12" cy="12" r="2"></circle><circle cx="19" cy="12" r="2"></circle></svg>
+                        </button>
+                        <sc-if value="{{ cc.menuOpen }}" hint-placeholder-val="{{ false }}">
+                          <div style="position:absolute;top:calc(100% + 4px);right:0;z-index:40;min-width:130px;background:#fff;border:1px solid rgba(0,0,29,0.12);border-radius:11px;box-shadow:0 14px 32px -8px rgba(16,16,20,0.28);padding:6px">
+                            <sc-for list="{{ cc.menuItems }}" as="mi" hint-placeholder-count="2">
+                              <div onClick="{{ mi.onClick }}" style="{{ mi.rowStyle }}" style-hover="background:#F5F5F7">{{ mi.label }}</div>
+                            </sc-for>
+                          </div>
+                        </sc-if>
+                      </div>
+                    </div>
+                    <div style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(0,0,29,0.08)">
+                      <p style="font:400 12.5px var(--font-ui);color:#6B6B78;margin:0">{{ cc.instruction }}</p>
+                    </div>
+                  </div>
+                </sc-for>
               </div>
-            </sc-for>
-          </div>
+            </sc-if>
+          </sc-if>
+
+          <sc-if value="{{ ciTabIsSuggestions }}" hint-placeholder-val="{{ false }}">
+            <div class="om-rt-grid" style="margin-top:18px">
+              <sc-for list="{{ ciSuggestions }}" as="sg" hint-placeholder-count="4">
+                <div style="{{ cardShell }};cursor:pointer" onClick="{{ sg.onUse }}" style-hover="border-color:rgba(97,72,249,0.35)">
+                  <div style="display:flex;align-items:center;gap:10px;min-width:0">
+                    <div style="position:relative;flex:none">
+                      <span style="{{ sg.tileStyle }}">{{ sg.tileIcon }}</span>
+                      <span style="{{ sg.statusBadgeStyle }}"></span>
+                    </div>
+                    <span style="font:600 15px var(--font-ui);color:#16161A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0">{{ sg.name }}</span>
+                  </div>
+                  <div style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(0,0,29,0.08)">
+                    <p style="font:400 12.5px var(--font-ui);color:#6B6B78;margin:0">{{ sg.description }}</p>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
         </sc-if>
 
         <sc-if value="{{ memModalIsPanel }}" hint-placeholder-val="{{ false }}">
@@ -3869,12 +3926,42 @@ input:focus,textarea:focus{outline:none}
                 <label style="{{ label }}">Instruction *</label>
                 <textarea value="{{ ciDraftInstruction }}" onChange="{{ onCiDraftInstruction }}" style="{{ taSt }}"></textarea>
                 <label style="{{ label }}">Description (Optional)</label>
-                <input value="{{ ciDraftDesc }}" onChange="{{ onCiDraftDesc }}" style="{{ inputSt }};margin-bottom:0">
+                <input value="{{ ciDraftDesc }}" onChange="{{ onCiDraftDesc }}" style="{{ inputSt }}">
+                <div onClick="{{ onCiDraftActiveToggle }}" style="display:flex;align-items:center;gap:8px;cursor:pointer">
+                  <div style="{{ ciDraftActiveStyle }}"><sc-if value="{{ ciDraftActive }}" hint-placeholder-val="{{ true }}"><svg width="10" height="8" viewBox="0 0 10 8" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4l2.5 2.5L9 1"></path></svg></sc-if></div>
+                  <span style="font:500 13px var(--font-ui);color:#16161A">Active</span>
+                </div>
               </div>
               <div style="{{ mdDivider }}"></div>
               <div style="{{ mdFoot }}">
                 <button onClick="{{ onIntelCloseModal }}" style="{{ btnSecondaryMd }}" style-hover="{{ btnSecondaryHover }}">Cancel</button>
                 <button onClick="{{ onCiCreateSubmit }}" disabled="{{ ciCreateDisabled }}" style="{{ btnPrimaryMd }}" style-hover="background:#4F39D8">Add</button>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ ciEditModalOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="{{ mdOverlay }}" onClick="{{ onIntelCloseModal }}">
+            <div style="{{ mdBoxCi }}" onClick="{{ stopClick2 }}">
+              <div style="{{ mdHead }}"><span style="font:600 16px var(--font-ui);color:#16161A">Edit Custom Instruction</span><button onClick="{{ onIntelCloseModal }}" style="{{ mdClose }}" style-hover="background:#F1F1F4"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div>
+              <div style="{{ mdDivider }}"></div>
+              <div style="{{ mdBody }}">
+                <label style="{{ label }}">Name *</label>
+                <input value="{{ ciDraftName }}" onChange="{{ onCiDraftName }}" style="{{ inputSt }}">
+                <label style="{{ label }}">Instruction *</label>
+                <textarea value="{{ ciDraftInstruction }}" onChange="{{ onCiDraftInstruction }}" style="{{ taSt }}"></textarea>
+                <label style="{{ label }}">Description (Optional)</label>
+                <input value="{{ ciDraftDesc }}" onChange="{{ onCiDraftDesc }}" style="{{ inputSt }}">
+                <div onClick="{{ onCiDraftActiveToggle }}" style="display:flex;align-items:center;gap:8px;cursor:pointer">
+                  <div style="{{ ciDraftActiveStyle }}"><sc-if value="{{ ciDraftActive }}" hint-placeholder-val="{{ true }}"><svg width="10" height="8" viewBox="0 0 10 8" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4l2.5 2.5L9 1"></path></svg></sc-if></div>
+                  <span style="font:500 13px var(--font-ui);color:#16161A">Active</span>
+                </div>
+              </div>
+              <div style="{{ mdDivider }}"></div>
+              <div style="{{ mdFoot }}">
+                <button onClick="{{ onIntelCloseModal }}" style="{{ btnSecondaryMd }}" style-hover="{{ btnSecondaryHover }}">Cancel</button>
+                <button onClick="{{ onCiUpdateSubmit }}" disabled="{{ ciUpdateDisabled }}" style="{{ btnPrimaryMd }}" style-hover="background:#4F39D8">Update</button>
               </div>
             </div>
           </div>
@@ -5515,7 +5602,7 @@ class Component extends DCLogic {
     glosImportDragOver: false, glosImportFileName: '', glosImportStatus: 'idle',
     sgDetailId: null, sgModal: null, sgDraftName: '', sgDraftDesc: '',
     sgRuleCategory: 'Tone', sgRuleCategoryOpen: false, sgRuleName: '', sgRuleContent: '', sgRuleExamples: '',
-    ciModal: null, ciDraftName: '', ciDraftInstruction: '', ciDraftDesc: '',
+    ciModal: null, ciDraftName: '', ciDraftInstruction: '', ciDraftDesc: '', ciDraftActive: true, ciEditId: '', ciTab: 'instructions',
     editTitleModal: null, intelMenuFor: '',
     pairSaveOpen: false, pairName: '', pairMenuFor: 0, pairRenamingId: 0, pairRenameValue: '', pairSkipSig: '',
     step: 1, kind: null, file: null, fileSource: null,
@@ -5780,14 +5867,31 @@ class Component extends DCLogic {
   }
 
   openCiCreate(prefill) {
-    this.setState({ ciModal: 'create', ciDraftName: (prefill && prefill.name) || '', ciDraftInstruction: (prefill && prefill.instruction) || '', ciDraftDesc: (prefill && prefill.description) || '' });
+    this.setState({ ciModal: 'create', ciDraftName: (prefill && prefill.name) || '', ciDraftInstruction: (prefill && prefill.instruction) || '', ciDraftDesc: (prefill && prefill.description) || '', ciDraftActive: true });
   }
   onCiCreateSubmit() {
     const name = (this.state.ciDraftName || '').trim();
     const instr = (this.state.ciDraftInstruction || '').trim();
     if (!name || !instr) return;
-    this.CUSTOM_INSTRUCTIONS.push({ id: 'ci' + Date.now(), name, instruction: instr, description: this.state.ciDraftDesc || '', active: true });
+    this.CUSTOM_INSTRUCTIONS.push({ id: 'ci' + Date.now(), name, instruction: instr, description: this.state.ciDraftDesc || '', active: !!this.state.ciDraftActive });
     this.setState({ ciModal: null });
+  }
+  openCiEdit(id) {
+    const ci = this.CUSTOM_INSTRUCTIONS.find(x => x.id === id);
+    if (!ci) return;
+    this.setState({ ciModal: 'edit', ciEditId: id, ciDraftName: ci.name, ciDraftInstruction: ci.instruction, ciDraftDesc: ci.description || '', ciDraftActive: ci.active !== false, intelMenuFor: '' });
+  }
+  onCiUpdateSubmit() {
+    const name = (this.state.ciDraftName || '').trim();
+    const instr = (this.state.ciDraftInstruction || '').trim();
+    if (!name || !instr) return;
+    const ci = this.CUSTOM_INSTRUCTIONS.find(x => x.id === this.state.ciEditId);
+    if (ci) { ci.name = name; ci.instruction = instr; ci.description = this.state.ciDraftDesc || ''; ci.active = !!this.state.ciDraftActive; }
+    this.setState({ ciModal: null, ciEditId: '' });
+  }
+  deleteCi(id) {
+    this.CUSTOM_INSTRUCTIONS = this.CUSTOM_INSTRUCTIONS.filter(x => x.id !== id);
+    this.setState({ intelMenuFor: '' });
   }
 
   toggleIntelMenu(key) { this.setState(s => ({ intelMenuFor: s.intelMenuFor === key ? '' : key })); }
@@ -5927,13 +6031,34 @@ class Component extends DCLogic {
     })) : [];
 
     // ---- Custom Instructions ----
-    const ciCards = this.CUSTOM_INSTRUCTIONS.map(ci => ({
-      id: ci.id, name: ci.name, instruction: ci.instruction, description: ci.description,
-    }));
-    const ciSuggestions = this.CI_SUGGESTIONS.map(sug => ({
-      name: sug.name, description: sug.description,
-      onUse: () => this.openCiCreate(sug),
-    }));
+    const ciCards = this.CUSTOM_INSTRUCTIONS.map(ci => {
+      const tile = this.renderIconTile('document', 40, '#F1F1F4', '#9A9AA6');
+      return Object.assign({
+        id: ci.id, name: ci.name, instruction: ci.instruction, description: ci.description,
+        tileStyle: tile.tileStyle, tileIcon: tile.icon,
+        statusTitle: ci.active ? 'Active' : 'Inactive',
+        statusBadgeStyle: 'position:absolute;right:-2px;bottom:-2px;width:12px;height:12px;border-radius:50%;border:2px solid #fff;background:' + (ci.active ? '#1C8A5A' : '#E5484D'),
+      }, kebabMenu('ci:' + ci.id, () => this.openCiEdit(ci.id), () => this.deleteCi(ci.id)));
+    });
+    const ciTabDefs = [{ id: 'instructions', label: 'Instructions' }, { id: 'suggestions', label: 'Suggestions' }];
+    const activeCiTab = ciTabDefs.some(t => t.id === S.ciTab) ? S.ciTab : 'instructions';
+    const ciTabs = ciTabDefs.map(t => {
+      const active = t.id === activeCiTab;
+      return {
+        label: t.label,
+        style: 'display:inline-flex;align-items:center;height:34px;padding:0 16px;font:' + (active ? '600' : '500') + ' 13.5px var(--font-ui);cursor:pointer;transition:.14s;border:none;border-radius:999px;'
+          + (active ? 'background:#6148F9;color:#fff;box-shadow:0 1px 2px rgba(16,16,20,0.09)' : 'background:transparent;color:#6B6B78'),
+        onClick: () => set({ ciTab: t.id }),
+      };
+    });
+    const ciSuggestions = this.CI_SUGGESTIONS.map(sug => {
+      const tile = this.renderIconTile('document', 40, '#F1F1F4', '#9A9AA6');
+      return {
+        name: sug.name, description: sug.description, tileStyle: tile.tileStyle, tileIcon: tile.icon,
+        statusBadgeStyle: 'position:absolute;right:-2px;bottom:-2px;width:12px;height:12px;border-radius:50%;border:2px solid #fff;background:#6148F9',
+        onUse: () => this.openCiCreate(sug),
+      };
+    });
 
     const plusIcon = this.icon('plus', 'currentColor', 14);
     return {
@@ -5980,6 +6105,8 @@ class Component extends DCLogic {
       onSgBack: () => set({ sgDetailId: null }), onSgOpenAddRule: () => this.openSgAddRule(),
 
       ciCards, ciSuggestions, onCiOpenCreate: () => this.openCiCreate(),
+      ciCount: this.CUSTOM_INSTRUCTIONS.length, ciListEmpty: this.CUSTOM_INSTRUCTIONS.length === 0, ciListPopulated: this.CUSTOM_INSTRUCTIONS.length > 0,
+      ciTabs, ciTabIsInstructions: activeCiTab === 'instructions', ciTabIsSuggestions: activeCiTab === 'suggestions',
 
       cardShell, kebabBtnStyle, spOverlay, spBox, spHead, spBody, spFoot,
       uploadIconLg: this.icon('upload', '#8A8A96', 26), uploadIconSm: this.icon('upload', '#8A8A96', 22),
@@ -6076,10 +6203,14 @@ class Component extends DCLogic {
       onSgAddRuleSubmit: () => this.onSgAddRuleSubmit(), sgAddRuleDisabled: !((S.sgRuleName || '').trim()),
 
       ciModalOpen: S.ciModal === 'create', mdBoxCi: mdBox(440),
+      ciEditModalOpen: S.ciModal === 'edit',
       ciDraftName: S.ciDraftName, onCiDraftName: e => set({ ciDraftName: e.target.value }),
       ciDraftInstruction: S.ciDraftInstruction, onCiDraftInstruction: e => set({ ciDraftInstruction: e.target.value }),
       ciDraftDesc: S.ciDraftDesc, onCiDraftDesc: e => set({ ciDraftDesc: e.target.value }),
+      ciDraftActive: !!S.ciDraftActive, ciDraftActiveStyle: this.chkBoxStyle(!!S.ciDraftActive),
+      onCiDraftActiveToggle: () => set({ ciDraftActive: !S.ciDraftActive }),
       onCiCreateSubmit: () => this.onCiCreateSubmit(), ciCreateDisabled: !((S.ciDraftName || '').trim() && (S.ciDraftInstruction || '').trim()),
+      onCiUpdateSubmit: () => this.onCiUpdateSubmit(), ciUpdateDisabled: !((S.ciDraftName || '').trim() && (S.ciDraftInstruction || '').trim()),
 
       editTitleModalOpen: !!S.editTitleModal, mdBoxEdit: mdBox(420),
       editTitleLabel: S.editTitleModal ? ({ memory: 'Edit memory name', glossaries: 'Edit glossary name', styleguides: 'Edit style guide name' })[S.editTitleModal.section] : '',
